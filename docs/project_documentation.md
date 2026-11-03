@@ -3,7 +3,7 @@
 
 **Prepared for:** MBA (Big Data Analytics) evaluation panel
 **Role:** Lead Analytics Solution Architect & Project Lead
-**Build date / data refresh:** 3 November 2026 · **Scoring version:** `weights_v2` (v1 kept for audit) · **Live app:** https://india-expansion-intel.vercel.app
+**Build date / data refresh:** 3 November 2026 · **Scoring version:** `weights_v3` (v1 and v2 kept for audit) · **Live app:** https://india-expansion-intel.vercel.app
 
 ---
 
@@ -14,7 +14,7 @@
 | *Where should an established Indian business expand next?* | A state-screening decision app: 7 pilot states × 6 industries, scored against a 30-state national reference | A relative 0–100 suitability index with evidence, trade-offs, rank stability and data caveats for every recommendation |
 | *Can we predict which states will grow?* | A leakage-controlled, one-year-ahead forecast of real manufacturing GSVA growth | Validated: 12% lower error than the best naive baseline; hold-out error 3.3 pp vs 3.9 pp. Other five sectors are **ranking-only** because no defensible state-level target exists |
 | *Which states are structurally alike?* | Unsupervised segmentation of 30 states on 15 de-correlated indicators | 5 state baskets (k = 5), from "Mature industrial & services cores" to "Remote frontier economies" |
-| *How much should we trust the ranking?* | ±20% weight perturbation, equal-weight and PCA-weight challengers, counter-explanations | Leaders are robust for IT services and healthcare (Karnataka, ≥99% of draws); in the other four industries the top two are a **near-tie** (e.g. manufacturing 63.2 / 63.0 / 62.7) and the app says so |
+| *How much should we trust the ranking?* | ±20% weight perturbation, equal-weight and PCA-weight challengers, counter-explanations | Leaders are robust for IT services (Karnataka, 100% of draws) and hospitality (Maharashtra, 100%); manufacturing and retail are **near-ties** (e.g. manufacturing 64.5 / 64.4 / 64.4) and the app says so |
 
 > **Governing principle.** The index is a *relative screening score*. It is **not** a probability of commercial success, profit or survival. Every number shown to a user traces to a raw government file with a recorded SHA-256 checksum. Nothing is imputed.
 
@@ -37,6 +37,12 @@ All scored data is from **official Indian government publications**. **No synthe
 | **Core** | Handbook of Statistics on Indian States 2024-25 (47 tables) | **RBI** (data from NSO/**MoSPI**, CEA, MoRTH, Labour Bureau, ASI) | State accounts at constant 2011-12 prices; ASI factories/workers; power; roads & rail; bank credit; CPI; rural wages; unemployment; tourism; health | Official HTML table pages (XLSX blocked by a bot check, so not bypassed) | Released 11 Dec 2025; data to FY 2024-25 |
 | Core | Household Consumption Expenditure Survey 2023-24, NSS Report 592 | **MoSPI** | Rural/urban MPCE (consumer demand) with relative standard errors | PDF (tables parsed with `pdfplumber`, spot-checked by page) | Aug 2023 – Jul 2024 |
 | Core | Telecom Performance Indicator Report | **TRAI** | Internet subscriptions per 100 by State/UT | PDF | Apr–Jun 2026 (released 12 Oct 2026) |
+| Policy | Business Reforms Action Plan (BRAP) 2024 | **DPIIT** (PIB release) | Ease-of-doing-business category per state; number of the 25 reform areas rated Top Achiever (>90%) | Official release page | Released 11 Nov 2025 |
+| Policy | Logistics Ease Across Different States (LEADS) 2025 | **Ministry of Commerce** (PIB release) | Four-tier logistics rating per state | Official release page | Released 13 May 2026 |
+| Policy | Export Preparedness Index 2024 | **NITI Aayog** | Score 0–100 per State/UT (pillars incl. Policy & Governance) | PDF | Released 14 Jan 2026 |
+| Policy | States' Startup Ranking 5.0 | **DPIIT** | Five-tier startup-ecosystem rating | Official results page | Released 16 Jan 2026 |
+| Skills | PLFS Annual Report 2023-24, Appendix Table (8) | **MoSPI / NSO** | Share of adults (15+) with secondary+, diploma/certificate, graduate and post-graduate education | PDF | Jul 2023 – Jun 2024 (released 23 Sep 2024) |
+| Skills | All India Survey on Higher Education 2023-24 | **Ministry of Education** | Higher-education GER (18–23), colleges per lakh, UG + PG pass-outs | PDF | 2023-24 (released Jul 2026) |
 | Supporting | Ookla Open Data (speed tiles) | Ookla (CC BY-NC-SA) | District and city fixed/mobile speeds, 2025Q3 vs 2026Q3 | Parquet (≈1 GB) + geoBoundaries ADM2 | 2026 Q3 |
 | Display-only | GST collections, minimum wages, private salary surveys | Press/aggregator pages | Context cards, **never scored** | Saved page snapshots | 2025–2026 |
 | Map only | geoBoundaries ADM1 | William & Mary geoLab (CC BY 4.0) | State outlines | GeoJSON | gbOpen |
@@ -49,9 +55,11 @@ All scored data is from **official Indian government publications**. **No synthe
 | data.gov.in / MCA company master | API key + CAPTCHA | Not bypassed. Company-density feature excluded |
 | PLFS Annual Report 2025 state tables | Not reachable by script | PLFS 2023-24 state unemployment (via RBI) used instead |
 | State youth unemployment PDFs (DGE, eparlib) | HTTP 404 / DNS failure | Hand-transcribed values exist but cannot be traced to a raw file, so **excluded** |
-| NITI Aayog indices | Not used | Composite indices of other agencies embed their own weights; we score from primary indicators to keep weighting transparent and avoid double-weighting |
+| NITI Aayog composite indices (other than EPI) | Not used | Composite indices embed their own weights. Only the Export Preparedness Index is scored, and only in the policy dimension of export-linked industries, with its overlap with infrastructure disclosed |
+| PLFS Annual Report 2025 (calendar-year design) | Not used | New survey design from Jan 2025 is not comparable with the 2023-24 round that the RBI unemployment tables use; series are kept separate |
+| State-wise vocational-training shares (PLFS Table 12) | Not available | Published for all-India only; diploma/certificate share (Table 8) is used instead |
 
-**Managerial lens.** The binding constraint was traceability, not data volume. A recommendation an investment committee cannot audit is a liability. This is why every value is stored with its provenance in `data/source_register.csv`, which holds 83 registered raw files, each with URL, SHA-256, acquisition date and status.
+**Managerial lens.** The binding constraint was traceability, not data volume. A recommendation an investment committee cannot audit is a liability. This is why every value is stored with its provenance in `data/source_register.csv`, which holds 90 registered raw files, each with URL, SHA-256, acquisition date and status.
 
 ### 1.2 Recency & time lag
 
@@ -110,11 +118,26 @@ State macro data in India has a **structural reporting lag of 12–24 months**, 
 | Labour availability | Urban/rural unemployment rate (as *available pool*), factory workers, public specialists and PHC doctors per lakh | Pool size ≠ job-specific talent |
 | Healthcare care gap | Public hospital beds per lakh, read as unmet demand (fewer public beds → more patients relying on private care) | Not a measure of private capacity |
 | Business ecosystem | Factories, manufacturing/services/financial share of GSVA, credit to industry, bank offices | Density can mean cluster **or** saturation |
-| Operating cost & policy | Rural wages, CPI, urban housing inflation, power T&D losses | No auditable policy metric, so policy is informational only |
+| Operating cost | Rural wages, CPI, urban housing inflation, power T&D losses | Wage levels are rural series; no city office-rent series exists |
+| Policy & ease of doing business (v3) | BRAP 2024 category and Top-Achiever reform areas; LEADS 2025 tier; Export Preparedness Index 2024; Startup Ranking 5.0 | Official assessments of reform implementation and user feedback, not incentives on offer; categories are ordinal |
+| Educated labour (v3, inside Labour) | Graduates among adults, adults with secondary+ education, diploma/certificate holders (PLFS); higher-education GER and new graduates a year per lakh people (AISHE) | Graduate counts are by state of institution, not residence; GER uses a 2011-census population base |
 
 **Industry relevance rule (scoring v2).** An indicator enters an industry's profile only with a written business rationale (`why` in `scoring/weights_v2.yaml`), and the build tests enforce it. Version 1 used a generic list, so a healthcare user was shown internet subscriptions as a strength and urban unemployment as a watch-out. v2 removed those, added PHC doctors and population for healthcare, and dropped household spending from IT services. It also dropped the ecosystem dimension for healthcare and hospitality, because no auditable cluster indicator exists for them. Indicators that only matter for some business models are brought in by **operational needs**: *digital-first* adds internet subscriptions, *power-intensive* adds power indicators and *logistics-heavy* adds highways and rail. The app tags each such reason with the need behind it.
 
-| Industry | Indicators scored (v2) |
+**Scoring v3: policy and educated labour.** v3 adds a separate **Policy & ease of doing business** dimension, scored from official government assessments, so the *policy* priority now changes the ranking (in v2 it could not, for want of data). It also adds **educated-labour supply** to the labour dimension. Ordinal categories (e.g. BRAP *Fast Mover* vs *Aspirer*) are scored as ordinal codes against the same 30-state reference, so tied states share a percentile. They are shown by name, never as numbers. Each industry uses the policy and education measures that matter to it:
+
+| Industry | Policy indicators | Educated-labour indicators |
+|---|---|---|
+| Manufacturing | BRAP category, BRAP Top-Achiever areas, Export Preparedness Index, LEADS tier | Diploma/certificate share (technicians), secondary+ share (shop floor) |
+| Retail | BRAP category, BRAP Top-Achiever areas | Secondary+ share (store staff) |
+| IT / professional | Startup Ranking (×2), BRAP category, BRAP Top-Achiever areas | Graduate share (×2), new graduates per lakh (×2), higher-education GER |
+| Logistics | LEADS tier (×2), BRAP category, BRAP Top-Achiever areas, Export Preparedness Index | via *skilled-labour* need only |
+| Healthcare | BRAP category, BRAP Top-Achiever areas | Diploma/certificate share (nursing, paramedical) |
+| Hospitality | BRAP category, BRAP Top-Achiever areas | Secondary+ share (front office) |
+
+The *skilled-labour* need adds the graduate share to any industry that lacks it and up-weights all education measures. Every new value traces to a registered raw file. The audit script re-reads numbers from the PDFs and checks each ordinal category by confirming the state is listed under it in the official release; deliberately wrong categories fail. PDF parsing is verified by the tables' own totals: PLFS shares add to 100, and AISHE male + female = total.
+
+| Industry | Indicators scored (v2 base; v3 additions above) |
 |---|---|
 | Manufacturing | GSDP, per-capita income, exports · energy shortage, peak unmet, power per person, highways, rail · forecast + manufacturing momentum · factory workers, urban & rural labour pool · factories, manufacturing share, credit to industry · rural non-farm wage, T&D losses, CPI |
 | Retail | Urban MPCE, per-capita income, personal loans, GSDP · internet, energy shortage, highways · services momentum · urban labour pool · services share, bank offices · urban rent inflation, CPI |
@@ -178,7 +201,7 @@ The rule was iterative: remove the highest-VIF feature, recompute, and stop when
 | Excluded factor | Why |
 |---|---|
 | Commercial rents, plot prices, industrial tariffs, outage hours | No comparable public state series; **never estimated** |
-| Policy incentives / DPIIT Startup ranking | Ordinal and methodology-dependent; shown as information, not scored |
+| Policy incentives on offer (subsidies, tax holidays) | Not comparable across states and not published as a state series; only reform-implementation assessments are scored |
 | Company registrations (MCA) | Not obtainable without bypassing a CAPTCHA; registered office ≠ operating site |
 | District youth unemployment | No official series exists; the app says so instead of estimating |
 | Six separate "sector forecasts" from the services aggregate | Would mislabel one broad target as six independent forecasts (rule 8 of the blueprint) |
@@ -290,14 +313,14 @@ Medians of raw values per cluster (national median in the last column). Source: 
 
 **Production weights are heuristic design defaults, not learned optima.** This is a deliberate MCDA (multi-criteria decision analysis) choice. They come from the project blueprint's expert-style pillar split (demand 25, infrastructure 20, outlook 20, labour 15, ecosystem 10, cost/policy 10), tilted per industry using documented domain rationale. For example, manufacturing upweights infrastructure and ecosystem, and hospitality upweights tourist demand.
 
-| Industry | Demand | Infra. | Outlook | Labour | Ecosystem | Cost |
-|---|---|---|---|---|---|---|
-| Manufacturing | 15 | **25** | 20 | 15 | 15 | 10 |
-| Retail | **30** | 15 | 20 | 15 | 10 | 10 |
-| IT / professional | 20 | **25** | 20 | 20 | 10 | 5 |
-| Logistics | 20 | **30** | 20 | 10 | 10 | 10 |
-| Healthcare | **35** | 20 | 15 | 20 | — | 10 |
-| Hospitality | **40** | 20 | 15 | 15 | — | 10 |
+| Industry | Demand | Infra. | Outlook | Labour | Ecosystem | Cost | Policy |
+|---|---|---|---|---|---|---|---|
+| Manufacturing | 15 | **25** | 15 | 15 | 10 | 10 | 10 |
+| Retail | **30** | 15 | 15 | 15 | 10 | 10 | 5 |
+| IT / professional | 15 | 20 | 15 | **25** | 10 | 5 | 10 |
+| Logistics | 20 | **25** | 15 | 10 | 10 | 10 | 10 |
+| Healthcare | **35** | 15 | 10 | 25 | — | 10 | 5 |
+| Hospitality | **40** | 20 | 10 | 15 | — | 10 | 5 |
 
 *— = no ecosystem dimension (no auditable indicator); its weight is spread over the other dimensions.*
 
@@ -305,16 +328,16 @@ Medians of raw values per cluster (national median in the last column). Source: 
 
 | Industry | PC1 share of variance | ρ (design vs equal) | ρ (design vs PCA) | Top-3 overlap with equal | Top-3 overlap with PCA |
 |---|---|---|---|---|---|
-| Manufacturing | 46% | 0.99 | 0.97 | 2 / 3 | 1 / 3 |
-| Retail | 41% | 0.94 | 0.92 | 2 / 3 | 2 / 3 |
-| IT / professional | 35% | 0.86 | 0.94 | 2 / 3 | 3 / 3 |
-| Logistics | 38% | 0.93 | **0.62** | 2 / 3 | 2 / 3 |
-| Healthcare | 33% | 0.80 | 0.91 | 2 / 3 | 3 / 3 |
-| Hospitality | 29% | 0.76 | 0.88 | 1 / 3 | 2 / 3 |
+| Manufacturing | 46% | 0.98 | 0.96 | 3 / 3 | 2 / 3 |
+| Retail | 36% | 0.96 | 0.97 | 3 / 3 | 2 / 3 |
+| IT / professional | 36% | 0.93 | 0.98 | 2 / 3 | 2 / 3 |
+| Logistics | 39% | 0.94 | **0.79** | 3 / 3 | 3 / 3 |
+| Healthcare | 34% | 0.91 | 0.91 | 3 / 3 | 3 / 3 |
+| Hospitality | 27% | 0.79 | 0.75 | 3 / 3 | 2 / 3 |
 
 *(Spearman rank correlations across all 30 states; source `reports/segmentation/weighting_comparison.csv`.)*
 
-**Interpretation.** Across 30 states, the national ordering is largely weight-insensitive (ρ ≥ 0.86 in four industries, ≥ 0.76 in all). The fine top-3 order is not, and that is exactly where user priorities should matter. Logistics diverges most under PCA weights because PCA puts 30% on ecosystem against the design's 10%. A manager who believes clustering effects dominate logistics should raise that weight, and the what-if panel lets them.
+**Interpretation.** Across 30 states, the national ordering is largely weight-insensitive (ρ ≥ 0.91 in five industries, ≥ 0.79 in all). The fine top-3 order is not, and that is exactly where user priorities should matter. Logistics diverges most under PCA weights because PCA puts far more weight on ecosystem than the design's 10%. A manager who believes clustering effects dominate logistics should raise that weight, and the what-if panel lets them.
 
 ### 4.2 Composite index formulation
 
@@ -362,20 +385,20 @@ $$
 
 | Industry (default weights) | Leader | Gap 1st–2nd (pts) | Leader kept in draws | Mean ρ vs base | Worst ρ |
 |---|---|---|---|---|---|
-| IT / professional | Karnataka | 3.1 | **100%** | 1.00 | 0.96 |
-| Healthcare | Karnataka | 0.8 | **99%** | 1.00 | 0.96 |
-| Retail | Telangana | 0.3 | 59% | 0.98 | 0.93 |
-| Logistics | Maharashtra | 0.1 | 55% | 0.96 | 0.89 |
-| **Manufacturing** | Telangana | **0.2** | **51%** | 0.91 | 0.64 |
-| Hospitality | Maharashtra | 0.1 | 36% | 0.95 | 0.82 |
+| IT / professional | Karnataka | 3.9 | **100%** | 0.98 | 0.86 |
+| Hospitality | Maharashtra | 1.0 | **100%** | 0.95 | 0.86 |
+| Healthcare | Tamil Nadu | 0.2 | 74% | 0.99 | 0.96 |
+| Logistics | Maharashtra | 0.4 | 71% | 0.95 | 0.82 |
+| Retail | Karnataka | 0.04 | 51% | 0.98 | 0.93 |
+| **Manufacturing** | Telangana | **0.04** | **39%** | 0.93 | 0.82 |
 
-**Counter-explanation.** For every result the engine computes what would make the runner-up win. Example (UP manufacturer demo, power/logistics/labour priorities): *"Gujarat scores 95 vs 63 for Telangana on business ecosystem (mainly manufacturing share of GSVA). If that dimension carried about 1.5× its current weight, Gujarat would rank first."*
+**Counter-explanation.** For every result the engine computes what would make the runner-up win. Example (UP manufacturer demo, power/logistics/labour priorities): *"Gujarat scores 95 vs 63 for Telangana on business ecosystem (mainly manufacturing share of GSVA). If that dimension carried about 1.7× its current weight, Gujarat would rank first."*
 
 **Policy & strategic allocation implications**
 
-- **Robust leaders** (IT services and healthcare → Karnataka) can support a *concentrated* bet. Healthcare shows that a small gap (0.8 points) can still be robust when the leader is ahead on most dimensions at once.
-- **Near-ties** (manufacturing default: Telangana 63.2, Maharashtra 63.0, Tamil Nadu 62.7; hospitality: Maharashtra 66.2, Karnataka 66.0, Rajasthan 65.3) argue for a **shortlist and site visits**, not a single-state commitment. The app states this explicitly.
-- Personalisation helps: once the UP manufacturer's priorities are applied, Telangana's lead becomes stable (same rank in 99% of draws). The engine converts stated strategy into a clearer answer.
+- **Robust leaders** (IT services → Karnataka, hospitality → Maharashtra) can support a *concentrated* bet.
+- **Near-ties** (manufacturing default: Telangana 64.5, Tamil Nadu 64.4, Maharashtra 64.4; retail: Karnataka 71.4, Telangana 71.3; healthcare: Tamil Nadu 67.5, Karnataka 67.3) argue for a **shortlist and site visits**, not a single-state commitment. The app states this explicitly.
+- Personalisation helps: once the UP manufacturer's priorities are applied, Telangana's lead becomes stable (same rank in 100% of draws). The engine converts stated strategy into a clearer answer.
 - For policymakers, weight-insensitive *weakness* (e.g. UP's infrastructure dimension at 30/100 under every reasonable weighting) is a robust intervention target, unlike rank changes driven by weighting choices.
 
 ---
@@ -426,8 +449,8 @@ $$
 | Decision stage | Use of the system | Example from this build |
 |---|---|---|
 | Portfolio framing | Start from the **basket**, not the state | A cost-led plant looks first at *Emerging Growth Markets* (UP, RJ); a skilled-services centre at *Mature Cores* |
-| Shortlisting | Top-3 index with priorities applied | UP manufacturer (power, logistics, labour) → Telangana 64.5, Gujarat 62.8, Tamil Nadu 61.9 |
-| Stress-testing | Stability panel + counter-explanation | Telangana keeps rank 1 in 99% of draws; Gujarat wins only if ecosystem weight rises ~1.5× |
+| Shortlisting | Top-3 index with priorities applied | UP manufacturer (power, logistics, labour) → Telangana 65.3, Gujarat 63.7, Tamil Nadu 63.3 |
+| Stress-testing | Stability panel + counter-explanation | Telangana keeps rank 1 in 100% of draws; Gujarat wins only if ecosystem weight rises ~1.7× |
 | Due diligence | Watch-outs + data confidence | Telangana: no rural wage series (cost uses other indicators); Gujarat: accounts end FY 2022-23, *Medium* confidence |
 | Capital allocation | Concentrate where robust, stage where near-tied | Manufacturing default is a three-way near-tie: phase capex behind site-level diligence in all three |
 
@@ -447,7 +470,8 @@ $$
 
 1. State averages hide corridor and district variation; this is *screening*, not site selection.
 2. One data vintage: the forecast backtest uses revised data.
-3. Weights and the indicator-to-industry mapping are expert-style defaults (v2), not AHP-elicited or learned.
+3. Weights and the indicator-to-industry mapping are expert-style defaults (v3), not AHP-elicited or learned.
+6. Policy categories are ordinal and coarse (BRAP 2024 placed no state above *Fast Mover*), so they separate states less finely than numeric indicators.
 4. Segmentation structure is weak (silhouette 0.21): useful for framing, not for hard rules.
 5. Ookla speed data is non-commercial (CC BY-NC-SA). A commercial deployment needs a licence.
 
@@ -474,7 +498,7 @@ python -m etl.ingest_rbi_hsis && python -m etl.validate && python -m etl.ingest_
 
 | Claim | File |
 |---|---|
-| Source register (83 files, SHA-256) | `data/source_register.csv` |
+| Source register (90 files, SHA-256) | `data/source_register.csv` |
 | Validation, revisions, outliers | `reports/validation_rbi_panel.md`, `reports/coverage_heatmap.png` |
 | Model metrics & acceptance | `reports/model_card_manufacturing.md`, `models/registry.json` |
 | Eligibility (7 × 6) | `reports/eligibility_matrix.csv` |

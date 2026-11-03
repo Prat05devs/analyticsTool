@@ -252,3 +252,50 @@ geoboundaries_ind_adm1:
   use: state outlines for the results map only (no data values)
   caveat: boundaries as published by geoBoundaries; not an official Survey of India map
   status: V
+
+# ---- Policy & skills sources added 3 Nov 2026 (user request: policy / ease of doing business and educated labour) ----
+# Ordinal government categories are scored as ordinal codes (ties share a percentile), with the category text kept.
+dpiit_brap_2024:
+  publisher: DPIIT, Ministry of Commerce & Industry (via PIB)
+  what: Business Reforms Action Plan 2024 - state ease-of-doing-business assessment (434 reform points, 25 reform areas,
+    70% user feedback / 30% evidence). Overall category per state + number of reform areas where the state is a Top Achiever (>90%).
+  release_date: 2025-11-11
+  press_release_html: https://www.pib.gov.in/PressReleasePage.aspx?PRID=2188992
+  caveat: "Categories are ordinal. No state reached Achiever/Top Achiever overall in BRAP 2024; Category X (NE & small UTs) is a separate track whose states are all Aspirers."
+  status: V
+leads_2025:
+  publisher: Department for Promotion of Industry and Internal Trade / Ministry of Commerce & Industry (via PIB)
+  what: Logistics Ease Across Different States 2025, four-tier classification (Exemplars, High Performers, Accelerators, Growth-Seekers)
+  release_date: 2026-05-13
+  press_release_html: https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260854
+  caveat: "Ordinal tiers, assigned within peer groups (coastal, landlocked, NE, UT)."
+  status: V
+niti_epi_2024:
+  publisher: NITI Aayog
+  what: Export Preparedness Index 2024 (4 pillars incl. Policy & Governance, 70 indicators, FY2022-FY2024 data); overall score 0-100 per State/UT
+  release_date: 2026-01-14
+  report_pdf: https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf
+  press_release_html: https://www.pib.gov.in/PressReleasePage.aspx?PRID=2214514
+  caveat: "Composite index: overlaps with infrastructure indicators scored elsewhere; used only in the policy dimension of export-linked industries."
+  status: V
+startup_ranking_5:
+  publisher: DPIIT - States' Startup Ranking 5.0
+  release_date: 2026-01-16
+  results_html: https://www.startupindia.gov.in/srf/portal/edition_5th_2026.html
+  caveat: "Five ordinal categories (Best Performers ... Emerging Ecosystems)."
+  status: V
+aishe_2023_24:
+  publisher: Ministry of Education, Department of Higher Education - All India Survey on Higher Education
+  release_date: 2026-07
+  report_pdf: https://www.dohe-education.gov.in/static/uploads/2026/07/8616f33dfee644ab6b87a2bd0658b18d.pdf
+  tables: "T-4 colleges per lakh population (18-23); T-19 GER in higher education (18-23, 2011-census based); T-33 out-turn/pass-out by level (based on actual response)"
+  caveat: "GER uses 2011-census-based population projections; out-turn counts only responding institutions."
+  status: V
+plfs_annual_2023_24:
+  publisher: MoSPI - NSO, Periodic Labour Force Survey
+  release_date: 2024-09-23
+  observation_period: July 2023 - June 2024
+  report_pdf: https://www.mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2023-24L2.pdf
+  tables: "Appendix A Table (8): % distribution of persons 15+ by highest level of education completed, by State/UT (rural+urban persons, p. A-19)"
+  caveat: "Same survey round as the RBI handbook unemployment tables (T08/T09). PLFS 2025 changed design; not mixed."
+  status: V

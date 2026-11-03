@@ -47,9 +47,12 @@ SCALE = {"ur_rural_us_adj": 0.1, "ur_urban_us_adj": 0.1, "foreign_tourist_visits
 def found_in_raw(path: str, value: float, code: str) -> str | None:
     text = full_text(str(ROOT / path))
     flat = digits_only(text)
+    # some PDF text layers split digit groups ('5 ,47,540'); a compact copy joins them, boundaries stay strict
+    compact = digits_only(re.sub(r"(?<=\d) (?=,\d)", "", text))
     for f in printed_forms(value, SCALE.get(code, 1.0)):
+        g = re.escape(f.replace(",", ""))
         if re.search(rf"(?<![\d.]){re.escape(f)}(?![\d])", text) or \
-                re.search(rf"(?<![\d.]){re.escape(f.replace(',', ''))}(?![\d])", flat):
+                re.search(rf"(?<![\d.]){g}(?![\d])", flat) or re.search(rf"(?<![\d.]){g}(?![\d])", compact):
             return f
     return None
 
@@ -76,9 +79,48 @@ def cell_matches(path, sid, period, value, code) -> bool:
     return any(abs(v * scale - value) <= 1e-6 * max(1, abs(value)) for v in raw_cells(path, sid, period) if v == v)
 
 
+CATEGORY_WORDS = {  # stems of each published category label, as they appear in the official pages
+    "Aspirer": "aspirer", "Fast Mover": "fast mover", "Achiever": "achiever", "Top Achiever": "top achiever", "Exemplar": "exemplar", "High Performer": "high performer",
+    "Accelerator": "accelerator", "Growth-Seeker": "growth-seeker", "Best Performer": "best performer",
+    "Top Performer": "top performer", "Leader": "leader", "Aspiring Leader": "aspiring leader",
+    "Emerging Ecosystem": "emerging ecosystem"}
+WORD_NUM = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}
+
+
+def trace_category(r) -> tuple[str, str]:
+    """Ordinal government categories: the state's name must sit under its recorded category in the raw page."""
+    import html as _html
+    from etl.states import name_of
+    raw_txt = (ROOT / r.source_file).read_text(errors="ignore")
+    t = re.sub(r"\s+", " ", _html.unescape(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>|<style.*?</style>", " ",
+                                                                         raw_txt, flags=re.S)))).lower()
+    name = name_of(r.state_id).lower()
+    ok_sha = sha_ok(r.source_file)
+    if r.unit.startswith("of 25"):
+        k = int(r.value)
+        hit = any(name in c and (f"across {WORD_NUM.get(k, '')} reform area" in c) for c in re.split(r"\.\s|, while ", t)) \
+            if k else not any(name in c and "reform area" in c and "top achiever" in c for c in re.split(r"\.\s", t))
+        return ("PASS" if ok_sha and hit else "FAIL", f"sha256 {'ok' if ok_sha else 'MISMATCH'}; "
+                f"{'listed' if k else 'not listed'} with {k} Top-Achiever reform area(s) in the release: {'yes' if hit else 'NO'}")
+    labels = dict(x.strip().split("=", 1) for x in r.unit.split(":", 1)[1].split(","))
+    want = labels[str(int(r.value))]
+    stems = {lab: CATEGORY_WORDS[lab] for lab in labels.values()}
+    ok = False
+    for m in re.finditer(re.escape(name), t):  # nearest category label before each mention of the state
+        before = t[max(0, m.start() - 4000):m.start()]
+        # latest-ending label wins; on a tie the longer label ('aspiring leader' over 'leader')
+        ends = [(before.rfind(st) + len(st) if before.rfind(st) >= 0 else -1, len(st), lab) for lab, st in stems.items()]
+        last = max(ends)
+        ok = ok or (last[0] >= 0 and last[2] == want)
+    return ("PASS" if ok and ok_sha else "FAIL",
+            f"sha256 {'ok' if ok_sha else 'MISMATCH'}; listed under '{want}' in the raw page: {'yes' if ok else 'NO'}")
+
+
 def trace_official(r) -> tuple[str, str]:
     path = r.source_file
     ok_sha = sha_ok(path)
+    if r.unit.startswith(("category:", "of 25")):
+        return trace_category(r)
     if "rbi_hsis" in path:
         ok = cell_matches(path, r.state_id, r.period, r.value, r.feature_code)
         return ("PASS" if ok and ok_sha else "FAIL",
@@ -101,7 +143,9 @@ def trace_derived(r, facts) -> tuple[str, str]:
     periods = set(re.findall(r"\d{4}-\d{2}|\d{4}", r.note)) | {str(r.period)}
     comp = comp[comp.period.astype(str).isin(periods)]
     ecomp = ecomp[ecomp.fy.isin(periods)]
-    checks = [cell_matches(c.source_file, c.state_id, c.period, c.value, c.feature_code) for c in comp.itertuples()]
+    checks = [cell_matches(c.source_file, c.state_id, c.period, c.value, c.feature_code) if "rbi_hsis" in c.source_file
+              else found_in_raw(c.source_file, c.value, c.feature_code) is not None  # PDF / page sources: value as printed
+              for c in comp.itertuples()]
     checks += [cell_matches(c.source_file, c.state_id, c.fy, c.value_rs_lakh, "") for c in ecomp.itertuples()]
     ok = all(oks) and len(checks) > 0 and all(checks)
     return ("PASS" if ok else "CHECK",

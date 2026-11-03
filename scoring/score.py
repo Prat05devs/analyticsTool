@@ -96,7 +96,7 @@ def effective_weights(p: Profile, version: str = CURRENT_VERSION) -> tuple[dict,
     for pr in [] if override else p.priorities:
         d = s["priorities"]["map"].get(pr)
         if d is None:
-            notes.append(s["priorities"]["policy_note"])
+            notes.append(s["priorities"].get("policy_note", f"Priority '{pr}' maps to no dimension."))
             continue
         if d not in dims:
             notes.append(f"Priority '{pr}': {prof['label']} has no {s['dimensions'][d]['label'].lower()} dimension, "

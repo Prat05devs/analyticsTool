@@ -10,8 +10,8 @@ from scoring.score import Profile, effective_weights, percentile, score
 
 def test_weights_are_versioned_design_defaults():
     s = spec()
-    assert s["version"] == "v2"
-    assert spec("v1")["version"] == "v1"  # previous version kept for the audit trail
+    assert s["version"] == "v3"
+    assert spec("v1")["version"] == "v1" and spec("v2")["version"] == "v2"  # previous versions kept
     for ind, prof in s["industries"].items():
         assert sum(prof["weights"].values()) == 100, ind
         assert set(prof["weights"]) <= set(s["dimensions"]), ind
@@ -95,12 +95,14 @@ def test_priorities_change_weights_transparently():
     pd.testing.assert_frame_equal(a, b)  # deterministic
 
 
-def test_policy_priority_does_not_change_scores():
-    a = score(Profile("logistics"), with_stability=False).ranking.set_index("state_id").score
-    b = score(Profile("logistics", priorities=["policy"]), with_stability=False)
-    assert np.allclose(a.sort_index(), b.ranking.set_index("state_id").score.sort_index())
-    assert any("policy" in n.lower() for n in b.notes)
-
+def test_policy_priority_reweights_the_policy_dimension():
+    """v3: 'policy' maps to a dimension scored from official assessments (BRAP, LEADS, EPI, Startup Ranking)."""
+    base = score(Profile("logistics"), with_stability=False)
+    pol = score(Profile("logistics", priorities=["policy"]), with_stability=False)
+    assert pol.dim_weights["policy"] > base.dim_weights["policy"]
+    assert any("Priority 'policy'" in n for n in pol.notes)
+    assert not np.allclose(base.ranking.set_index("state_id").score.sort_index(),
+                           pol.ranking.set_index("state_id").score.sort_index())
 
 def test_too_many_priorities_rejected():
     with pytest.raises(ValueError):

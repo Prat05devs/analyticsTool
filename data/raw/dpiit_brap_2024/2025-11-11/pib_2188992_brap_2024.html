@@ -1,0 +1,1083 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css?v=1" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css?v=1" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css?v=1" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" /><link id="pibA11yCss" rel="stylesheet" href="/css/accessibility.css?v=7" type="text/css" />
+    <script type="text/javascript">
+        (function (d) {
+            var t = "";
+            try {
+                t = window.localStorage.getItem("pibStyle") || "";
+            } catch (e) {
+                t = "";
+            }
+            if (t === "orange") {
+                t = "yellow";
+            }
+            var c = t === "change" ? " pib-hc"
+                : t === "green" ? " pib-theme-green"
+                : t === "yellow" ? " pib-theme-yellow" : "";
+            d.documentElement.className += c + " pib-a11y-content";
+        }(document));
+    </script>
+
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/accessibility.js?v=7"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+            });
+    </script>
+    <style type="text/css">
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+        }
+
+        full-width {
+            width: 100%;
+        }
+
+        .logo-left, .logo-center, .countdown {
+            display: flex;
+            align-items: center;
+        }
+
+            .logo-left img, .logo-center img {
+                height: 70px;
+            }
+
+        .countdown {
+            text-align: center;
+            background-color: var(--dbim-text, #150202);
+            border-radius: 10px;
+            padding: 10px;
+            border: 2px solid grey;
+        }
+
+        .firstnumber {
+            color: #000000;
+            position: absolute;
+            top: 50px;
+            right: 90px;
+            font-size: 30px;
+        }
+
+        .secondnumber {
+            position: absolute;
+            color: #000000;
+            right: 45px;
+            top: 50px;
+            font-size: 30px;
+        }
+
+        .countdown .days {
+            font-size: 35px;
+            color: gold;
+        }
+
+        .countdown p {
+            margin: 0;
+        }
+
+        .countdown .text {
+            font-size: 16px;
+        }
+
+        a {
+            word-break: break-all;
+        }
+
+        iframe, img {
+            max-width: 100%;
+        }
+
+        /* === DBIM 3.0 Option 4 Separator Line & Reading Meta Styling === */
+        .pr-share--footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-top: 1px solid var(--dbim-border, #d1d5db);
+            padding-top: 16px;
+            margin-top: 24px;
+        }
+
+        .pr-share__left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pr-reading-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--dbim-text-secondary, #475569);
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
+        .pr-reading-meta__item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pr-reading-meta__divider {
+            color: var(--dbim-border, #cbd5e1);
+            font-weight: 300;
+        }
+
+        .pib-hc .pr-reading-meta,
+        .pib-hc .pr-reading-meta svg {
+            color: currentColor !important;
+        }
+
+        @media (max-width: 680px) {
+            .pr-share--footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .pr-reading-meta {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media(max-width:1199px) {
+            .firstnumber {
+                top: 40px;
+                right: 72px;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 35px;
+                top: 40px;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:990px) {
+            .firstnumber {
+                top: 25px;
+                right: 54px;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 25px;
+                top: 25px;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:768px) {
+            .countdown, .days {
+                font-size: 12px !important;
+            }
+
+            .firstnumber {
+                top: 25%;
+                right: 8%;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 4.5%;
+                top: 25%;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:475px) {
+            .countdown, .days {
+                font-size: 10px !important;
+                top: 20%;
+            }
+
+            .bannerimgdiv {
+                padding: 0 !important;
+            }
+
+            .bannerimg {
+                width: 108% !important;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+    </script>
+
+    <link id="pibConsentCss" href="/css/consent.css?v=8" rel="stylesheet" type="text/css" /><link id="pibFontsCss" href="/css/fonts-noto.css?v=6" rel="stylesheet" type="text/css" /><link id="pibDbimCss" href="/css/dbim.css?v=1120" rel="stylesheet" type="text/css" /><meta property="og:title" content="The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2188992" /><meta property="og:description" content="The Union Minister of Commerce and Industry, Shri Piyush Goyal, emphasized the Central Government’s " /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="eqausaa4l3rnojqacqhq4aaaabvouihv-f-e6e524efb-clienttons-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":52,"ak.ipv":6,"ak.proto":"http/1.1","ak.rid":"1207e581","ak.r":38572,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":58738,"ak.gh":"23.48.245.101","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1793728757","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==jzlXpDvMoC1foUeFqzlmZ+hWNCn4HC/a0hJd0JzuGcSBx1VAoVR5xk7aW/CUYaYeI5dfHMQ1t1uda+jORGqR0MAk3Cxm2YduHkS8J1dxCzKQNFf4VUq/577+hEYAmzGa735aV/R6h8O3iPtUxQgNLsPYmS84ZLh5kr6IEb3RvgbjQAzSYNWBgqFAeHIxyZLniyccMMIkq4Wvj44IQMlGVvynsGEFin6nq7mcd2QwCRsqOL4KdLONM6qJpWKyYZWaN+QfWl6r0NcWrNb8mIhfTW3C64mQfsy7nXSjVbiSmT5ApaGo3U5+an7UlLGfGMlG2MMRJFlpDlzyUaxYVjDLXUgEuaBZo3hnJqHHykleZ6gq6/OS+VDzDIVae8K+g3DfbRWmc/EwhAOmAbn8D8D2Q07y7NzkoaR6lmxMKWY+vrE=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden" id="dbim-icon-sprite">
+    <defs>
+        <symbol id="icon-angle-double-left" viewBox="0 0 24 24"><path d="M11.6 4.6 4.2 12l7.4 7.4 2.2-2.2L8.6 12l5.2-5.2z"/><path d="M19 4.6 11.6 12 19 19.4l2.2-2.2L16 12l5.2-5.2z"/></symbol>
+        <symbol id="icon-angle-double-right" viewBox="0 0 24 24"><path d="M12.4 4.6 10.2 6.8 15.4 12l-5.2 5.2 2.2 2.2L19.8 12z"/><path d="M5 4.6 2.8 6.8 8 12l-5.2 5.2L5 19.4 12.4 12z"/></symbol>
+        <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M20.8 10.6H9.6v2.8h11.2z"/><path d="M10.8 5.6 3.2 12l7.6 6.4z"/></symbol>
+        <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M3.2 10.6h11.2v2.8H3.2z"/><path d="M13.2 5.6 20.8 12l-7.6 6.4z"/></symbol>
+        <symbol id="icon-blogger" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6.4 2.4h11.2a4 4 0 0 1 4 4v11.2a4 4 0 0 1-4 4H6.4a4 4 0 0 1-4-4V6.4a4 4 0 0 1 4-4zm2.8 5.2a2 2 0 0 0 0 4h2.4a2 2 0 0 0 0-4zm0 5.6a2 2 0 0 0 0 4h5.6a2 2 0 0 0 0-4z"/></symbol>
+        <symbol id="icon-calendar" viewBox="0 0 24 24"><path d="M7.6 2.4H10v2.4H7.6z"/><path d="M14 2.4h2.4v2.4H14z"/><path fill-rule="evenodd" d="M4 4.8h16a1.6 1.6 0 0 1 1.6 1.6v13.2a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6V6.4A1.6 1.6 0 0 1 4 4.8zm.4 5.6v8.4h15.2v-8.4z"/><path d="M6.4 12.4h3.2v3.2H6.4z"/></symbol>
+        <symbol id="icon-chevron-left" viewBox="0 0 24 24"><path d="M15.4 4.6 8 12l7.4 7.4 2.2-2.2L12.4 12l5.2-5.2z"/></symbol>
+        <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="M8.6 4.6 6.4 6.8 11.6 12l-5.2 5.2 2.2 2.2L16 12z"/></symbol>
+        <symbol id="icon-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24"><path d="M10.8 3h2.4v7.6h3.4L12 16.6l-4.6-6h3.4z"/><path d="M4 17.2h2.4v2.4h11.2v-2.4H20v3.2a1.4 1.4 0 0 1-1.4 1.4H5.4A1.4 1.4 0 0 1 4 20.4z"/></symbol>
+        <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M13.6 21.6v-8.4h2.8l.42-3.3h-3.22V7.8c0-.95.27-1.6 1.64-1.6h1.74V3.26a23 23 0 0 0-2.54-.13c-2.5 0-4.22 1.53-4.22 4.34v2.43H7.4v3.3h2.82v8.4z"/></symbol>
+        <symbol id="icon-fact-check" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4 3.6 5.6v6.2c0 4.6 3.4 8.6 8.4 9.8 5-1.2 8.4-5.2 8.4-9.8V5.6zm-1 13.2-3.6-3.6 1.7-1.7 1.9 1.9 4.5-4.5 1.7 1.7z"/></symbol>
+        <symbol id="icon-hashtag" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.8 3h2.4l-1 6h3.2l1-6h2.4l-1 6h3.4v2.4h-3.8l-.6 3.2h3.6V17h-4l-1 5h-2.4l1-5h-3.2l-1 5H5.4l1-5H3V14.6h3.8l.6-3.2H3.8V9h4zm.6 8.4-.6 3.2h3.2l.6-3.2z"/></symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24"><path d="M12 3.4 2.8 11.6h2.4v8.4a1 1 0 0 0 1 1h3.3v-5.4h5v5.4h3.3a1 1 0 0 0 1-1v-8.4h2.4z"/></symbol>
+        <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.6 2.4h8.8a5.2 5.2 0 0 1 5.2 5.2v8.8a5.2 5.2 0 0 1-5.2 5.2H7.6a5.2 5.2 0 0 1-5.2-5.2V7.6a5.2 5.2 0 0 1 5.2-5.2zm0 2.4a2.8 2.8 0 0 0-2.8 2.8v8.8a2.8 2.8 0 0 0 2.8 2.8h8.8a2.8 2.8 0 0 0 2.8-2.8V7.6a2.8 2.8 0 0 0-2.8-2.8z"/><path fill-rule="evenodd" d="M12 6.8a5.2 5.2 0 1 0 0 10.4 5.2 5.2 0 0 0 0-10.4zm0 2.4a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6z"/><circle cx="17.3" cy="6.7" r="1.3"/></symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 24 24"><path d="M4.8 8.8h3.6v12H4.8z"/><circle cx="6.6" cy="5.4" r="2.1"/><path d="M10.8 8.8h3.45v1.65h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.35 4.3 5.4v6.6h-3.6v-5.85c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1v5.95h-3.6z"/></symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24"><path d="M2.4 7.6v9.2a1.6 1.6 0 0 0 1.6 1.6h16a1.6 1.6 0 0 0 1.6-1.6V7.6L12 14z"/><path d="M21.2 5.4H2.8L12 11.8z"/></symbol>
+        <symbol id="icon-mail-open" viewBox="0 0 24 24"><path d="M2.4 9.8h19.2v9.6A1.6 1.6 0 0 1 20 21H4a1.6 1.6 0 0 1-1.6-1.6z"/><path d="M12 2.6 21.6 9.2h-3.8L12 5.3 6.2 9.2H2.4z"/><path d="m3.9 11.2 8.1 5.4 8.1-5.4 1.5 1.3-9.6 6.4-9.6-6.4z"/></symbol>
+        <symbol id="icon-map-marker" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4a7 7 0 0 0-7 7c0 5.2 7 12.2 7 12.2s7-7 7-12.2a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></symbol>
+        <symbol id="icon-newspaper" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2.8 4.4h14.8v15.2H2.8zm2 2v11.2h10.8V6.4z"/><path d="M6 7.6h8.4v1.6H6z"/><path d="M6 10.8h8.4v1.6H6z"/><path d="M6 14h5.2v1.6H6z"/><path d="M18.4 8.4h2.8v9.6a1.4 1.4 0 0 1-2.8 0z"/></symbol>
+        <symbol id="icon-pause" viewBox="0 0 24 24"><rect x="7.4" y="4" width="3.6" height="16" rx="0.9"/><rect x="13" y="4" width="3.6" height="16" rx="0.9"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8 4.5v15l12-7.5z"/></symbol>
+        <symbol id="icon-picture" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2.4 5.2h19.2v13.6H2.4zm2 2v9.6h15.2V7.2z"/><path d="M5.6 16.4 10 11l2.6 3 2-2.2 4 4.6z"/><circle cx="8" cy="10.4" r="1.5"/></symbol>
+        <symbol id="icon-press-conference" viewBox="0 0 24 24"><circle cx="12" cy="5.2" r="2.6"/><path d="M7.6 12.2a4.4 4.4 0 0 1 8.8 0z"/><circle cx="4.9" cy="9.6" r="2.2"/><path d="M1.8 15.2a3.1 3.1 0 0 1 6.2 0z"/><circle cx="19.1" cy="9.6" r="2.2"/><path d="M16 15.2a3.1 3.1 0 0 1 6.2 0z"/><path d="M6.6 13.6h10.8l2.2 7.8H4.4z"/></symbol>
+        <symbol id="icon-print" viewBox="0 0 24 24"><path d="M6.4 2.8h11.2v4.4H6.4z"/><path d="M4 8.4h16a1.6 1.6 0 0 1 1.6 1.6v5.6a1.6 1.6 0 0 1-1.6 1.6h-1.6v-2.8H6v2.8H4a1.6 1.6 0 0 1-1.6-1.6V10A1.6 1.6 0 0 1 4 8.4z"/><path d="M7.2 15.6h9.6v5.6H7.2z"/></symbol>
+        <symbol id="icon-rss" viewBox="0 0 24 24"><circle cx="4.8" cy="19.2" r="2.4"/><path d="M2.4 11.2v3.2a6.4 6.4 0 0 1 6.4 6.4H12A9.6 9.6 0 0 0 2.4 11.2z"/><path d="M2.4 4.8V8A13.6 13.6 0 0 1 16 21.6h3.2A16.8 16.8 0 0 0 2.4 4.8z"/></symbol>
+        <symbol id="icon-search-plus" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10 2.8a7.2 7.2 0 1 0 0 14.4 7.2 7.2 0 0 0 0-14.4zm0 2.4a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6z"/><path d="M15.3 14.6 21.2 20.5l-1.5 1.5-5.9-5.9z"/><path d="M9.2 6.8h1.6v2.4h2.4v1.6h-2.4v2.4H9.2v-2.4H6.8V9.2h2.4z"/></symbol>
+        <symbol id="icon-share" viewBox="0 0 24 24"><circle cx="18" cy="5.6" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="18.4" r="3"/><path d="M8.3 10.9 15.7 7.2l.9 1.8-7.4 3.7z"/><path d="M9.2 13.1 16.6 16.8l-.9 1.8-7.4-3.7z"/></symbol>
+        <symbol id="icon-twitter" viewBox="0 0 24 24"><path d="M4.2 3h4.3l11.3 18h-4.3z"/><path d="M19.3 3h-2.6L4.2 21h2.6z"/></symbol>
+        <symbol id="icon-university" viewBox="0 0 24 24"><path d="M12 2.4 21.6 7.2v1.6H2.4V7.2z"/><path d="M4.8 10.4h2.4v8H4.8z"/><path d="M9.2 10.4h2.4v8H9.2z"/><path d="M13.4 10.4h2.4v8h-2.4z"/><path d="M17.6 10.4H20v8h-2.4z"/><path d="M3.2 19.8h17.6v1.8H3.2z"/></symbol>
+        <symbol id="icon-volume-up" viewBox="0 0 24 24"><path d="M3.2 9.2h3.3l5-4.2v14l-5-4.2H3.2z"/><path d="M14.6 8.4a5 5 0 0 1 0 7.2l1.6 1.6a7.2 7.2 0 0 0 0-10.4z"/><path d="M17.4 5.6a8.8 8.8 0 0 1 0 12.8l1.5 1.5a10.9 10.9 0 0 0 0-15.8z"/></symbol>
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4a9.5 9.5 0 0 0-8.1 14.5L2.4 21.6l4.8-1.4A9.5 9.5 0 1 0 12 2.4zm0 2.2a7.3 7.3 0 1 1-3.8 13.5l-.4-.2-2.6.7.7-2.5-.3-.4A7.3 7.3 0 0 1 12 4.6z"/><path d="M9.4 7.8c-.2-.5-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.6.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3-1.6-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6 6 0 0 1-1.8-1.1 6.6 6.6 0 0 1-1.2-1.6c-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5z"/></symbol>
+        <symbol id="icon-youtube" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8zM10.2 15.1V8.9l5.1 3.1z"/></symbol>
+    </defs>
+</svg>
+
+    <form method="post" action="./PressReleasePage.aspx?PRID=2188992&amp;reg=48&amp;lang=2" id="form1">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+
+<script src="/ScriptResource.axd?d=x6wALODbMJK5e0eRC_p1LdIxBJXt0U_WW5GWfJqHAqo6frgCmGRfEywglicTersO2OKrFhK1gAIp0Wk2al2YrpdR3uWqH6f4nfjBsCyRUfTUUVmb0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a8613aea7%3af9cec9bc%3a3202a5a2%3aab09e3fe%3a87104b7c%3a720a52bf%3a589eaa30%3aa67c2700%3abe6fb298" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="8BtV13C/ej2UuqzwZw6d2ucbTvHhJsWuyoKS633rbVxqLsnoaiaYDHtzPj5c92mMjX1yzAalqdiTUVTUtejzv9Jc69YFvTB1qIF2KJ4FimlvVU83jDhW3L5605EfSeLluXH43IxrgNkN2Mr/vBD5MC46NIT24CTA9pxL+GxXdhec8pIc6jWZtaIAZnVmWT/dKonpGyks0nFEaFNRw3lQRe5QlWc9dvqqe/7Bh6NynRli1VUyYK9JR3rbH6njk6KlcFG/srHLy/X+mRAz3ac/CJlH0iE=" />
+        
+        <div id="templateCss"></div>
+        
+        <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+        <div class="container" style='margin-bottom: 50px;'>
+            <div id="accessories">
+                
+                <div class="pull-right" style="display: flex">
+                    <div id="voll"></div>
+                    <div id="vollDT"></div>
+                    
+
+<span class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</span>
+                </div>
+            </div>
+            <input type="hidden" name="hydpermid" id="hydpermid" value="2188992" />
+            
+
+            <div class="innner-page-main-about-us-content-right-part">
+                <div id="MinistryName" class="MinistryNameSubhead text-center">
+                    Ministry of Commerce & Industry
+                </div>
+                <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2026/sep/ph_9768_20260902_10000501.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+                <div class="text-center event-heading-background">
+                    
+                    <h1 id="Titleh2">
+                        The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025
+                    </h1>
+                    <h3 id="Subtitleh3">
+                        <span id="ltrSubtitle"><br/>Shri Goyal Calls for Strong Centre–State Collaboration and Effective Implementation of Industrial Incentives to Boost Growth<br/><br/>Shri Piyush Goyal Urges States and Industries to Adopt Sustainable Manufacturing Aligned with PM’s “Zero Effect, Zero Defect” Vision<br/><br/>Shri Piyush Goyal Highlights Government Support for Fisheries Sector, Emphasizes Innovation, Skill Development, and Inclusive Growth Through New FTAs</span>
+                    </h3>
+                </div>
+
+                <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                    Posted On:
+                              11 NOV 2025 8:36PM by PIB Delhi
+                </div>
+                
+                <div class='pt20'>
+                </div>
+                <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                
+
+                <!-- Release content wrapper for client-side zero-reflow word count -->
+                <div id="pibReleaseBody">
+                    <p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Union Minister of Commerce and Industry, Shri Piyush Goyal, emphasized the Central Government’s commitment to supporting States and Union Territories in ensuring that high-quality products reach consumers across the country while addressing the second edition of Udyog Samagam 2025, organised by the Department for Promotion of Industry and Internal Trade (DPIIT).</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Minister stated that Quality Control Orders (QCOs) are being implemented to make superior-quality products available to consumers and to promote a culture of quality in manufacturing. Citing the success of QCOs on toys and plywood, he noted that such measures have strengthened Indian industries while curbing substandard imports.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The conference brought together Industries and Commerce Ministers from 14 States and Union Territories, senior officials, and industry representatives to review progress under the Business Reforms Action Plan (BRAP) 2024 and felicitate the best-performing States and UTs.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Minister highlighted the importance of strong Centre–State collaboration in driving industrial growth. He said that every State in India has developed good practices that can serve as models for others, and by learning from one another, the nation can accelerate industrial progress. Shri Goyal encouraged States and Union Territories to establish third-party mechanisms to effectively implement and monitor industrial incentives, ensuring timely disbursement and execution to maintain industry confidence.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">He underscored that a strong partnership between industry and government is vital for economic growth, emphasizing law and order, time-bound approvals, and minimal physical interface. Appreciating Madhya Pradesh’s model of providing ready-built industrial facilities at nominal rates—which has generated lakhs of jobs—he urged other States to adopt similar approaches. He also suggested the use of escrow and RBI-linked mechanisms for incentive payments, competitive power tariffs, and self-certification systems to build trust and improve ease of doing business.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Reiterating that sustainability is the key to future growth, Shri Goyal called for the active participation of States and Union Territories in ensuring that all industrial efforts align with environmental protection. Referring to Prime Minister Narendra Modi’s motto of “Zero Effect, Zero Defect,” he urged industries to adopt sustainable manufacturing practices that minimize environmental impact while maintaining the highest standards of quality.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Citing the example of the fisheries sector under the PM Matsya Sampada Yojana, Shri Goyal noted the government’s efforts in supporting cold storage and cooperative-based purchase of deep-sea vessels through financial assistance. He further encouraged States to focus on innovation, skill development, women’s participation, startups, and deep-tech enterprises. He added that India’s new Free Trade Agreements with developed nations will safeguard the interests of farmers, manufacturers, and all stakeholders while opening new avenues for growth.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The programme opened with remarks by Secretary, DPIIT, Shri Amardeep Singh Bhatia, who noted that BRAP has evolved into one of the most comprehensive sub-national reform exercises globally and that the reform process has deepened across the country under BRAP 2024. The event was also addressed by the Chief Minister of Madhya Pradesh as well as industry and State leaders, who acknowledged the progress achieved through collaborative reform efforts.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">At Udyog Samagam 2025, States and UTs were felicitated for excellence under BRAP 2024 across 25 reform areas, showcasing the depth and impact of reforms across domains such as Business Entry, Construction Permits, Labour Regulation Enablers, Land Administration, Environment Registration, Utility Permits, Services Sector, and Sector-Specific Services. Uttarakhand and Punjab were recognised as top achievers across five reform areas. Andhra Pradesh, West Bengal, Jammu & Kashmir, Kerala, Tamil Nadu, Madhya Pradesh, Telangana, Rajasthan, Jharkhand, and Chhattisgarh were top achievers across four reform areas. Maharashtra, Assam, Himachal Pradesh, Haryana, Odisha, and Uttar Pradesh were recognised as top achievers across three reform areas. Gujarat, Karnataka, and Tripura were top achievers across two reform areas, while Goa and Meghalaya were recognised across one reform area. DPIIT also presented the BRAP 2024 State Categories reflecting the broader Ease of Doing Business and compliance landscape.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Under Category Y (States/UTs with established business systems), fast movers were Odisha, Punjab, Andhra Pradesh, Rajasthan, Madhya Pradesh, Kerala, Assam, Uttarakhand, Jammu & Kashmir, and Karnataka. Aspirers under Category Y included West Bengal, Tamil Nadu, Maharashtra, Gujarat, Uttar Pradesh, Chhattisgarh, Haryana, Telangana, Jharkhand, Himachal Pradesh, Goa, Bihar, and Delhi. Under Category X (North-Eastern States and UTs with developing systems), all States/UTs were classified as Aspirers, namely Tripura, Meghalaya, Chandigarh, Dadra & Nagar Haveli and Daman & Diu, Andaman & Nicobar Islands, Puducherry, Nagaland, Arunachal Pradesh, Mizoram, Sikkim, Lakshadweep, and Manipur. “Top Achiever” refers to States and UTs securing a score above 90 percent, indicating consistent implementation of reforms, fully functional systems, and strong user validation.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">BRAP 2024 covered 434 reform points across Central and State domains and was supported by one of the largest national feedback exercises. 5,83,365 businesses were contacted, and 1,33,776 interviews were completed across 34 States and UTs. These included 11,201 face-to-face responses, 1,15,128 telephonic interactions, and 7,447 SMS and email-based responses, along with 30 Focus Group Discussions. This extensive outreach ensured transparency and reflected ground-level experience of service delivery and the reforms implemented by States.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">BRAP 2024 assessment followed a structured methodology combining evidence-based verification and user feedback. States and UTs submitted complete evidence of implementation, including operational system URLs and notifications. User data for services availed during the defined period formed the basis of the national feedback survey, conducted through telephone, digital, focus group discussions, and face-to-face interviews. The scoring framework applied 70 percent weightage to user feedback and 30 percent to evidence, with NA1 (eliminated regulation) awarded full marks and NA2 (not applicable) excluded from scoring. Defined thresholds ensured that only reforms observed in actual practice were considered implemented.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">*** </span></span></p>
+
+<p style="text-align:justify"><strong><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">AD/ NS/ SA/IB</span></span></strong></p>
+
+                </div>
+
+                <div id="reel_pic">
+                </div>
+
+                <br />
+                <span id="ReleaseId">(Release ID: 2188992)</span>
+                <span id="lblViews">Visitor Counter : 4850</span>
+                <div>
+                    
+                </div>
+                
+
+                <span id="lblRefPhoto"></span>
+
+                <div class="BackgroundRelease">
+                    
+                </div>
+                <div>
+                    
+                </div>
+                <div class="ReleaseLang">Read this release in: 
+                
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2189098' target="_blank">
+                            Urdu </a>
+                    
+                        ,
+                    
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2189044' target="_blank">
+                            हिन्दी </a>
+                    
+                </div>
+
+                <div class="RelTag">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="clear">
+                </div>
+
+                <!-- DBIM 3.0 Option 4: Separator Line with Left Share Rail & Right Reading Metrics -->
+                <div class="pr-share pr-share--footer" role="region" aria-label="Share and reading details">
+                    <div class="pr-share__left">
+                        <span class="pr-share__label" aria-hidden="true">Share</span>
+                        <ul class="pr-share__list">
+                            <li><a class="pr-share__btn pr-share__btn--facebook"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2188992"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on Facebook">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-facebook" xlink:href="#icon-facebook"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--twitter"
+                                href="https://twitter.com/intent/tweet?url=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2188992"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on X">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-twitter" xlink:href="#icon-twitter"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--whatsapp"
+                                href="https://api.whatsapp.com/send?text=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2188992"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on WhatsApp">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-whatsapp" xlink:href="#icon-whatsapp"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--linkedin"
+                                href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2188992"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on LinkedIn">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-linkedin" xlink:href="#icon-linkedin"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--mail"
+                                href="mailto:?subject=Press+release+from+PIB&amp;body=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2188992"
+                                aria-label="Share by email">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-mail" xlink:href="#icon-mail"></use>
+                                </svg>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="pr-reading-meta" id="prReadingMeta" aria-label="Reading statistics">
+                        <span class="pr-reading-meta__item">
+                            <!-- Modern Document / Word Count Icon -->
+                            <svg class="pr-reading-meta__icon" width="18" height="18" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                            </svg>
+                            <span id="prWordCount">-- words</span>
+                        </span>
+
+                        <span class="pr-reading-meta__divider" aria-hidden="true">|</span>
+
+                        <span class="pr-reading-meta__item">
+                            <!-- Modern Precision Clock / Read Time Icon -->
+                            <svg class="pr-reading-meta__icon" width="18" height="18" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+                            </svg>
+                            <span id="prReadTime">-- min read</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div id="RelLink" class="RelLink">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <center>
+                    
+                </center>
+            </div>
+
+            <div id="update12">
+	
+                    
+                    <input type="hidden" name="Hidden" id="Hidden" />
+                    <div id="P_CategoryManagement" class="ModalWindow" style="display: none">
+		
+                        <div>
+                            <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                        </div>
+                        <div id="description">
+                        </div>
+                        <div class="text-center">
+                            <h2>
+                                
+                                <br>
+                                
+                            </h2>
+                        </div>
+                        <br />
+                        <div class="clear">
+                        </div>
+                        
+                    
+	</div>
+                
+</div>
+        </div>
+
+        <div id="PdfDiv" style="display: none;">
+            <table width="100%">
+                <tr>
+                    <td style="font-weight: 200; text-align: center">
+                        Ministry of Commerce & Industry
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                            The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                            <div style='height:30px;width:100%;'></div>Shri Goyal Calls for Strong Centre–State Collaboration and Effective Implementation of Industrial Incentives to Boost Growth<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>Shri Piyush Goyal Urges States and Industries to Adopt Sustainable Manufacturing Aligned with PM’s “Zero Effect, Zero Defect” Vision<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>Shri Piyush Goyal Highlights Government Support for Fisheries Sector, Emphasizes Innovation, Skill Development, and Inclusive Growth Through New FTAs
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="text-align: center; font-size: 14px;">
+                            Posted On:
+                                          11 NOV 2025 8:36PM by PIB Delhi
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                            <p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Union Minister of Commerce and Industry, Shri Piyush Goyal, emphasized the Central Government’s commitment to supporting States and Union Territories in ensuring that high-quality products reach consumers across the country while addressing the second edition of Udyog Samagam 2025, organised by the Department for Promotion of Industry and Internal Trade (DPIIT).</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Minister stated that Quality Control Orders (QCOs) are being implemented to make superior-quality products available to consumers and to promote a culture of quality in manufacturing. Citing the success of QCOs on toys and plywood, he noted that such measures have strengthened Indian industries while curbing substandard imports.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The conference brought together Industries and Commerce Ministers from 14 States and Union Territories, senior officials, and industry representatives to review progress under the Business Reforms Action Plan (BRAP) 2024 and felicitate the best-performing States and UTs.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Minister highlighted the importance of strong Centre–State collaboration in driving industrial growth. He said that every State in India has developed good practices that can serve as models for others, and by learning from one another, the nation can accelerate industrial progress. Shri Goyal encouraged States and Union Territories to establish third-party mechanisms to effectively implement and monitor industrial incentives, ensuring timely disbursement and execution to maintain industry confidence.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">He underscored that a strong partnership between industry and government is vital for economic growth, emphasizing law and order, time-bound approvals, and minimal physical interface. Appreciating Madhya Pradesh’s model of providing ready-built industrial facilities at nominal rates—which has generated lakhs of jobs—he urged other States to adopt similar approaches. He also suggested the use of escrow and RBI-linked mechanisms for incentive payments, competitive power tariffs, and self-certification systems to build trust and improve ease of doing business.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Reiterating that sustainability is the key to future growth, Shri Goyal called for the active participation of States and Union Territories in ensuring that all industrial efforts align with environmental protection. Referring to Prime Minister Narendra Modi’s motto of “Zero Effect, Zero Defect,” he urged industries to adopt sustainable manufacturing practices that minimize environmental impact while maintaining the highest standards of quality.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Citing the example of the fisheries sector under the PM Matsya Sampada Yojana, Shri Goyal noted the government’s efforts in supporting cold storage and cooperative-based purchase of deep-sea vessels through financial assistance. He further encouraged States to focus on innovation, skill development, women’s participation, startups, and deep-tech enterprises. He added that India’s new Free Trade Agreements with developed nations will safeguard the interests of farmers, manufacturers, and all stakeholders while opening new avenues for growth.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The programme opened with remarks by Secretary, DPIIT, Shri Amardeep Singh Bhatia, who noted that BRAP has evolved into one of the most comprehensive sub-national reform exercises globally and that the reform process has deepened across the country under BRAP 2024. The event was also addressed by the Chief Minister of Madhya Pradesh as well as industry and State leaders, who acknowledged the progress achieved through collaborative reform efforts.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">At Udyog Samagam 2025, States and UTs were felicitated for excellence under BRAP 2024 across 25 reform areas, showcasing the depth and impact of reforms across domains such as Business Entry, Construction Permits, Labour Regulation Enablers, Land Administration, Environment Registration, Utility Permits, Services Sector, and Sector-Specific Services. Uttarakhand and Punjab were recognised as top achievers across five reform areas. Andhra Pradesh, West Bengal, Jammu & Kashmir, Kerala, Tamil Nadu, Madhya Pradesh, Telangana, Rajasthan, Jharkhand, and Chhattisgarh were top achievers across four reform areas. Maharashtra, Assam, Himachal Pradesh, Haryana, Odisha, and Uttar Pradesh were recognised as top achievers across three reform areas. Gujarat, Karnataka, and Tripura were top achievers across two reform areas, while Goa and Meghalaya were recognised across one reform area. DPIIT also presented the BRAP 2024 State Categories reflecting the broader Ease of Doing Business and compliance landscape.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Under Category Y (States/UTs with established business systems), fast movers were Odisha, Punjab, Andhra Pradesh, Rajasthan, Madhya Pradesh, Kerala, Assam, Uttarakhand, Jammu & Kashmir, and Karnataka. Aspirers under Category Y included West Bengal, Tamil Nadu, Maharashtra, Gujarat, Uttar Pradesh, Chhattisgarh, Haryana, Telangana, Jharkhand, Himachal Pradesh, Goa, Bihar, and Delhi. Under Category X (North-Eastern States and UTs with developing systems), all States/UTs were classified as Aspirers, namely Tripura, Meghalaya, Chandigarh, Dadra & Nagar Haveli and Daman & Diu, Andaman & Nicobar Islands, Puducherry, Nagaland, Arunachal Pradesh, Mizoram, Sikkim, Lakshadweep, and Manipur. “Top Achiever” refers to States and UTs securing a score above 90 percent, indicating consistent implementation of reforms, fully functional systems, and strong user validation.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">BRAP 2024 covered 434 reform points across Central and State domains and was supported by one of the largest national feedback exercises. 5,83,365 businesses were contacted, and 1,33,776 interviews were completed across 34 States and UTs. These included 11,201 face-to-face responses, 1,15,128 telephonic interactions, and 7,447 SMS and email-based responses, along with 30 Focus Group Discussions. This extensive outreach ensured transparency and reflected ground-level experience of service delivery and the reforms implemented by States.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">BRAP 2024 assessment followed a structured methodology combining evidence-based verification and user feedback. States and UTs submitted complete evidence of implementation, including operational system URLs and notifications. User data for services availed during the defined period formed the basis of the national feedback survey, conducted through telephone, digital, focus group discussions, and face-to-face interviews. The scoring framework applied 70 percent weightage to user feedback and 30 percent to evidence, with NA1 (eliminated regulation) awarded full marks and NA2 (not applicable) excluded from scoring. Defined thresholds ensured that only reforms observed in actual practice were considered implemented.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">*** </span></span></p>
+
+<p style="text-align:justify"><strong><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">AD/ NS/ SA/IB</span></span></strong></p>
+
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                            (Release ID: 2188992)
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="clearfix">
+        </div>
+
+        <div class="section1">
+            <div id="frst_t">
+                <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992' target='_blank'><li class='fb_b'   ></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992&text=The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025' target='_blank'><li class='twitter_r'  > </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992' target='_blank'><li class='whatsapp_r'  ></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992&title=The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ></li></a></ul></div></div>
+            </div>
+            <div id="second_t">
+                <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992' target='_blank'><li class='fb_b'   ></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992&text=The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025' target='_blank'><li class='twitter_r'  > </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992' target='_blank'><li class='whatsapp_r'  ></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2188992&title=The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ></li></a></ul></div></div>
+            </div>
+        </div>
+        <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="The Union Minister of Commerce and Industry, Shri Piyush Goyal Reaffirms Government’s Commitment to Promoting Quality Manufacturing and Implementation of QCOs at Udyog Samagam 2025" />
+        <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" value="&lt;br/>Shri Goyal Calls for Strong Centre–State Collaboration and Effective Implementation of Industrial Incentives to Boost Growth&lt;br/>&lt;br/>Shri Piyush Goyal Urges States and Industries to Adopt Sustainable Manufacturing Aligned with PM’s “Zero Effect, Zero Defect” Vision&lt;br/>&lt;br/>Shri Piyush Goyal Highlights Government Support for Fisheries Sector, Emphasizes Innovation, Skill Development, and Inclusive Growth Through New FTAs" />
+        <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Union Minister of Commerce and Industry, Shri Piyush Goyal, emphasized the Central Government’s commitment to supporting States and Union Territories in ensuring that high-quality products reach consumers across the country while addressing the second edition of Udyog Samagam 2025, organised by the Department for Promotion of Industry and Internal Trade (DPIIT).&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Minister stated that Quality Control Orders (QCOs) are being implemented to make superior-quality products available to consumers and to promote a culture of quality in manufacturing. Citing the success of QCOs on toys and plywood, he noted that such measures have strengthened Indian industries while curbing substandard imports.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The conference brought together Industries and Commerce Ministers from 14 States and Union Territories, senior officials, and industry representatives to review progress under the Business Reforms Action Plan (BRAP) 2024 and felicitate the best-performing States and UTs.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Minister highlighted the importance of strong Centre–State collaboration in driving industrial growth. He said that every State in India has developed good practices that can serve as models for others, and by learning from one another, the nation can accelerate industrial progress. Shri Goyal encouraged States and Union Territories to establish third-party mechanisms to effectively implement and monitor industrial incentives, ensuring timely disbursement and execution to maintain industry confidence.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>He underscored that a strong partnership between industry and government is vital for economic growth, emphasizing law and order, time-bound approvals, and minimal physical interface. Appreciating Madhya Pradesh’s model of providing ready-built industrial facilities at nominal rates—which has generated lakhs of jobs—he urged other States to adopt similar approaches. He also suggested the use of escrow and RBI-linked mechanisms for incentive payments, competitive power tariffs, and self-certification systems to build trust and improve ease of doing business.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Reiterating that sustainability is the key to future growth, Shri Goyal called for the active participation of States and Union Territories in ensuring that all industrial efforts align with environmental protection. Referring to Prime Minister Narendra Modi’s motto of “Zero Effect, Zero Defect,” he urged industries to adopt sustainable manufacturing practices that minimize environmental impact while maintaining the highest standards of quality.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Citing the example of the fisheries sector under the PM Matsya Sampada Yojana, Shri Goyal noted the government’s efforts in supporting cold storage and cooperative-based purchase of deep-sea vessels through financial assistance. He further encouraged States to focus on innovation, skill development, women’s participation, startups, and deep-tech enterprises. He added that India’s new Free Trade Agreements with developed nations will safeguard the interests of farmers, manufacturers, and all stakeholders while opening new avenues for growth.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The programme opened with remarks by Secretary, DPIIT, Shri Amardeep Singh Bhatia, who noted that BRAP has evolved into one of the most comprehensive sub-national reform exercises globally and that the reform process has deepened across the country under BRAP 2024. The event was also addressed by the Chief Minister of Madhya Pradesh as well as industry and State leaders, who acknowledged the progress achieved through collaborative reform efforts.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>At Udyog Samagam 2025, States and UTs were felicitated for excellence under BRAP 2024 across 25 reform areas, showcasing the depth and impact of reforms across domains such as Business Entry, Construction Permits, Labour Regulation Enablers, Land Administration, Environment Registration, Utility Permits, Services Sector, and Sector-Specific Services. Uttarakhand and Punjab were recognised as top achievers across five reform areas. Andhra Pradesh, West Bengal, Jammu &amp; Kashmir, Kerala, Tamil Nadu, Madhya Pradesh, Telangana, Rajasthan, Jharkhand, and Chhattisgarh were top achievers across four reform areas. Maharashtra, Assam, Himachal Pradesh, Haryana, Odisha, and Uttar Pradesh were recognised as top achievers across three reform areas. Gujarat, Karnataka, and Tripura were top achievers across two reform areas, while Goa and Meghalaya were recognised across one reform area. DPIIT also presented the BRAP 2024 State Categories reflecting the broader Ease of Doing Business and compliance landscape.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Under Category Y (States/UTs with established business systems), fast movers were Odisha, Punjab, Andhra Pradesh, Rajasthan, Madhya Pradesh, Kerala, Assam, Uttarakhand, Jammu &amp; Kashmir, and Karnataka. Aspirers under Category Y included West Bengal, Tamil Nadu, Maharashtra, Gujarat, Uttar Pradesh, Chhattisgarh, Haryana, Telangana, Jharkhand, Himachal Pradesh, Goa, Bihar, and Delhi. Under Category X (North-Eastern States and UTs with developing systems), all States/UTs were classified as Aspirers, namely Tripura, Meghalaya, Chandigarh, Dadra &amp; Nagar Haveli and Daman &amp; Diu, Andaman &amp; Nicobar Islands, Puducherry, Nagaland, Arunachal Pradesh, Mizoram, Sikkim, Lakshadweep, and Manipur. “Top Achiever” refers to States and UTs securing a score above 90 percent, indicating consistent implementation of reforms, fully functional systems, and strong user validation.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>BRAP 2024 covered 434 reform points across Central and State domains and was supported by one of the largest national feedback exercises. 5,83,365 businesses were contacted, and 1,33,776 interviews were completed across 34 States and UTs. These included 11,201 face-to-face responses, 1,15,128 telephonic interactions, and 7,447 SMS and email-based responses, along with 30 Focus Group Discussions. This extensive outreach ensured transparency and reflected ground-level experience of service delivery and the reforms implemented by States.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>BRAP 2024 assessment followed a structured methodology combining evidence-based verification and user feedback. States and UTs submitted complete evidence of implementation, including operational system URLs and notifications. User data for services availed during the defined period formed the basis of the national feedback survey, conducted through telephone, digital, focus group discussions, and face-to-face interviews. The scoring framework applied 70 percent weightage to user feedback and 30 percent to evidence, with NA1 (eliminated regulation) awarded full marks and NA2 (not applicable) excluded from scoring. Defined thresholds ensured that only reforms observed in actual practice were considered implemented.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>*** &lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;strong>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>AD/ NS/ SA/IB&lt;/span>&lt;/span>&lt;/strong>&lt;/p>
+" />
+        <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+        </script>
+        <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+                  function CleanHtml(html) {
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+        </script>
+        <script type="text/javascript">
+                  $(document).ready(function () {
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                        }
+                  });
+        </script>
+        <style type="text/css">
+            @media print {
+                .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                    display: none !important;
+                }
+            }
+
+            .f_vl {
+                padding-right: 30px;
+                font-size: 17px;
+                cursor: pointer;
+            }
+
+            .log_oo {
+                display: flex;
+                justify-content: space-between;
+            }
+
+                .log_oo img {
+                    width: 150px;
+                }
+
+            .sticky-social_mb {
+                position: fixed;
+                bottom: 0px;
+                padding: 0px;
+                margin: 0px;
+                width: 100%;
+            }
+
+            .social_mb {
+                list-style: none;
+                display: flex;
+                width: 100%;
+                margin-bottom: -8px;
+            }
+
+                .social_mb a {
+                    padding: 8px 0px;
+                    font-size: 30px;
+                    transition: all 0.8s ease-in-out;
+                    width: 20% !important;
+                    text-align: center;
+                }
+        </style>
+        <style type="text/css">
+            .section1 {
+                position: relative;
+                padding: 10px 0px;
+                width: 100%;
+            }
+
+            .sticky-social {
+                position: fixed;
+                top: 20px;
+                left: 0px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .social {
+                list-style: none;
+            }
+
+                .social a li {
+                    padding: 8px 12px;
+                    font-size: 25px;
+                    transition: all 0.8s ease-in-out;
+                }
+
+                    .social a li:hover {
+                        margin-right: -30px;
+                        box-shadow: 2px 5px 10px grey;
+                    }
+
+                        .social a li:hover .fa {
+                            margin-left: 20px;
+                        }
+
+            .fb_b {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .twitter_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .whatsapp_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .fa-envelope_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .fa-linkedin_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+        </style>
+        <style type="text/css">
+            @media only screen and (max-device-width: 767px) {
+                p span img {
+                    max-width: 90% !important;
+                    height: auto !important;
+                }
+
+                p img {
+                    max-width: 90% !important;
+                    height: auto !important;
+                }
+
+                h2 {
+                    font-size: var(--dbim-h2, 20px);
+                    font-weight: 600 !important;
+                }
+
+                h3 {
+                    font-size: var(--dbim-h3, 16px);
+                    font-weight: 600 !important;
+                }
+            }
+        </style>
+        <style type="text/css">
+            .film-roll-badge {
+                position: absolute;
+                top: 82%;
+                right: 20px;
+                width: 230px;
+                height: 70px;
+                background: repeating-linear-gradient( to right, var(--dbim-green-key, #0F5757) 0px, var(--dbim-green-key, #0F5757) 18px, var(--dbim-text, #150202) 18px, var(--dbim-text, #150202) 36px );
+                border-top: 8px solid var(--dbim-green-key, #0F5757);
+                border-bottom: 8px solid var(--dbim-green-key, #0F5757);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                animation: moveFilm 8s linear infinite;
+                z-index: 10;
+            }
+
+                .film-roll-badge::before,
+                .film-roll-badge::after {
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 10px;
+                    background: repeating-linear-gradient( to right, var(--dbim-green-key, #0F5757) 0px, var(--dbim-green-key, #0F5757) 10px, #fff 10px, #fff 20px );
+                    left: 0;
+                    z-index: 2;
+                }
+
+                .film-roll-badge::before {
+                    top: -4px;
+                }
+
+                .film-roll-badge::after {
+                    bottom: -4px;
+                }
+
+            .film-roll-inner {
+                position: relative;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: flicker 2s infinite ease-in-out;
+            }
+
+            .countdown-text {
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: #fff;
+                text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                white-space: nowrap;
+            }
+
+            @keyframes moveFilm {
+                0% {
+                    background-position: 0 0;
+                }
+
+                100% {
+                    background-position: 120px 0;
+                }
+            }
+
+            @keyframes flicker {
+                0%, 100% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.9;
+                }
+
+                25% {
+                    opacity: 0.95;
+                }
+
+                75% {
+                    opacity: 0.85;
+                }
+            }
+
+            @media (max-width: 1500px) {
+                .film-roll-badge {
+                    top: 68%;
+                    right: 18px;
+                    height: 65px;
+                    font-size: 0.85rem;
+                }
+
+                .press-section {
+                    margin-top: 35px;
+                }
+            }
+
+            @media (max-width: 992px) {
+                .film-roll-badge {
+                    top: 52%;
+                    right: 10px;
+                    width: 200px;
+                    height: 60px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .film-roll-badge {
+                    top: 56%;
+                    right: 10px;
+                    width: 124px;
+                    height: 55px;
+                }
+
+                .countdown-text {
+                    font-size: 0.9rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .film-roll-badge {
+                    top: 59%;
+                    right: 5px;
+                    height: 50px;
+                }
+
+                .countdown-text {
+                    font-size: 0.85rem;
+                }
+            }
+        </style>
+        <script type="text/javascript">
+                  const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                  const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+                  const countdownElement = document.getElementById("countdown");
+
+                  if (countdownElement) {
+                        const interval = setInterval(() => {
+                              const now = new Date().getTime();
+
+                              if (now < festivalStart) {
+                                    const diff = festivalStart - now;
+                                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                                    countdownElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to go`;
+                              } else if (now >= festivalStart && now <= festivalEnd) {
+                                    const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                                    countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                              } else {
+                                    countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+                                    const elements = document.querySelectorAll('.film-roll-badge');
+                                    elements.forEach(el => el.style.width = "350px");
+                                    clearInterval(interval);
+                              }
+                        }, 1000);
+                  }
+        </script>
+        <script type="text/javascript">
+                  const miffStart = new Date("2026-06-15T00:00:00").getTime();
+                  const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+                  const miffElement = document.getElementById("miff");
+
+                  if (miffElement) {
+                        const miffInterval = setInterval(() => {
+                              const now = new Date().getTime();
+
+                              if (now < miffStart) {
+                                    const diff = miffStart - now;
+                                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                    miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+                              } else if (now >= miffStart && now <= miffEnd) {
+                                    const dayNumber = Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+                                    miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                              } else {
+                                    miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+                                    document.querySelectorAll('.film-roll-badge').forEach(el => el.style.width = "350px");
+                                    clearInterval(miffInterval);
+                              }
+                        }, 1000);
+                  }
+        </script>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="cplNEsRTusNDQjfO8G4GjdOPeY00nsrb_5E1mAFF2xOTXvldS_5WiFHGgsq4PfwCtvg7zO9ZlbFwdHwm4i-ngsDxJR-ucNFP"/></form>
+    
+
+<script type="application/json" id="pibConsentConfig">{"ga4Id":"G-Q414Y0X6EE,G-QJJ6LZ8LHV","policyUrl":"/CookiePolicy.aspx","text":{"bannerLabel":"Cookie consent","title":"Cookies on this website","body":"We use essential cookies to make this website work. We also set analytics cookies when you arrive, so we can see how the site is used and improve it - you can switch these off below or at any time from the Cookie Policy page. Cookies from embedded social media content are set only if you allow them.","policyLink":"Read our Cookie Policy","accept":"Accept all","reject":"Reject optional","customize":"Customise","prefsTitle":"Cookie preferences","prefsIntro":"Choose which cookies this website may set. Essential cookies cannot be switched off because the site does not work without them. Analytics cookies are on unless you turn them off. Social media cookies stay off until you allow them. You can change these choices at any time from the Cookie Policy page.","essentialName":"Essential cookies","essentialDesc":"Needed for the site to function. These remember your session, your language and region, your text size and colour theme, and verify the security check on forms. They are always on.","analyticsName":"Analytics cookies","analyticsDesc":"Help us understand how visitors use the site - which pages are read and how long people stay - so it can be improved. The information is collected in a form that does not directly identify you. These are on when you arrive; switching them off here stops them and deletes the ones already set.","socialName":"Social media cookies","socialDesc":"Set by content embedded from X, Facebook and YouTube, such as timelines and videos. These platforms may use them to track you across websites. They stay off until you allow them.","save":"Save preferences","cancel":"Cancel"}}</script>
+<script type="text/javascript" src='/js/consent.js?v=10'></script>
+
+<script type="text/javascript" src='/js/consent-embeds.js?v=10'></script>
+
+
+    <!-- Minimal O(N) Time and O(1) Auxiliary Space Word Count & Read Time Calculation -->
+    <script type="text/javascript">
+            (function () {
+                  function calculateReadingStats() {
+                        var bodyEl = document.getElementById("pibReleaseBody");
+                        if (!bodyEl) return;
+
+                        // textContent extracts text without triggering expensive layout/reflow computations
+                        var text = bodyEl.textContent || "";
+                        var words = 0;
+                        var inWord = false;
+
+                        // O(N) single pass character code scan: achieves O(1) space with zero array allocations
+                        for (var i = 0, len = text.length; i < len; i++) {
+                              var code = text.charCodeAt(i);
+                              // Delimits on ASCII whitespace, control characters, tabs, newlines, and non-breaking spaces (160)
+                              if (code <= 32 || code === 160) {
+                                    inWord = false;
+                              } else if (!inWord) {
+                                    inWord = true;
+                                    words++;
+                              }
+                        }
+
+                        // Standard 250 WPM reading speed (e.g., 612 words yields 2 min read)
+                        var minutes = Math.max(1, Math.round(words / 250));
+
+                        var elWords = document.getElementById("prWordCount");
+                        var elTime = document.getElementById("prReadTime");
+
+                        if (elWords) elWords.textContent = words + (words === 1 ? " word" : " words");
+                        if (elTime) elTime.textContent = minutes + " min read";
+                  }
+
+                  if (document.readyState === "loading") {
+                        document.addEventListener("DOMContentLoaded", calculateReadingStats);
+                  } else {
+                        calculateReadingStats();
+                  }
+            })();
+    </script>
+
+    <script type="text/javascript">
+            (function () {
+                  try {
+                        if (window.self === window.top) { return; }
+                  } catch (e) { return; }
+                  var s = document.createElement("style");
+                  s.textContent = ".sticky-social, .sticky-social_mb { display: none !important; }";
+                  (document.head || document.documentElement).appendChild(s);
+            }());
+    </script>
+</body>
+</html>

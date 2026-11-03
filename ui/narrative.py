@@ -27,6 +27,16 @@ def fmt(v, unit: str = "") -> str:
     if v is None or (isinstance(v, float) and math.isnan(v)):
         return "n/a"
     u = unit.lower()
+    if u.startswith("category:"):  # ordinal government category, e.g. 'category: 1=Aspirer, 2=Fast Mover, ...'
+        labels = dict(x.strip().split("=", 1) for x in unit.split(":", 1)[1].split(","))
+        lo, hi = math.floor(v), math.ceil(v)
+        if lo != hi:  # a median between two categories
+            return f"between {labels.get(str(lo), lo)} and {labels.get(str(hi), hi)}"
+        return labels.get(str(lo), f"{v:.0f}")
+    if u.startswith("of 25"):
+        return (f"{v:.0f}" if v == int(v) else f"{v:.1f}") + " of 25"
+    if u.startswith("score 0-100"):
+        return f"{v:.1f} / 100"
     if u.startswith("rs crore"):
         return f"₹{indian(v)} cr"
     if u.startswith("rs") and "day" in u:
@@ -44,6 +54,11 @@ def fmt(v, unit: str = "") -> str:
     return f"{v:.1f}" if abs(v) >= 10 else f"{v:.2f}"
 
 
+SOURCE_TAGS = {"dpiit_brap_2024": "DPIIT BRAP 2024", "leads_2025": "LEADS 2025", "niti_epi_2024": "NITI EPI 2024",
+               "startup_ranking_5": "DPIIT Startup Ranking 5.0", "aishe_2023_24": "AISHE 2023-24",
+               "plfs_annual_2023_24": "PLFS 2023-24 T8"}
+
+
 def source_tag(row) -> str:
     f = str(row.source_file).split(";")[0]
     tbl = ""
@@ -55,6 +70,8 @@ def source_tag(row) -> str:
         tbl = "TRAI PIR"
     elif "registry" in f:
         tbl = "Forecast model"
+    else:
+        tbl = next((v for k, v in SOURCE_TAGS.items() if k in f), "")
     if row.quality == "derived":
         tbl = (tbl + ", derived") if tbl else "derived"
     return f"{tbl} · {row.period}".strip(" ·")

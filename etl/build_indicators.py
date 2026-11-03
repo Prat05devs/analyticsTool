@@ -21,7 +21,7 @@ import pandas as pd
 from etl.common import CUR, FACT_INDICATOR_COLS, WAREHOUSE, fy_label, fy_start, write_parquet
 from etl.states import dim_state
 
-SOURCES = ["rbi", "hces", "trai", "secondary"]
+SOURCES = ["rbi", "hces", "trai", "secondary", "policy"]
 
 
 def load_sources() -> pd.DataFrame:
@@ -109,6 +109,7 @@ def derive(ind: pd.DataFrame, econ: pd.DataFrame) -> pd.DataFrame:
         ("govt_beds_total", "govt_beds_per_lakh_pop", 1e5, "per lakh people", "snapshot"),
         ("health_staff_chc_specialists_in_position", "specialists_per_lakh_pop", 1e5, "per lakh people", "year"),
         ("health_staff_phc_doctors_in_position", "phc_doctors_per_lakh_pop", 1e5, "per lakh people", "year"),
+        ("graduates_outturn", "graduates_per_lakh_pop", 1e5, "per lakh people", "fy"),  # AISHE 2023-24 pass-outs
     ]
     for src, code, scale, unit, kind in ratio_specs:
         sub = ind[(ind.feature_code == src) & ind.value.notna()]
@@ -116,6 +117,8 @@ def derive(ind: pd.DataFrame, econ: pd.DataFrame) -> pd.DataFrame:
             r = g.sort_values("period").iloc[-1]
             if kind == "year":
                 fy = fy_label(int(r.period) - 1)  # end-March Y -> FY (Y-1)-Y
+            elif kind == "fy":
+                fy = str(r.period)                 # already a fiscal / academic year label, e.g. 2023-24
             else:
                 fy = max(fys)
             p, fy_used = pop_asof(sid, fy)

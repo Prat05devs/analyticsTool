@@ -53,7 +53,7 @@ with form:
                              format_func=PRIORITY_LABELS.get, max_selections=3,
                              help="Each chosen priority multiplies its dimension weight by 1.6, then all weights are "
                                   "renormalised.")
-        if "policy" in pri:
+        if "policy" in pri and S["priorities"].get("policy_note"):
             theme.caveat(S["priorities"]["policy_note"])
 
     with st.container(border=True):
@@ -72,7 +72,7 @@ profile = {"industry": industry, "current_state": current, "capital_rs_crore": c
 with side:
     with st.container(border=True):
         st.subheader("Weights you will use")
-        st.caption(f"{industries()[industry]} defaults (v2), adjusted by your choices. Design defaults, not learned "
+        st.caption(f"{industries()[industry]} defaults (v3), adjusted by your choices. Design defaults, not learned "
                    "optima.")
         w, _, notes = effective_weights(to_profile(profile))
         base = S["industries"][industry]["weights"]

@@ -74,6 +74,24 @@
 - New frozen reference `scoring/reference_v2.parquet`; eligibility, web bundle, parity fixtures and the
   weighting/sensitivity outputs regenerated; panel documentation updated. 109 tests pass; audit trace 20/20.
 
+## Scoring v3 — policy and educated-labour data (3 Nov 2026)
+- User request: back the 'policy' priority with government ease-of-doing-business data, and add education / hireable
+  skilled labour. Downloaded and registered (sha256) 7 official files, all fetched without bot checks:
+  DPIIT BRAP 2024 (PIB 11 Nov 2025), LEADS 2025 (PIB 13 May 2026), NITI Export Preparedness Index 2024 (PDF + PIB),
+  DPIIT States' Startup Ranking 5.0 results page, AISHE 2023-24 report, PLFS Annual Report 2023-24.
+- `etl/ingest_policy_skills.py`: BRAP category + Top-Achiever reform-area counts, LEADS tier, EPI score, Startup
+  category; PLFS T(8) graduate / post-graduate / secondary+ / diploma shares; AISHE GER (T-19), college density (T-4),
+  UG and PG pass-outs (T-33, column-true parse `etl/pdf_columns.py`, every row verified male + female = total).
+  Derived: graduate+ share (PLFS cols 8+9), graduates per lakh people (AISHE / RBI population).
+- Discrepancy logged: the Startup Ranking page's counter shows 'Best Performers 5' but lists 3; the 34 listed
+  entities match the page's '34 participating entities', so the listed names are used.
+- Not used: PLFS 2025 (new design, not comparable with the 2023-24 round), state vocational-training shares
+  (PLFS Table 12 is all-India only), EPI pillar scores (charts only).
+- `scoring/weights_v3.yaml`: new Policy & ease-of-doing-business dimension (policy priority now maps to it);
+  education indicators in Labour; skilled-labour need adds the graduate share. v1, v2 kept.
+- Audit: ordinal categories verified by locating the state under its category in the raw page (negative controls
+  fail); PDF-derived values verified from their printed components. Audit trace 20/20; 132 tests pass.
+
 ## Open questions
 1. Download the RBI XLSX files by hand? Optional: the HTML tables are the same official data.
 2. Gujarat FY 2023-24/2024-25 GSVA from Gujarat DES — different source; add as a separate, labelled panel?

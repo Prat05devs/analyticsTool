@@ -62,7 +62,7 @@
       if (override) notes.push('What-if: dimension weights set by hand (priorities already reflected in the starting values).');
       for (const pr of override ? [] : pri) {
         const d = S.priorities.map[pr];
-        if (d === null || d === undefined) { notes.push(S.priorities.policy_note); continue; }
+        if (d === null || d === undefined) { notes.push(S.priorities.policy_note || ("Priority '" + pr + "' maps to no dimension.")); continue; }
         if (!(d in dims)) { notes.push("Priority '" + pr + "': " + prof.label + ' has no ' + S.dimensions[d].label.toLowerCase() + ' dimension, so it does not change the scores.'); continue; }
         dims[d] = dims[d] * S.priorities.multiplier;
         notes.push("Priority '" + pr + "': " + S.dimensions[d].label + ' weight x' + S.priorities.multiplier + '.');

@@ -8,7 +8,7 @@ from scoring.data import PILOT_IDS, spec
 from scoring.score import Profile, score
 
 PRIORITY_LABELS = {"demand": "Market demand", "infrastructure": "Reliable infrastructure", "labour": "Labour",
-                   "cost": "Operating cost", "growth": "Growth", "policy": "Policy"}
+                   "cost": "Operating cost", "growth": "Growth", "policy": "Policy & ease of doing business"}
 NEED_LABELS = {"power_intensive": "Power-intensive", "digital_first": "Digital-first",
                "logistics_heavy": "Logistics-heavy", "skilled_labour": "Skilled labour"}
 OTHER_STATE = "Other state"

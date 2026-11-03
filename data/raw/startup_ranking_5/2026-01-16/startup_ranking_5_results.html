@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Result</title>
+    <base href="/srf/portal/" />
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/util/commonScriptsAndStyles.js"></script>
+    <script src="js/mapdata2.js"></script>
+    <script src="js/countrymap1.js"></script>
+    <link href="css/result5.css" rel="stylesheet" />
+    <link href="css/result4.css" rel="stylesheet" />
+    
+    <style>
+      .backgroundBest{
+    background-image: url(./images/srf-2022/SRFBestPeformerleaf.svg);
+     }
+.backgroundTop{
+    background-image: url(./images/srf-2022/SRFTopPerformer.svg);
+}
+.backgroundLeaders{
+    background-image: url(./images/srf-2022/SRFLeaders.svg);
+}
+.backgroundAsoiringLeaders{
+    background-image: url(./images/srf-2022/SRFAspiringLeaders.svg);
+}
+.backgroundEmerging{
+    background-image: url(./images/srf-2022/SRFEmerging.svg);
+}
+      .backgroundcard{
+        /* background-image: url(../images/srf-2022/SRFLeafGradient.svg); */
+    background-repeat: no-repeat;
+    padding: 10px;
+    display: flex;
+    height: 182px; /* Set the desired height */
+    width: 170px; /* Set the desired width */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* border-radius: 10px; */
+    position: relative;
+    /* transition: transform 1s ; */
+    
+      }
+      .backgroundcard:hover{
+        
+    transform: translateY(-0.9375rem) !important;
+   
+        cursor: pointer;
+        z-index: 1;
+        position: relative;
+      }
+      
+      
+      /* .backgroundcard:hover .flowershape{
+        top: 12px;
+    right: 80px;
+      } */
+      .result-section .card-body{
+        /* margin-top: 40px; */
+        margin-left: 0px;
+        box-shadow: 10px 10px #FF9934 !important;
+       
+      }
+      .flowershape{
+        font-size: 35px;
+    font-weight: bold;
+    position: absolute;
+    top: 14px;
+    right: 75px;
+    color: white;
+      
+      }
+      .flowershapeText{
+position: absolute;
+top: 100px;
+font-size: 18px;
+font-weight: bold;
+text-align: center;
+color: white;
+      }
+      .hiddenText {
+  display: none;
+  position: absolute;
+
+  z-index: 1;
+}
+
+      .samewidthdive{
+margin-top: 50px;
+      }
+      .overpopup h3 {
+        font-size: 14px !important;
+      }
+
+      .states-startup {
+        background: #fff;
+        padding: 50px 0;
+      }
+
+      .evolution-across {
+        width: 100%;
+      }
+
+      .evolution-across ul {
+        margin: 0px;
+        list-style: decimal;
+      }
+
+      .evolution-across ul li {
+        float: left;
+        width: 100%;
+        font-size: 15px;
+        margin-bottom: 8px;
+        line-height: 26px;
+        color: #202020;
+      }
+
+      .evolution-across ul li strong {
+        color: #000000;
+      }
+
+      .compendium-list {
+        width: 100%;
+      }
+
+      .compendium-list ul {
+        margin: 0px 0 10px;
+        list-style: inside;
+        padding: 0px;
+      }
+
+      .compendium-list li {
+        font-size: 15px;
+        line-height: 20px;
+        margin-bottom: 5px;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        fireAjaxForLoadingHeaderAndFooter();
+      });
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-96264521-2"
+      integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-96264521-2");
+    </script>
+  </head>
+  <body>
+    <div class="wrapper result-page" style="overflow-x: hidden">
+      <div id="header" style="padding-top: 134px"></div>
+      <section class="banner-sec">
+        <img src="./images/srf-2022/edition4-banner.svg" class="w-100"  alt="Logo" />
+        
+      
+      </section >
+      
+      <section class="result-prv2  text-center introduction-sec" style="padding-top: 0px;">
+        <div class="container subcontainer ">
+          <h2 class="text-center">Introduction</h2>
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                The States' Startup Ranking is a periodic capacity building exercise created and released by the
+                Department for Promotion of Industry and Internal Trade (DPIIT) to evaluate all of India's States and
+                Union Territories (UT) on their efforts to build an ecosystem conducive to startup growth. 
+              </p>
+              </div>
+              </div>
+</div>
+
+              <div class="row videos ">
+                 <div class="col-md-6">
+              <div class="yt-outer-wrapp">
+               
+                <div class="yt-wrapp">
+                  <div class="wrapper" style="padding: 0">
+                    <img
+                      id="video-cover"
+                      src="SRF_2022_Result_page/Videos/SRF_5.0_introduction_Thumbnail.jpg"
+                      alt="Video title"
+                      style="height: 400px"
+                    />
+                    <video controls="" width="100%" height="471" id="player">
+                      <source
+                        src="SRF_2022_Result_page/Videos/SRF-15-1-26.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+
+                    <button id="play" class="play-btn">
+                      <img src="images/play-btn.png" alt="" />
+                    </button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <img class="circle-rotate icon1" src="images/map-circle.png" alt="" />
+            <img class="circle-rotate icon2" src="images/map-circle.png" alt="" />
+                </div>
+                <div class="container">
+                <div class="row">
+            <div class="col-md-12">
+                <p>States'
+                Startup Ranking was launched in February 2018 to achieve the vision of building a robust startup
+                ecosystem in the country. It aims to evaluate the Indian startup landscape through the eyes of state
+                / UT policy intervention and identify practices that accelerate ecosystem growth and development.</p>
+              <p class="text-center">
+                The States’ Startup Ranking Exercise has led each state / UT to have dedicated startup policies and
+                through its annual rankings, it is able to track the evolution of these policies and the overall efforts
+                of states / UTs in ecosystem building. The States Startup Ranking Framework accelerates efforts
+                put in by the Center and States / UTs to enliven the entrepreneurial mindset across the length and
+                breadth of the country. Capacity Building Measures have also been undertaken by the Startup India
+                Team across States and Union Territories for ecosystem enablers and innovators in promoting
+                economic growth by upholding the spirit of cooperative federalism.
+              </p>
+              <!-- 3rd para removed -->
+              <a
+                href="javascript:void(0)"
+                class="introduction-show-more more mobile"
+              >
+                + Show More</a
+              >
+              <a
+                href="javascript:void(0)"
+                class="introduction-show-more less mobile"
+              >
+                - Show Less</a
+              >
+            </div>
+            </div>
+            </div>
+
+           
+            
+          </div>
+          
+        </div>
+      </section>
+     
+     
+    
+     <section class="result-section result-section-bg">
+       <div class="ranking-sec">
+        <div class="container">
+             <div class="result-prv2">
+                <h2>States’ Startup Ranking 5.0</h2>
+              </div>
+           
+                <div class="states-ranking">
+
+   
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event,'best')">Best Performers</button>
+        <button class="tab-btn" onclick="openTab(event,'top')">Top Performers</button>
+        <button class="tab-btn" onclick="openTab(event,'leader')">Leader</button>
+        <button class="tab-btn" onclick="openTab(event,'aspiring')">Aspiring Leaders</button>
+        <button class="tab-btn" onclick="openTab(event,'emerging')">Emerging Ecosystem</button>
+    </div>
+
+   
+    <div class="tab-content">
+
+      
+        <div id="best" class="content active">
+            <div class="cards">
+              <a href="state2.html?state=Gujarat"><img src="images/srf-2022/state/Gujarat.png"></a>
+            </div>
+             <div class="cards">
+              <a href="state2.html?state=Arunachal Pradesh"><img src="images/srf-2022/state/Arunachal Pradesh.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Goa"><img src="images/srf-2022/state/Goa.png"></a>
+            </div>
+        </div>
+
+        
+        <div id="top" class="content">
+           <div class="cards">
+             <a href="state2.html?state=Karnataka"><img src="images/srf-2022/state/Karnataka.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Punjab"><img src="images/srf-2022/state/Punjab.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Tamil Nadu"><img src="images/srf-2022/state/Tamilnadu.png"></a>
+            </div>
+             <!-- <div class="cards">
+             <a href=""><img src="images/srf-2022/state/Tamilnadu.png"></a>
+            </div> -->
+             <div class="cards">
+            <a href="state2.html?state=Uttar Pradesh"><img src="images/srf-2022/state/Uttar Pradesh.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Himachal Pradesh"><img src="images/srf-2022/state/Himachal Pradesh.png"></a>
+            </div>
+             <!-- <div class="cards">
+             <a href=""><img src="images/srf-2022/state/Uttar Pradesh.png"></a>
+            </div>
+             <div class="cards">
+             <a href=""><img src="images/srf-2022/state/Uttar Pradesh.png"></a>
+            </div> -->
+        </div>
+
+        
+        <div id="leader" class="content">
+             <div class="cards">
+            <a href="state2.html?state=Rajasthan"><img src="images/srf-2022/state/Rajasthan.png"></a>
+            </div>
+            <div class="cards">
+            <a href="state2.html?state=Kerala"><img src="images/srf-2022/state/Kerala.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Madhya Pradesh"><img src="images/srf-2022/state/Madhya Pradesh.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Uttarakhand"><img src="images/srf-2022/state/Uttarakhand.png"></a>
+            </div>
+            <div class="cards">
+              <a href="state2.html?state=Telangana"><img src="images/srf-2022/state/Telangana.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Maharashtra"><img src="images/srf-2022/state/Maharashtra.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Andhra Pradesh"><img src="images/srf-2022/state/Andhra Pradesh.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Haryana"
+                        ><img src="images/srf-2022/state/Haryana.png"></a>
+            </div>
+
+             <div class="cards">
+              <a href="state2.html?state=Manipur"><img src="images/srf-2022/state/Manipur.png"></a>
+            </div>
+             <div class="cards">
+              <a href="state2.html?state=Nagaland"><img src="images/srf-2022/state/Nagaland.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Meghalaya"><img src="images/srf-2022/state/Meghalaya.png"></a>
+            </div>
+            
+        </div>
+
+        
+        <div id="aspiring" class="content">
+            <div class="cards">
+             <a href="state2.html?state=Assam"><img src="images/srf-2022/state/Assam.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Odisha"><img src="images/srf-2022/state/Odisha.png"></a>
+            </div>
+             <div class="cards">
+              <a href="state2.html?state=Bihar"
+             ><img src="images/srf-2022/state/Bihar.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Jammu and Kashmir"><img src="images/srf-2022/state/Jammu & Kashmir.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Sikkim"><img src="images/srf-2022/state/Sikkim.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Tripura"><img src="images/srf-2022/state/Tripura.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Mizoram"><img src="images/srf-2022/state/Mizoram.png"></a>
+            </div>
+             <div class="cards">
+             <a href="state2.html?state=Andaman and Nicobar Islands"><img src="images/srf-2022/state/Andaman & Nicobar.png"></a>
+            </div>
+        </div>
+
+       
+        <div id="emerging" class="content">
+            <div class="cards">
+             <a href="state2.html?state=Chhattisgarh"><img src="images/srf-2022/state/Chhattisgarh.png"></a>
+            </div>
+            <div class="cards">
+              <a href="state2.html?state=Delhi"><img src="images/srf-2022/state/NCT of Delhi.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Puducherry"><img src="images/srf-2022/state/Puducherry.png"></a>
+            </div>
+            <div class="cards">
+              <a href="state2.html?state=Chandigarh"><img src="images/srf-2022/state/Chandigarh.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Dadra and Nagar Haveli and Daman and Diu">
+               <img src="images/srf-2022/state/Dadra and Nagar Haveli & Daman & Diu.png"></a>
+            </div>
+            <div class="cards">
+             <a href="state2.html?state=Lakshadweep"><img src="images/srf-2022/state/Lakshadweep.png"></a>
+            </div>
+             <div class="cards">
+              <a href="state2.html?state=Ladakh"><img src="images/srf-2022/state/Ladakh.png"></a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+        </div>
+      </div>
+        <div class="container subcontainer" style="display:none;">
+         
+          
+            
+            <div class="row">
+            <div class="col-md-6 samewidthdive resultsecrotate">
+              
+              <!-- Changes made after this line... -->
+              <p
+                class="text-center mb-40"
+                style="max-width: 850px; margin: 0 auto 40px"
+              >
+              State / UT specific Reports for each of the 34 participating entities have been prepared and a
+              comprehensive analysis of the respective ecosystem and an overview of the strengths and priority
+              areas for the future have been included.
+              </p>
+              <img class="circle-rotate" src="images/map-circle.png" alt="" />
+              <img class="circle-rotate cerclerotatte" src="images/map-circle.png" alt="" />
+              <div
+              id="best_performer_detail"
+              class="hiddenText card-body"
+              style="margin-left: 10px; margin-top: -20px;"
+             
+            >
+            <div class="headingwithCountbest countcommenmaphover">
+              <h4>Best Performers</h4>
+              <h4>5</h4>
+            </div>
+              <ul>
+                    <li>
+        <a href="./portal/state2.html?state=Gujarat" target="_blank">
+            <img src="images1/small/gujarat.png" alt="state">
+            Gujarat
+        </a><span class="category">Category A1</span>
+    </li>
+     <li>
+      <a href="./portal/state2.html?state=Arunachal Pradesh" target="_blank">
+          <img src="images1/small/arunanchalpradesh.png"
+               alt="state"> Arunachal Pradesh
+      </a><span class="category">Category B</span>
+  </li>
+
+   <li>
+    <a href="./portal/state2.html?state=Goa" target="_blank">
+        <img src="images1/small/goa.png"
+             alt="state"> Goa
+    </a><span class="category">Category B</span>
+</li>
+               
+              </ul>
+            </div>
+            <div class="hiddenText card-body" id="top_performer_detail" style="margin-left: 10px; margin-top: -20px;">
+              <div class="headingwithCountTop countcommenmaphover">
+              <h4>Top Performers</h4>
+              <h4>5</h4>
+            </div>
+                                              <ul>
+                                  
+                                  <li>
+                                        <a href="./portal/state2.html?state=Karnataka" target="_blank">
+                                            <img src="images1/small/karnataka.png" alt="state">
+                                            Karnataka
+                                        </a><span class="category">Category A1</span>
+                                    </li>
+
+<li>
+                                      <a href="./portal/state2.html?state=Punjab" target="_blank">
+                                          <img src="images1/small/punjab.png" alt="state">
+                                          Punjab
+                                      </a><span class="category">Category A2</span>
+                                  </li>
+
+                                   <li>
+                                    <a href="./portal/state2.html?state=Tamil Nadu" target="_blank">
+                                        <img src="images1/small/tamil.png" alt="state"> Tamil
+                                        Nadu
+                                    </a><span class="category">Category A1</span>
+                                </li>
+
+                                <li>
+                                        <a href="./portal/state2.html?state=Uttar Pradesh" target="_blank">
+                                            <img src="images1/small/up.png" alt="state"> Uttar
+                                            Pradesh
+                                        </a><span class="category">Category A1</span>
+                                    </li>
+
+                                     <li>
+                                  <a href="./portal/state2.html?state=Himachal Pradesh" target="_blank">
+                                      <img src="images1/small/hp.png" alt="state">
+                                      Himachal Pradesh
+                                  </a><span class="category">Category B</span>
+                              </li>
+                                  
+                                </ul>
+          </div>
+          <div class="hiddenText card-body" id="leader_performer_detail" style="margin-left: 10px; margin-top: -20px;">
+            <div class="headingwithCountLeaders countcommenmaphover">
+              <h4>Leader</h4>
+              <h4>11</h4>
+            </div>
+                                           <ul>
+                                  <li>
+                                    <a href="./portal/state2.html?state=Rajasthan" target="_blank">
+                                        <img src="images1/small/rajasthan.png" alt="state">
+                                        Rajasthan
+                                    </a><span class="category">Category A1</span>
+                                </li>
+                                 <li>
+                                      <a href="./portal/state2.html?state=Kerala" target="_blank">
+                                          <img src="images1/small/kerala.png" alt="state">
+                                          Kerala
+                                      </a><span class="category">Category A2</span>
+                                  </li>
+                                 
+                              <li>
+                                      <a href="./portal/state2.html?state=Madhya Pradesh" target="_blank">
+                                          <img src="images1/small/mp.png" alt="state"> Madhya
+                                          Pradesh
+                                      </a><span class="category">Category A1</span>
+                                  </li>
+
+                                  <li>
+                                      <a href="./portal/state2.html?state=Uttarakhand" target="_blank">
+                                          <img src="images1/small/uk.png" alt="state">
+                                          Uttarakhand
+                                      </a><span class="category">Category A2</span>
+                                  </li>
+
+                                  <li>
+                                        <a href="./portal/state2.html?state=Telangana" target="_blank">
+                                            <img src="images1/small/telangana.png" alt="state">
+                                            Telangana
+                                        </a><span class="category">Category A2</span>
+                                    </li>
+
+                                    <li>
+                                        <a href="./portal/state2.html?state=Maharashtra" target="_blank">
+                                            <img src="images1/small/maharashtra.png" alt="state">
+                                            Maharashtra
+                                        </a> <span class="category">Category A1</span>
+                                    </li>
+
+<li>
+                                    <a href="./portal/state2.html?state=Andhra Pradesh" target="_blank">
+                                        <img src="images1/small/ap.png" alt="state"> Andhra
+                                        Pradesh
+                                    </a><span class="category">Category A2</span>
+                                </li>
+
+                                <li>
+                                    <li><a href="./portal/state2.html?state=Haryana" target="_blank">
+                                      <img src="images1/small/haryana.png" alt="state">Haryana</a>
+                                      <span class="category">Category A2</span></li>
+
+                                       <li>
+                                  <a href="./portal/state2.html?state=Manipur" target="_blank">
+                                      <img src="images1/small/manipur.png" alt="state">
+                                      Manipur
+                                  </a><span class="category">Category B</span>
+                              </li>
+
+                              <li>
+                                        <a href="./portal/state2.html?state=Nagaland" target="_blank">
+                                            <img src="images1/small/nagaland.png" alt="state">
+                                            Nagaland
+                                        </a><span class="category">Category B</span>
+                                    </li>
+
+                                    <li>
+                                      <a href="./portal/state2.html?state=Meghalaya" target="_blank">
+                                          <img src="images1/small/meghalaya.png"
+                                               alt="state"> Meghalaya
+                                      </a><span class="category">Category B</span>
+                                  </li>
+
+                                </ul>
+        </div>
+        <div class="hiddenText card-body" id="Aspiringleader_performer_detail" style="margin-left: 10px; margin-top: -20px;">
+          <div class="headingwithCountLeadersaspiring countcommenmaphover">
+            <h4>Aspiring Leader</h4>
+            <h4>8</h4>
+          </div>
+                                       <ul>
+
+<li>
+                                  <a href="./portal/state2.html?state=Assam" target="_blank">
+                                      <img src="images/small/assam.png" alt="state"> Assam
+                                  </a><span class="category">Category A2</span>
+                              </li>
+
+                              <li>
+                                        <a href="./portal/state2.html?state=Odisha" target="_blank">
+                                            <img src="images/small/odisa.png" alt="state">
+                                            Odisha
+                                        </a><span class="category">Category A2</span>
+                                    </li>
+
+                                  <li><a href="./portal/state2.html?state=Bihar" target="_blank">
+                                    <img src="images/small/bihar.png" alt="state">Bihar</a>
+                                    <span class="category">Category A1</span></li>
+                                  
+                                    
+                                
+                                   <li>
+                                  <a href="./portal/state2.html?state=Jammu and Kashmir" target="_blank">
+                                      <img src="images/small/j&k.png" alt="state">
+                                      Jammu and Kashmir
+                                  </a><span class="category">Category A2</span>
+                              </li>
+
+                               <li><a href="./portal/state2.html?state=Sikkim" target="_blank">
+                                    <img src="images/small/sikkim.png" alt="state">Sikkim</a>
+                                    <span class="category">Category B</span></li>
+                                  <li>
+                                    
+                                    <li>
+                                  <a href="./portal/state2.html?state=Tripura" target="_blank">
+                                      <img src="images/small/tripura.png" alt="state">
+                                      Tripura
+                                  </a><span class="category">Category B</span>
+                              </li>
+
+                              <li>
+                                        <a href="./portal/state2.html?state=Mizoram" target="_blank">
+                                            <img src="images/small/mizoram.png" alt="state">
+                                            Mizoram
+                                        </a><span class="category">Category B</span>
+                                    </li>
+
+                                    <li>
+                                    <a href="./portal/state2.html?state=Andaman and Nicobar Islands" target="_blank">
+                                        <img src="images/small/andaman.png"
+                                             alt="state"> Andaman and Nicobar Islands
+                                    </a><span class="category">Category B</span>
+                                </li>
+                                    
+                                    
+                                    
+                                </ul>
+     </div>
+     <div class="hiddenText card-body" id="emergingSystems_performer_detail" style="margin-left: 10px; margin-top: -20px;">
+      <div class="headingwithCountEmerging countcommenmaphover">
+        <h4>Emerging Ecosystems</h4>
+        <h4>7</h4>
+      </div>
+          <ul>
+        <li>
+          <a href="./portal/state2.html?state=Chhattisgarh" target="_blank">
+              <img src="images/small/chattisgarh.png" alt="state">
+              Chhattisgarh
+          </a><span class="category">Category A2</span>
+      </li>
+
+        <li>
+          <a href="./portal/state2.html?state=Delhi" target="_blank">
+              <img src="images/small/delhi.png" alt="state"> NCT of Delhi
+          </a><span class="category">Category A2</span>
+      </li>
+
+      <li>
+            <a href="./portal/state2.html?state=Puducherry" target="_blank">
+                <img src="images/small/puducherry.png" alt="state">
+                Puducherry
+            </a><span class="category">Category B</span>
+        </li>
+      
+   
+    <li>
+        <a href="./portal/state2.html?state=Chandigarh" target="_blank">
+            <img src="images/small/chandigarh.png" alt="state">
+            Chandigarh
+        </a><span class="category">Category B</span>
+    </li>
+
+    <li>
+      <a href="./portal/state2.html?state=Daman and Diu" target="_blank">
+          <img src="images/small/dadra&nagaranddaman&diu.png" alt="state">
+          Dadra and Nagar Haveli and Daman and Diu
+      </a><span class="category">Category B</span>
+  </li> 
+
+  <li>
+    <a href="./portal/state2.html?state=Lakshadeep" target="_blank">
+        <img src="images/small/ladhak.png" alt="state">
+        Lakshadeep
+    </a><span class="category">Category B</span>
+</li>
+    
+  <li>
+    <a href="./portal/state2.html?state=Ladakh" target="_blank">
+        <img src="images/small/ladhak.png" alt="state">
+        Ladakh
+    </a><span class="category">Category B</span>
+</li>
+
+
+          
+          
+        
+
+       
+
+      </ul></div>
+            </div>
+            <div class="col-md-6 samewidthdive">
+              <p class="text-center mapuppertext">
+                State/UT Reports can be accessed by clicking on respective maps
+              </p>
+              <div id="map"></div>
+            </div>
+            
+          </div>
+          <!-- <span class="notee"><b>The data represents the overall percentile score obtained by each State/UT.</b></span> -->
+        </div>
+      </section>
+
+      <section class="national-report-wrap national-reort-section  result-prv2" style="padding-top: 65px;">
+        <div class="container subcontainer">
+          
+          <div class="row flex-container containerdata national-report-section">
+            <div class="col-md-9">
+              <h2 class="text-center" >National Report</h2>
+              <p class="text-justify">
+                The National Report presents the overall structure including framework and methodology,
+evaluation process, and results of the entire exercise. The report encompasses aspects of the
+startup ecosystem of the country, evolution of the ecosystem in the states and union territories and
+followed by deep dive into the conceptualization of the framework and traces its evolution across
+the years; and subsequently the evaluation and implementation process including intensive
+capacity development of states / UTs. Finally, the report highlights the results of the ranking
+exercise, followed by the nationwide impact created through the exercise across all six reform
+areas.
+              </p>
+              <a
+                href="SRF_2022_Result_page/National-Report-15-01-26.pdf"
+                target="_blank"
+                class="download-report-cta"
+                >Click here to download report</a
+              >
+
+              <a
+                href="javascript:void(0)"
+                class="national-report-show-more more mobile"
+              >
+                + Show More</a
+              >
+              <a
+                href="javascript:void(0)"
+                class="national-report-show-more less mobile"
+              >
+                - Show Less</a
+              >
+            </div>
+            <div class="col-md-3">
+              <div class="img-wrap">
+                <img class="circle-rotate" src="images/map-circle.png" alt="" />
+                <div class="inner">
+                  <img src="images/srf-2022/NationalReport5.0.jpg" alt="" class="commonImagesection"/>
+                  <a
+                    class="on-hover"
+                    target="_blank"
+                    href="SRF_2022_Result_page/National-Report-15-01-26.pdf"
+                  >
+                    <span>
+                      <img
+                        class="mobile"
+                        src="images1/download-arrow-icon2.png"
+                        alt=""
+                      /><img
+                        class="desktop"
+                        src="images1/download-icon.png"
+                        alt=""
+                      />&nbsp; Download Report
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="national-report-wrap compendium-section result-prv2">
+        
+        <div class="container subcontainer compediumContainer">
+          
+          <div class="row flex-container containerdata compendium-report-section">
+            <div class="col-md-9">
+              <h2 class="text-center">Compendium of Best Practices</h2>
+              <p class="text-justify">
+                Compendium of Best Practices outlines initiatives adopted by various States / UTs in the following 7
+                Reform Areas: Institutional Support, Fostering Innovation & Entrepreneurship, Access to Market,
+                Incubation & Mentorship Support, Funding Support, Capacity Building of Enablers, Roadmap to a
+                Sustainable Future.
+              </p>
+             
+              <a
+                href="SRF_2022_Result_page/Compendium-of-Best-Practices-15-01-26.pdf"
+                target="_blank"
+                class="download-report-cta"
+                >Click here to download report</a
+              >
+              <a
+              href="javascript:void(0)"
+              class="compendium-report-show-more more mobile"
+            >
+              + Show More</a
+            >
+            <a
+              href="javascript:void(0)"
+              class="compendium-report-show-more less mobile"
+            >
+              - Show Less</a
+            >
+            </div>
+            <div class="col-md-3">
+              <div class="img-wrap">
+                <div class="inner">
+                  <img src="images/srf-2022/Compedium5.0.jpg" alt="" class="commonImagesection" />
+                  <a
+                    class="on-hover"
+                    target="_blank"
+                    href="SRF_2022_Result_page/Compendium-of-Best-Practices-15-01-26.pdf"
+                  >
+                    <span>
+                      <img
+                        class="mobile"
+                        src="images1/download-arrow-icon2.png"
+                        alt=""
+                      /><img
+                        class="desktop"
+                        src="images1/download-icon.png"
+                        alt=""
+                      />&nbsp; Download Report
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="ut-reports">
+        <div class="container">
+          <h2>State Reports</h2>
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                Individual reports for each participating State and Union Territory have been designed, containing
+an overview of that State’s / UT’s Startup Ecosystem, its performance, and pillar-wise assessment of the State’s / UT’s key strengths with an way forward. These reports have been especially
+customized to provide a roadmap for each State / UT as per its performance and current progress.
+              </p>
+            </div>
+          </div>
+          <div class="card-wrapp">
+            <div class="row card-row">
+              <div class="col-md-2 ut-reportFirst-card">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                   href="SRF_2026_Result_page/Andaman_Nicobar_Islands_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/andamanNicobar.png"
+                        alt="andaman and nicobar"
+                      /> 
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Andhra_Pradesh_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/andhraPradesh.png"
+                        alt="andhra pradesh SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+             
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Arunachal_Pradesh_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/ArunachalPradesh.png"
+                        alt="Arunachal pradesh SRF Report"
+                      />
+                    </div>
+                    
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Assam_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Assam.png"
+                        alt="Assam SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Bihar_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Bihar.png"
+                        alt="Bihar SRF Report"
+                      />
+                    </div>
+                    
+                  </a>
+                </div>
+              </div>
+            
+            </div>
+           
+            <div class="row card-row" >
+              <div class="col-md-2 ut-reportFirst-card">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Chandigarh_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Chandigarh.png"
+                        alt="Chandigarh SRF Report"
+                      />
+                    </div>
+                    
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2" >
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                   href="SRF_2026_Result_page/Chhattisgarh_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/chhattisgarh.png"
+                        alt="chhattisgarh SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Daman_and_Diu_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Daman&Diu.png"
+                        alt="Daman & Diu SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/NCT_of_Delhi_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Delhi.png"
+                        alt="Delhi SRF Report"
+                      />
+                    </div>
+                    
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Goa_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Goa.png"
+                        alt="Goa SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              
+              
+            </div>
+            <div class="row card-row">
+              <div class="col-md-2 ut-reportFirst-card">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Gujarat_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Gujarat.png"
+                        alt="Gujarat SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+           <div class="col-md-2" >
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Haryana_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Haryana.png"
+                        alt="Haryana SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Himachal_Pradesh_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/himachalPradesh.png"
+                        alt="himachal pradesh SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Jammu_and_Kashmir_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/J&K.png"
+                        alt="J&K SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Karnataka_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Karnataka.png"
+                        alt="karnataka SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row card-row">
+              <div class="col-md-2 ut-reportFirst-card">
+                <div class="state-card">
+                  <a
+                    target="_blank"
+                    href="SRF_2026_Result_page/Kerala_State_Report.pdf"
+                    class="card-link"
+                  >
+                    <div class="img-wrap">
+                      <img
+                        src="images/srf-2026/AllStateCoversFinal/Kerala.png"
+                        alt="Kerala SRF Report"
+                      />
+                    </div>
+                   
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2" >
+                   <div class="state-card">
+                     <a
+                       target="_blank"
+                       href="SRF_2026_Result_page/Ladakh_State_Report.pdf"
+                       class="card-link"
+                     >
+                       <div class="img-wrap">
+                         <img
+                           src="images/srf-2026/AllStateCoversFinal/Ladakh.png"
+                           alt="Ladakh SRF Report"
+                         />
+                       </div>
+                      
+                     </a>
+                   </div>
+                 </div>
+                 <div class="col-md-2">
+                   <div class="state-card">
+                     <a
+                       target="_blank"
+                       href="SRF_2026_Result_page/Maharashtra_State_Report.pdf"
+                       class="card-link"
+                     >
+                       <div class="img-wrap">
+                         <img
+                           src="images/srf-2026/AllStateCoversFinal/Maharashtra.png"
+                           alt="maharastra SRF Report"
+                         />
+                       </div>
+                      
+                     </a>
+                   </div>
+                 </div>
+                 <div class="col-md-2">
+                   <div class="state-card">
+                     <a
+                       target="_blank"
+                       href="SRF_2026_Result_page/Manipur_State_Report.pdf"
+                       class="card-link"
+                     >
+                       <div class="img-wrap">
+                         <img
+                           src="images/srf-2026/AllStateCoversFinal/Manipur.png"
+                           alt="manipur SRF Report"
+                         />
+                       </div>
+                      
+                     </a>
+                   </div>
+                 </div>
+                 <div class="col-md-2">
+                   <div class="state-card">
+                     <a
+                       target="_blank"
+                       href="SRF_2026_Result_page/Meghalaya_State_Report.pdf"
+                       class="card-link"
+                     >
+                       <div class="img-wrap">
+                         <img
+                           src="images/srf-2026/AllStateCoversFinal/Meghalaya.png"
+                           alt="meghalaya SRF Report"
+                         />
+                       </div>
+                      
+                     </a>
+                   </div>
+                 </div>
+                 
+               </div>
+               <div class="row card-row">
+                <div class="col-md-2 ut-reportFirst-card">
+                  <div class="state-card">
+                    <a
+                      target="_blank"
+                      href="SRF_2026_Result_page/Mizoram_State_Report.pdf"
+                      class="card-link"
+                    >
+                      <div class="img-wrap">
+                        <img
+                          src="images/srf-2026/AllStateCoversFinal/Mizoram.png"
+                          alt="Mizoram SRF Report"
+                        />
+                      </div>
+                     
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-2" >
+                     <div class="state-card">
+                       <a
+                         target="_blank"
+                         href="SRF_2026_Result_page/Madhya_Pradesh_State_Report.pdf"
+                         class="card-link"
+                       >
+                         <div class="img-wrap">
+                           <img
+                             src="images/srf-2026/AllStateCoversFinal/MadhyaPradesh.png"
+                             alt="Madhya Pradesh SRF Report"
+                           />
+                         </div>
+                        
+                       </a>
+                     </div>
+                   </div>
+                   <div class="col-md-2">
+                     <div class="state-card">
+                       <a
+                         target="_blank"
+                         href="SRF_2026_Result_page/Nagaland_State_Report.pdf"
+                         class="card-link"
+                       >
+                         <div class="img-wrap">
+                           <img
+                             src="images/srf-2026/AllStateCoversFinal/Nagaland.png"
+                             alt="Nagaland SRF Report"
+                           />
+                         </div>
+                        
+                       </a>
+                     </div>
+                   </div>
+                   <div class="col-md-2">
+                     <div class="state-card">
+                       <a
+                         target="_blank"
+                         href="SRF_2026_Result_page/Odisha_State_Report.pdf"
+                         class="card-link"
+                       >
+                         <div class="img-wrap">
+                           <img
+                             src="images/srf-2026/AllStateCoversFinal/Orissa.png"
+                             alt="Orissa SRF Report"
+                           />
+                         </div>
+                        
+                       </a>
+                     </div>
+                   </div>
+                   <div class="col-md-2">
+                     <div class="state-card">
+                       <a
+                         target="_blank"
+                         href="SRF_2026_Result_page/Puducherry_State_Report.pdf"
+                         class="card-link"
+                       >
+                         <div class="img-wrap">
+                           <img
+                             src="images/srf-2026/AllStateCoversFinal/puducherry.png"
+                             alt="Pondicherry SRF Report"
+                           />
+                         </div>
+                        
+                       </a>
+                     </div>
+                   </div>
+                   
+                 </div>
+                 <div class="row card-row">
+                  <div class="col-md-2 ut-reportFirst-card">
+                    <div class="state-card">
+                      <a
+                        target="_blank"
+                        href="SRF_2026_Result_page/Punjab_State_Report.pdf"
+                        class="card-link"
+                      >
+                        <div class="img-wrap">
+                          <img
+                            src="images/srf-2026/AllStateCoversFinal/Punjab.png"
+                            alt="punjab SRF Report"
+                          />
+                        </div>
+                       
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-2" >
+                       <div class="state-card">
+                         <a
+                           target="_blank"
+                           href="SRF_2026_Result_page/Rajasthan_State_Report.pdf"
+                           class="card-link"
+                         >
+                           <div class="img-wrap">
+                             <img
+                               src="images/srf-2026/AllStateCoversFinal/Rajasthan.png"
+                               alt="Rajasthan SRF Report"
+                             />
+                           </div>
+                          
+                         </a>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                       <div class="state-card">
+                         <a
+                           target="_blank"
+                           href="SRF_2026_Result_page/Sikkim_State_Report.pdf"
+                           class="card-link"
+                         >
+                           <div class="img-wrap">
+                             <img
+                               src="images/srf-2026/AllStateCoversFinal/Sikkim.png"
+                               alt="Sikkim SRF Report"
+                             />
+                           </div>
+                          
+                         </a>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                       <div class="state-card">
+                         <a
+                           target="_blank"
+                           href="SRF_2026_Result_page/Tamil_Nadu_State_Report.pdf"
+                           class="card-link"
+                         >
+                           <div class="img-wrap">
+                             <img
+                               src="images/srf-2026/AllStateCoversFinal/tamilNadu.png"
+                               alt="tamil nadu SRF Report"
+                             />
+                           </div>
+                          
+                         </a>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                       <div class="state-card">
+                         <a
+                           target="_blank"
+                           href="SRF_2026_Result_page/Telangana_State_Report.pdf"
+                           class="card-link"
+                         >
+                           <div class="img-wrap">
+                             <img
+                               src="images/srf-2026/AllStateCoversFinal/Telangana.png"
+                               alt="Telangana SRF Report"
+                             />
+                           </div>
+                          
+                         </a>
+                       </div>
+                     </div>
+                     
+                     
+                   </div>
+                   <div class="row card-row">
+                    <div class="col-md-2 ut-reportFirst-card">
+                      <div class="state-card">
+                        <a
+                          target="_blank"
+                          href="SRF_2026_Result_page/Tripura_State_Report.pdf"
+                          class="card-link"
+                        >
+                          <div class="img-wrap">
+                            <img
+                              src="images/srf-2026/AllStateCoversFinal/Tripura.png"
+                              alt="Tripura SRF Report"
+                            />
+                          </div>
+                         
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-md-2" >
+                         <div class="state-card">
+                           <a
+                             target="_blank"
+                             href="SRF_2026_Result_page/Uttar_Pradesh_State_Report.pdf"
+                             class="card-link"
+                           >
+                             <div class="img-wrap">
+                               <img
+                                 src="images/srf-2026/AllStateCoversFinal/UttarPradesh.png"
+                                 alt="Uttar pradesh SRF Report"
+                               />
+                             </div>
+                            
+                           </a>
+                         </div>
+                       </div>
+                       <div class="col-md-2">
+                         <div class="state-card">
+                           <a
+                             target="_blank"
+                             href="SRF_2026_Result_page/Uttarakhand_State_Report.pdf"
+                             class="card-link"
+                           >
+                             <div class="img-wrap">
+                               <img
+                                 src="images/srf-2026/AllStateCoversFinal/Uttarakhand.png"
+                                 alt="Uttarakhand SRF Report"
+                               />
+                             </div>
+                            
+                           </a>
+                         </div>
+                       </div>
+
+                       <div class="col-md-2">
+                         <div class="state-card">
+                           <a
+                             target="_blank"
+                             href="SRF_2026_Result_page/Lakshadweep_State_Report.pdf"
+                             class="card-link"
+                           >
+                             <div class="img-wrap">
+                               <img
+                                 src="images/srf-2026/AllStateCoversFinal/Lakshadweep.png"
+                                 alt="Lakshadweep SRF Report"
+                               />
+                             </div>
+                            
+                           </a>
+                         </div>
+                       </div>
+                      
+                    
+                     </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center stateReportSectionbuttondiv">
+                <button type="button"  class="btn stateReportSectionbutton view-more">
+                  VIEW MORE
+                </button>
+              </div>
+            </div>
+          </div>
+        
+        
+      </section>
+      <div id="footer"></div>
+    </div>
+    <script src="js/textyle.min.js"></script>
+    <script src="js/result2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js" integrity="sha512-Z+V5WXTXHeut+GdKWOD2nGwTgq030voO42yy6hcCE12KISP/nGR5Ja3MR8z2N4ZR4wWHMn+kx8ocFzfjP3zxTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    
+    <!-- <script>
+      $(document).ready(function() {
+  // On hover event for the element with the class .backgroundcard
+  $('.backgroundcard').hover(
+    function() {
+      // Change the background image on hover
+      $(this).css('background-image', "url('../images/srf-2022/SRFLeafHighlight.svg')");
+    },
+    function() {
+      // Change back to the original background image when not hovering
+      $(this).css('background-image',  "url('../images/srf-2022/SRFLeafGradient.svg')");
+    }
+  );
+});
+
+    </script> -->
+    <script>
+    // $(document).ready(function() {
+    //   // On hover event for the element with the class .backgroundcard
+    //   $('.backgroundcard').hover(
+    //     function() {
+    //       // Show the hiddenText when hovering over .backgroundcard
+    //       $(this).find('.hiddenText').css('display', 'block');
+    //     },
+    //     function() {
+    //       // Hide the hiddenText when not hovering
+    //       $(this).find('.hiddenText').css('display', 'none');
+    //     }
+    //   );
+    // });
+    // function call on click 
+//     $(document).ready(function() {
+//   // On click event for the element with the class .backgroundcard
+//   $('.backgroundcard').click(function() {
+//     // Hide all other hiddenText elements except the clicked one
+//     $('.hiddenText').not($(this).find('.hiddenText')).hide();
+    
+//     // Toggle display of hiddenText for the clicked backgroundcard
+//     $(this).find('.hiddenText').toggle();
+//   });
+// });
+
+
+$(document).ready(function() {
+$('.backgroundcard').click(function(event) {
+    event.stopPropagation(); 
+
+    $('.hiddenText').not($(this).find('.hiddenText')).hide();
+
+    $(this).find('.hiddenText').toggle();
+  });
+
+  $(document).click(function(event) {
+   
+    if (!$(event.target).closest('.backgroundcard').length && !$(event.target).hasClass('hiddenText')) {
+      $('.hiddenText').hide(); 
+    }
+  });
+});
+    </script>
+ 
+  <script>
+    $(document).ready(function () {
+      // Hide all rows except the first one initially
+      $('.card-row').slice(1).hide();
+  
+      // Counter to keep track of the visible rows
+      let visibleRowCount = 1;
+  
+      // Handle click event for the "View More" button
+      $('.view-more').on('click', function () {
+        if (visibleRowCount < $('.card-row').length) {
+          // Show the next row of state cards
+          $(`.card-row:nth-child(${visibleRowCount + 1})`).slideDown();
+  
+          // Increment the counter for visible rows
+          visibleRowCount++;
+        } else {
+          // Hide the additional rows if all rows are already visible
+          $('.card-row').slice(1).slideUp();
+          visibleRowCount = 1;
+        }
+  
+        // Toggle "View More" and "View Less" based on visible rows
+        if (visibleRowCount === $('.card-row').length) {
+          $(this).text('VIEW LESS');
+        } else {
+          $(this).text('VIEW MORE');
+        }
+      });
+    });
+  </script>
+  
+
+  <script>
+function openTab(evt, tabId){
+    let contents = document.querySelectorAll('.content');
+    let tabs = document.querySelectorAll('.tab-btn');
+
+    contents.forEach(c => c.classList.remove('active'));
+    tabs.forEach(t => t.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+  </body>
+</html>

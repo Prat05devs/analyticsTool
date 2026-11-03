@@ -7,7 +7,7 @@ three states with a relative 0–100 suitability index, the evidence behind it, 
 caveats.
 
 > **The index is a relative screening score. It is not a probability of commercial success, profit or survival,
-> and not financial advice.** Weights are documented design defaults (`scoring/weights_v2.yaml`; v1 kept for the audit trail), not learned optima.
+> and not financial advice.** Weights are documented design defaults (`scoring/weights_v3.yaml`; v1 and v2 kept for the audit trail), not learned optima.
 
 ## Quick start
 
@@ -46,7 +46,7 @@ official file (XLSX/HTML/PDF) ──> data/raw/<source>/<vintage>/   immutable, 
         │ etl/ingest_*.py  (fixed state alias map, units converted once, '-' -> missing, footnotes stripped)
         ▼
 data/curated/*.parquet  ──>  data/curated/warehouse.duckdb   (dim_state, fact_economic, fact_indicator)
-        │ features/build_panel.py (as-of joins)    │ scoring/score.py (percentiles vs 30 states, weights v2)
+        │ features/build_panel.py (as-of joins)    │ scoring/score.py (percentiles vs 30 states, weights v3)
         ▼                                          ▼
 models/registry.json + forecast parquet  ───────>  Streamlit app (app.py, pages/)  ──> CSV / PDF export
 ```
@@ -107,7 +107,7 @@ data/raw/ data/curated/    immutable raw files, curated parquet + CSV, DuckDB wa
 data/source_register.csv   one row per raw file: url, sha256, acquisition date, status
 etl/                       ingest_*.py, validate.py, build_indicators.py, eligibility.py, states.py
 features/ models/          build_panel.py; train.py, evaluate.py, registry.json
-scoring/                   score.py, weights_v2.yaml, reference_v2.parquet (frozen national reference; v1 files kept)
+scoring/                   score.py, weights_v3.yaml, reference_v3.parquet (frozen national reference; v1 and v2 files kept)
 app.py pages/ ui/          Streamlit app (Survey Ledger visual system, matches the design canvas)
 tests/                     pytest, incl. fixtures
 reports/                   validation, coverage heatmap, model card, eligibility matrix, audit report, audit log

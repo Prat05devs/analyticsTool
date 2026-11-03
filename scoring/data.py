@@ -16,7 +16,7 @@ REFERENCE_KINDS = {"State"}
 REFERENCE_EXTRA = {"DL", "JK"}
 
 
-CURRENT_VERSION = "v2"   # weights_v1.yaml is kept for the audit trail
+CURRENT_VERSION = "v3"   # weights_v1.yaml and weights_v2.yaml are kept for the audit trail
 
 
 @functools.lru_cache(maxsize=4)

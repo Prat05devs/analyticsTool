@@ -7,11 +7,11 @@
   const main = $('#main');
   let B, E, S;
 
-  const PRIORITY = { demand: 'Market demand', infrastructure: 'Reliable infrastructure', labour: 'Labour', cost: 'Operating cost', growth: 'Growth', policy: 'Policy' };
+  const PRIORITY = { demand: 'Market demand', infrastructure: 'Reliable infrastructure', labour: 'Labour', cost: 'Operating cost', growth: 'Growth', policy: 'Policy & ease of doing business' };
   const NEEDS = { power_intensive: 'Power-intensive', digital_first: 'Digital-first', logistics_heavy: 'Logistics-heavy', skilled_labour: 'Skilled labour' };
   const PLOT = { displayModeBar: false, responsive: true };
   const FONT = { family: 'Inter, system-ui, sans-serif', color: '#12161C', size: 13 };
-  const SHORT = { demand: 'Demand', infrastructure: 'Infrastructure', outlook: 'Outlook', labour: 'Labour', ecosystem: 'Ecosystem', cost: 'Cost & policy' };
+  const SHORT = { demand: 'Demand', infrastructure: 'Infrastructure', outlook: 'Outlook', labour: 'Labour', ecosystem: 'Ecosystem', cost: 'Cost', policy: 'Policy' };
   const SEQ = ['#DCE5FB', '#9DB4F2', '#5B82EA', '#2F5FE0', '#163A9E'];
 
   // ---------- session (per-viewer convenience only; works without storage)
@@ -34,6 +34,14 @@
   function fmt(v, unit) {
     if (!isNum(v)) return 'n/a';
     const u = (unit || '').toLowerCase();
+    if (u.startsWith('category:')) {  // ordinal government category, e.g. 'category: 1=Aspirer, 2=Fast Mover, ...'
+      const labels = Object.fromEntries(unit.split(':').slice(1).join(':').split(',').map((x) => x.trim().split('=')));
+      const lo = Math.floor(v), hi = Math.ceil(v);
+      if (lo !== hi) return 'between ' + (labels[String(lo)] || lo) + ' and ' + (labels[String(hi)] || hi);  // a median between two categories
+      return labels[String(lo)] || v.toFixed(0);
+    }
+    if (u.startsWith('of 25')) return (v === Math.trunc(v) ? v.toFixed(0) : v.toFixed(1)) + ' of 25';
+    if (u.startsWith('score 0-100')) return v.toFixed(1) + ' / 100';
     if (u.startsWith('rs crore')) return '₹' + indian(v) + ' cr';
     if (u.startsWith('rs') && u.includes('day')) return '₹' + indian(v) + '/day';
     if (u.startsWith('rs')) return '₹' + indian(v);
@@ -43,6 +51,7 @@
     if (Math.abs(v) >= 1000) return indian(v);
     return Math.abs(v) >= 10 ? v.toFixed(1) : v.toFixed(2);
   }
+  const SOURCE_TAGS = { dpiit_brap_2024: 'DPIIT BRAP 2024', leads_2025: 'LEADS 2025', niti_epi_2024: 'NITI EPI 2024', startup_ranking_5: 'DPIIT Startup Ranking 5.0', aishe_2023_24: 'AISHE 2023-24', plfs_annual_2023_24: 'PLFS 2023-24 T8' };
   function sourceTag(r) {
     const f = String(r.source_file || '').split(';')[0];
     let t = '';
@@ -50,6 +59,7 @@
     else if (f.includes('hces')) t = 'HCES 2023-24';
     else if (f.includes('trai')) t = 'TRAI PIR';
     else if (f.includes('registry')) t = 'Forecast model';
+    else t = (Object.entries(SOURCE_TAGS).find(([k]) => f.includes(k)) || ['', ''])[1];
     if (r.quality === 'derived') t = t ? t + ', derived' : 'derived';
     return [t, r.period].filter(Boolean).join(' · ');
   }
@@ -165,12 +175,12 @@
       $('#indnote').textContent = prof.model_target ? 'A next-year growth forecast is shown where the model is validated and the state has current data.' : 'Ranking only: ' + (prof.target_note || '');
       $('#npri').textContent = p.priorities.length;
       $('#pri').innerHTML = Object.entries(PRIORITY).map(([k, v]) => { const on = p.priorities.includes(k); const dis = !on && p.priorities.length >= 3; return `<button type="button" class="chip" aria-pressed="${on}" ${dis ? 'disabled' : ''} data-pri="${k}">${v}</button>`; }).join('');
-      $('#polnote').innerHTML = p.priorities.includes('policy') ? `<p class="caveat" style="margin:10px 0 0">${esc(S.priorities.policy_note)}</p>` : '';
+      $('#polnote').innerHTML = p.priorities.includes('policy') && S.priorities.policy_note ? `<p class="caveat" style="margin:10px 0 0">${esc(S.priorities.policy_note)}</p>` : '';
       $('#needs').innerHTML = Object.entries(NEEDS).map(([k, v]) => `<button type="button" class="chip" aria-pressed="${p.needs.includes(k)}" data-need="${k}">${v}</button>`).join('');
       $('#sts').innerHTML = B.pilots.map((s) => `<button type="button" class="chip" aria-pressed="${p.states.includes(s)}" data-st="${s}">${esc(label(s))}</button>`).join('');
       $('#excl').disabled = !p.current_state;
       const ew = E.effectiveWeights(p); const base = prof.weights; const tot = Object.values(base).reduce((a, b) => a + b, 0);
-      $('#wnote').textContent = prof.label + ' defaults (v2), adjusted by your choices. Design defaults, not learned optima.';
+      $('#wnote').textContent = prof.label + ' defaults (v3), adjusted by your choices. Design defaults, not learned optima.';
       $('#wts').innerHTML = Object.entries(ew.w).map(([d, v]) => `<div class="s14" style="display:flex;justify-content:space-between"><span>${esc(S.dimensions[d].label)}</span><span class="mono">${(100 * v).toFixed(1)}%</span></div><div class="wbar"><div class="${Math.abs(v - base[d] / tot) > 1e-6 ? 'up' : ''}" style="width:${(100 * v).toFixed(1)}%"></div></div>`).join('');
       $('#wnotes').innerHTML = ew.notes.map((n) => `<p style="margin:6px 0">· ${esc(n)}</p>`).join('');
       $('#go').disabled = p.states.length < 2;
@@ -395,8 +405,8 @@
     const head = ['state', 'rank', 'suitability_index', 'dimension', 'indicator', 'value', 'unit', 'period', 'quality', 'source_file', 'source_url', 'national_percentile_score', 'indicator_weight_in_dimension', 'dimension_weight', 'contribution_to_index', 'caveat', 'note'];
     const rows = res.indicators.slice().sort((a, b) => rk[a.state_id].rank - rk[b.state_id].rank || a.dimension.localeCompare(b.dimension)).map((r) =>
       [r.state, rk[r.state_id].rank, rk[r.state_id].score, r.dimension, r.label, r.value, r.unit, r.period, r.quality, r.source_file, r.url, r.score, r.w_ind_eff, r.dim_weight, r.contribution, r.proxy, r.note].map(q).join(','));
-    const meta = [`# India Expansion Intelligence export, ${new Date().toISOString().slice(0, 10)}`, `# Profile: ${describe(p)}`, '# Scoring version: weights_v2.yaml',
-      '# Relative suitability index (0-100) for state screening. It is NOT a probability of commercial success, profit or survival, and not financial advice. Weights are design defaults (v2), not learned optima.'];
+    const meta = [`# India Expansion Intelligence export, ${new Date().toISOString().slice(0, 10)}`, `# Profile: ${describe(p)}`, '# Scoring version: weights_v3.yaml',
+      '# Relative suitability index (0-100) for state screening. It is NOT a probability of commercial success, profit or survival, and not financial advice. Weights are design defaults (v3), not learned optima.'];
     const blob = new Blob([meta.join('\n') + '\n' + head.join(',') + '\n' + rows.join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'expansion_screening.csv'; document.body.appendChild(a); a.click(); a.remove();
   }
@@ -404,7 +414,7 @@
   function methodsView() {
     const steps = [['01', 'Raw files', 'Official XLSX/HTML/PDF saved unchanged with sha256 in the source register'], ['02', 'Parse & map', 'Fixed state alias map, units converted once, footnotes stripped'],
       ['03', 'Validate', 'Duplicates, ±40% jumps flagged, single price base, edition revisions logged'], ['04', 'Warehouse', 'DuckDB: dim_state, fact_economic, fact_indicator'],
-      ['05', 'Model', 'Lag features as of release date; ridge vs persistence and 3-year-mean baselines'], ['06', 'Score', 'Percentiles vs 30 states, weights v2, your priorities (computed in your browser)']];
+      ['05', 'Model', 'Lag features as of release date; ridge vs persistence and 3-year-mean baselines'], ['06', 'Score', 'Percentiles vs 30 states, weights v3, your priorities (computed in your browser)']];
     const regRows = Object.entries(S.industries).map(([k, v]) => { const r = B.registry[v.model_target || k] || {}; return `<tr><th scope="row">${esc(v.label)}</th><td>${badge((r.status || 'not trained').replace('_', ' '), r.status === 'validated' ? 'blue' : 'grey')}</td><td class="s14">${esc(r.reason || v.target_note || '')}</td></tr>`; }).join('');
     const dkeys = Object.keys(S.dimensions);
     const wRows = Object.values(S.industries).map((v) => `<tr><th scope="row">${esc(v.label)}</th>${dkeys.map((d) => `<td class="num">${v.weights[d] === undefined ? '<span class="muted" title="no auditable indicator for this industry">—</span>' : v.weights[d]}</td>`).join('')}</tr>`).join('');
@@ -416,11 +426,11 @@
     const urls = {}; B.indicators.forEach((r) => { String(r.url || '').split(' ; ').filter(Boolean).forEach((u) => { urls[u] = (urls[u] || 0) + 1; }); });
     const srcList = Object.keys(urls).sort().map((u) => `<li><a href="${esc(u)}" rel="noopener" target="_blank">${esc(u.replace(/^https?:\/\//, '').slice(0, 110))}</a></li>`).join('');
     const md = window.marked ? window.marked.parse(B.model_card) : `<pre>${esc(B.model_card)}</pre>`;
-    main.innerHTML = `<div class="stack"><div><h1>Methods and data lineage</h1><p class="lead">How each number gets from a government file to your screen, what the model can and cannot say, and the exact weights used. Data refreshed ${esc(B.generated)} · scoring weights v2.</p></div>
+    main.innerHTML = `<div class="stack"><div><h1>Methods and data lineage</h1><p class="lead">How each number gets from a government file to your screen, what the model can and cannot say, and the exact weights used. Data refreshed ${esc(B.generated)} · scoring weights v3.</p></div>
       <section><h2 style="margin-bottom:12px">Lineage</h2><ol class="lineage grid" style="--min:170px;gap:10px">${steps.map(([n, t, d]) => `<li class="card"><span class="mono small muted">${n}</span><br><strong>${t}</strong><p class="small muted" style="margin:4px 0 0">${esc(d)}</p></li>`).join('')}</ol></section>
       <section><h2 style="margin-bottom:12px">Forecast models and targets</h2><div class="tbl-wrap"><table><thead><tr><th>Industry</th><th>Status</th><th>Reason</th></tr></thead><tbody>${regRows}</tbody></table></div>
         <details style="margin-top:12px"><summary>Model card: manufacturing (full)</summary><div class="md">${md}</div></details></section>
-      <section><h2 style="margin-bottom:6px">Default weights (v2)</h2><p class="small muted">Design defaults from the blueprint, tilted by industry. NOT learned optima. Indicators are scored as their percentile among 30 states (cost and risk reversed); missing indicators are dropped and weights renormalised, never filled; a state missing a mandatory dimension is excluded.</p>
+      <section><h2 style="margin-bottom:6px">Default weights (v3)</h2><p class="small muted">Design defaults from the blueprint, tilted by industry. NOT learned optima. Indicators are scored as their percentile among 30 states (cost and risk reversed); missing indicators are dropped and weights renormalised, never filled; a state missing a mandatory dimension is excluded.</p>
         <div class="tbl-wrap"><table><thead><tr><th>Industry</th>${dkeys.map((d) => `<th class="num">${esc(S.dimensions[d].label)}</th>`).join('')}</tr></thead><tbody>${wRows}</tbody></table></div>
         <p class="small muted" style="margin:12px 0 4px">— = the industry has no such dimension: no auditable indicator exists for it, so its weight is spread over the others.</p>
         <h3 style="margin:16px 0 6px">Indicators used by each industry, and why</h3><p class="small muted">Only indicators with a stated business link are scored. Operational needs can add indicators (e.g. digital-first adds internet subscriptions). Strengths and watch-outs on the results page compare each state with the other states you chose.</p>${whyRows}

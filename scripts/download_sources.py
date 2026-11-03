@@ -97,6 +97,44 @@ def rbi_tables(src):
                  status="downloaded (official HTML table; XLSX blocked by browser check)")
 
 
+POLICY_SKILLS = [  # (source id in data_sources.yaml, key, file name, is_html)
+    ("dpiit_brap_2024", "press_release_html", "pib_2188992_brap_2024.html", True),
+    ("leads_2025", "press_release_html", "pib_2260854_leads_2025.html", True),
+    ("niti_epi_2024", "report_pdf", "Export_Preparedness_Index_2024.pdf", False),
+    ("niti_epi_2024", "press_release_html", "pib_2214514_epi_2024.html", True),
+    ("startup_ranking_5", "results_html", "startup_ranking_5_results.html", True),
+    ("aishe_2023_24", "report_pdf", "AISHE_2023-24_report.pdf", False),
+    ("plfs_annual_2023_24", "report_pdf", "AnnualReport_PLFS2023-24L2.pdf", False),
+]
+
+
+def policy_skills(src):
+    """Policy (ease of doing business) and education / skills sources. Press-release pages are saved as published."""
+    for sid, key, name, is_html in POLICY_SKILLS:
+        s = src[sid]
+        meta = {"publisher": s["publisher"], "release_date": str(s["release_date"]), "caveat": s.get("caveat", ""),
+                "observation_period": s.get("observation_period", ""), "table": s.get("tables", "")}
+        folder = ROOT / "data/raw" / sid / str(s["release_date"])
+        if is_html:
+            folder.mkdir(parents=True, exist_ok=True)
+            dest = folder / name
+            if dest.exists():
+                print(f"  have {sid}_{key}")
+                continue
+            r = fetch(s[key])
+            if b"<html" not in r.content[:2000].lower() or len(r.content) < 5000:
+                print(f"  BLOCKED {sid}_{key}")
+                BLOCKED.append((f"{sid}_{key}", s[key], folder))
+                continue
+            dest.write_bytes(r.content)
+            register({"dataset_id": f"{sid}_{key}", "url": s[key], "local_path": str(dest.relative_to(ROOT)),
+                      "sha256": hashlib.sha256(r.content).hexdigest(), "acquisition_date": dt.date.today().isoformat(),
+                      "status": "downloaded (official page)", **meta})
+            print(f"  ok {sid}_{key}")
+        else:
+            save(f"{sid}_{key}", s[key], folder, meta, name=name)
+
+
 def register_manual():
     """Hash files that were downloaded by hand and are not yet in the register."""
     have = {r for _, r in registered()}
@@ -123,6 +161,7 @@ def main():
         return 0
     src = yaml.safe_load((ROOT / "data_sources.yaml").read_text())
     rbi_tables(src)
+    policy_skills(src)
 
     if args.all:
         for sid, s in src.items():

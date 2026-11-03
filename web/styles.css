@@ -79,7 +79,7 @@ input[type=range] { width: 100%; accent-color: var(--blue); min-height: 32px; }
 /* results */
 .score { font-family: var(--mono); font-size: 40px; line-height: 1; }
 .why { display: flex; gap: 8px; font-size: 14px; margin: 4px 0; }
-.why .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.why .tags { display: block; margin-top: 6px; } .why .tags .badge { margin: 0 4px 4px 0; font-size: 12px; }
 .why .p { color: var(--blue); font-weight: 700; } .why .n { color: var(--neg); font-weight: 700; }
 .fc { background: var(--ground); border-radius: 10px; padding: 10px 14px; margin: 12px 0; }
 .src { display: block; font-size: 12px; color: var(--muted); }

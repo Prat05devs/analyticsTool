@@ -12,7 +12,7 @@ from ui.narrative import fmt, managerial, model_explanation, reasons
 from ui.state import describe
 
 DISCLAIMER = ("Relative suitability index (0-100) for state screening. It is NOT a probability of commercial success, "
-              "profit or survival, and not financial advice. Weights are design defaults (v2), not learned optima.")
+              "profit or survival, and not financial advice. Weights are design defaults (v3), not learned optima.")
 
 
 def csv_bytes(res, profile: dict) -> bytes:
@@ -42,7 +42,7 @@ class _PDF(FPDF):
         self.set_y(-12)
         self.set_font("Helvetica", size=8)
         self.set_text_color(90, 98, 110)
-        self.cell(0, 6, _latin(f"India Expansion Intelligence | weights v2 | page {self.page_no()}"), align="R")
+        self.cell(0, 6, _latin(f"India Expansion Intelligence | weights v3 | page {self.page_no()}"), align="R")
 
 
 def pdf_bytes(res, profile: dict) -> bytes:

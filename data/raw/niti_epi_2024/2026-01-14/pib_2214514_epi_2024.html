@@ -1,0 +1,1879 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css?v=1" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css?v=1" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css?v=1" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" /><link id="pibA11yCss" rel="stylesheet" href="/css/accessibility.css?v=7" type="text/css" />
+    <script type="text/javascript">
+        (function (d) {
+            var t = "";
+            try {
+                t = window.localStorage.getItem("pibStyle") || "";
+            } catch (e) {
+                t = "";
+            }
+            if (t === "orange") {
+                t = "yellow";
+            }
+            var c = t === "change" ? " pib-hc"
+                : t === "green" ? " pib-theme-green"
+                : t === "yellow" ? " pib-theme-yellow" : "";
+            d.documentElement.className += c + " pib-a11y-content";
+        }(document));
+    </script>
+
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/accessibility.js?v=7"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+            });
+    </script>
+    <style type="text/css">
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+        }
+
+        full-width {
+            width: 100%;
+        }
+
+        .logo-left, .logo-center, .countdown {
+            display: flex;
+            align-items: center;
+        }
+
+            .logo-left img, .logo-center img {
+                height: 70px;
+            }
+
+        .countdown {
+            text-align: center;
+            background-color: var(--dbim-text, #150202);
+            border-radius: 10px;
+            padding: 10px;
+            border: 2px solid grey;
+        }
+
+        .firstnumber {
+            color: #000000;
+            position: absolute;
+            top: 50px;
+            right: 90px;
+            font-size: 30px;
+        }
+
+        .secondnumber {
+            position: absolute;
+            color: #000000;
+            right: 45px;
+            top: 50px;
+            font-size: 30px;
+        }
+
+        .countdown .days {
+            font-size: 35px;
+            color: gold;
+        }
+
+        .countdown p {
+            margin: 0;
+        }
+
+        .countdown .text {
+            font-size: 16px;
+        }
+
+        a {
+            word-break: break-all;
+        }
+
+        iframe, img {
+            max-width: 100%;
+        }
+
+        /* === DBIM 3.0 Option 4 Separator Line & Reading Meta Styling === */
+        .pr-share--footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-top: 1px solid var(--dbim-border, #d1d5db);
+            padding-top: 16px;
+            margin-top: 24px;
+        }
+
+        .pr-share__left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pr-reading-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--dbim-text-secondary, #475569);
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
+        .pr-reading-meta__item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pr-reading-meta__divider {
+            color: var(--dbim-border, #cbd5e1);
+            font-weight: 300;
+        }
+
+        .pib-hc .pr-reading-meta,
+        .pib-hc .pr-reading-meta svg {
+            color: currentColor !important;
+        }
+
+        @media (max-width: 680px) {
+            .pr-share--footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .pr-reading-meta {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media(max-width:1199px) {
+            .firstnumber {
+                top: 40px;
+                right: 72px;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 35px;
+                top: 40px;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:990px) {
+            .firstnumber {
+                top: 25px;
+                right: 54px;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 25px;
+                top: 25px;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:768px) {
+            .countdown, .days {
+                font-size: 12px !important;
+            }
+
+            .firstnumber {
+                top: 25%;
+                right: 8%;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 4.5%;
+                top: 25%;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:475px) {
+            .countdown, .days {
+                font-size: 10px !important;
+                top: 20%;
+            }
+
+            .bannerimgdiv {
+                padding: 0 !important;
+            }
+
+            .bannerimg {
+                width: 108% !important;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+    </script>
+
+    <link id="pibConsentCss" href="/css/consent.css?v=8" rel="stylesheet" type="text/css" /><link id="pibFontsCss" href="/css/fonts-noto.css?v=6" rel="stylesheet" type="text/css" /><link id="pibDbimCss" href="/css/dbim.css?v=1120" rel="stylesheet" type="text/css" /><meta property="og:title" content="NITI Aayog Releases Export Preparedness Index (EPI) 2024" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2214514" /><meta property="og:description" content="NITI Aayog released the Export Preparedness Index (EPI) 2024, a comprehensive assessment of export r" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="eqausaa4l3rnojqacqhq4aaaabvouiim-f-92381f4bb-clienttons-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":21,"ak.ipv":6,"ak.proto":"http/1.1","ak.rid":"bb9636e","ak.r":38572,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":58742,"ak.gh":"23.48.245.95","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1793728780","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==GcSZBTBYhvOV9NZyXtC+ui5QEr5talN95bEoLtULusY3E0ueo9DaquGxSqPh5zvwCeVc0ejv+zJfLRBBSWO/NtTg5T3L6rQ0t8CA5ROuH5hWDVBGqC3dBrBbpPe+Tg1ioich2BwtNHrBC3DkiMFNpdIw3SE1qN+rkH4JEKXQZgGWsqroywPeAQpJ4M6Kkb+O+/z8p1+Ff7Z8C5WOZQDTJt4VKGQ0CNrNKuGTpCkHOXMLUbslMnn3HiliRKVwgshBdyOJmp+0w+FZIWe7X28xNUUHoxLiBINcJRmkD8wsj7wkS/I7l/khzmzeRViLH7RCDnTduVou7vXmgGmG8sUK+RC7wnufjSCM9MjkPJUNr8RW7+FijXY+H1GJn6uul2uIte6T0JTsdfci0Xxl/HCu25sUnzhU4a7oj99xO+t9MlE=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden" id="dbim-icon-sprite">
+    <defs>
+        <symbol id="icon-angle-double-left" viewBox="0 0 24 24"><path d="M11.6 4.6 4.2 12l7.4 7.4 2.2-2.2L8.6 12l5.2-5.2z"/><path d="M19 4.6 11.6 12 19 19.4l2.2-2.2L16 12l5.2-5.2z"/></symbol>
+        <symbol id="icon-angle-double-right" viewBox="0 0 24 24"><path d="M12.4 4.6 10.2 6.8 15.4 12l-5.2 5.2 2.2 2.2L19.8 12z"/><path d="M5 4.6 2.8 6.8 8 12l-5.2 5.2L5 19.4 12.4 12z"/></symbol>
+        <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M20.8 10.6H9.6v2.8h11.2z"/><path d="M10.8 5.6 3.2 12l7.6 6.4z"/></symbol>
+        <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M3.2 10.6h11.2v2.8H3.2z"/><path d="M13.2 5.6 20.8 12l-7.6 6.4z"/></symbol>
+        <symbol id="icon-blogger" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6.4 2.4h11.2a4 4 0 0 1 4 4v11.2a4 4 0 0 1-4 4H6.4a4 4 0 0 1-4-4V6.4a4 4 0 0 1 4-4zm2.8 5.2a2 2 0 0 0 0 4h2.4a2 2 0 0 0 0-4zm0 5.6a2 2 0 0 0 0 4h5.6a2 2 0 0 0 0-4z"/></symbol>
+        <symbol id="icon-calendar" viewBox="0 0 24 24"><path d="M7.6 2.4H10v2.4H7.6z"/><path d="M14 2.4h2.4v2.4H14z"/><path fill-rule="evenodd" d="M4 4.8h16a1.6 1.6 0 0 1 1.6 1.6v13.2a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6V6.4A1.6 1.6 0 0 1 4 4.8zm.4 5.6v8.4h15.2v-8.4z"/><path d="M6.4 12.4h3.2v3.2H6.4z"/></symbol>
+        <symbol id="icon-chevron-left" viewBox="0 0 24 24"><path d="M15.4 4.6 8 12l7.4 7.4 2.2-2.2L12.4 12l5.2-5.2z"/></symbol>
+        <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="M8.6 4.6 6.4 6.8 11.6 12l-5.2 5.2 2.2 2.2L16 12z"/></symbol>
+        <symbol id="icon-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24"><path d="M10.8 3h2.4v7.6h3.4L12 16.6l-4.6-6h3.4z"/><path d="M4 17.2h2.4v2.4h11.2v-2.4H20v3.2a1.4 1.4 0 0 1-1.4 1.4H5.4A1.4 1.4 0 0 1 4 20.4z"/></symbol>
+        <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M13.6 21.6v-8.4h2.8l.42-3.3h-3.22V7.8c0-.95.27-1.6 1.64-1.6h1.74V3.26a23 23 0 0 0-2.54-.13c-2.5 0-4.22 1.53-4.22 4.34v2.43H7.4v3.3h2.82v8.4z"/></symbol>
+        <symbol id="icon-fact-check" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4 3.6 5.6v6.2c0 4.6 3.4 8.6 8.4 9.8 5-1.2 8.4-5.2 8.4-9.8V5.6zm-1 13.2-3.6-3.6 1.7-1.7 1.9 1.9 4.5-4.5 1.7 1.7z"/></symbol>
+        <symbol id="icon-hashtag" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.8 3h2.4l-1 6h3.2l1-6h2.4l-1 6h3.4v2.4h-3.8l-.6 3.2h3.6V17h-4l-1 5h-2.4l1-5h-3.2l-1 5H5.4l1-5H3V14.6h3.8l.6-3.2H3.8V9h4zm.6 8.4-.6 3.2h3.2l.6-3.2z"/></symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24"><path d="M12 3.4 2.8 11.6h2.4v8.4a1 1 0 0 0 1 1h3.3v-5.4h5v5.4h3.3a1 1 0 0 0 1-1v-8.4h2.4z"/></symbol>
+        <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.6 2.4h8.8a5.2 5.2 0 0 1 5.2 5.2v8.8a5.2 5.2 0 0 1-5.2 5.2H7.6a5.2 5.2 0 0 1-5.2-5.2V7.6a5.2 5.2 0 0 1 5.2-5.2zm0 2.4a2.8 2.8 0 0 0-2.8 2.8v8.8a2.8 2.8 0 0 0 2.8 2.8h8.8a2.8 2.8 0 0 0 2.8-2.8V7.6a2.8 2.8 0 0 0-2.8-2.8z"/><path fill-rule="evenodd" d="M12 6.8a5.2 5.2 0 1 0 0 10.4 5.2 5.2 0 0 0 0-10.4zm0 2.4a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6z"/><circle cx="17.3" cy="6.7" r="1.3"/></symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 24 24"><path d="M4.8 8.8h3.6v12H4.8z"/><circle cx="6.6" cy="5.4" r="2.1"/><path d="M10.8 8.8h3.45v1.65h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.35 4.3 5.4v6.6h-3.6v-5.85c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1v5.95h-3.6z"/></symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24"><path d="M2.4 7.6v9.2a1.6 1.6 0 0 0 1.6 1.6h16a1.6 1.6 0 0 0 1.6-1.6V7.6L12 14z"/><path d="M21.2 5.4H2.8L12 11.8z"/></symbol>
+        <symbol id="icon-mail-open" viewBox="0 0 24 24"><path d="M2.4 9.8h19.2v9.6A1.6 1.6 0 0 1 20 21H4a1.6 1.6 0 0 1-1.6-1.6z"/><path d="M12 2.6 21.6 9.2h-3.8L12 5.3 6.2 9.2H2.4z"/><path d="m3.9 11.2 8.1 5.4 8.1-5.4 1.5 1.3-9.6 6.4-9.6-6.4z"/></symbol>
+        <symbol id="icon-map-marker" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4a7 7 0 0 0-7 7c0 5.2 7 12.2 7 12.2s7-7 7-12.2a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></symbol>
+        <symbol id="icon-newspaper" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2.8 4.4h14.8v15.2H2.8zm2 2v11.2h10.8V6.4z"/><path d="M6 7.6h8.4v1.6H6z"/><path d="M6 10.8h8.4v1.6H6z"/><path d="M6 14h5.2v1.6H6z"/><path d="M18.4 8.4h2.8v9.6a1.4 1.4 0 0 1-2.8 0z"/></symbol>
+        <symbol id="icon-pause" viewBox="0 0 24 24"><rect x="7.4" y="4" width="3.6" height="16" rx="0.9"/><rect x="13" y="4" width="3.6" height="16" rx="0.9"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8 4.5v15l12-7.5z"/></symbol>
+        <symbol id="icon-picture" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2.4 5.2h19.2v13.6H2.4zm2 2v9.6h15.2V7.2z"/><path d="M5.6 16.4 10 11l2.6 3 2-2.2 4 4.6z"/><circle cx="8" cy="10.4" r="1.5"/></symbol>
+        <symbol id="icon-press-conference" viewBox="0 0 24 24"><circle cx="12" cy="5.2" r="2.6"/><path d="M7.6 12.2a4.4 4.4 0 0 1 8.8 0z"/><circle cx="4.9" cy="9.6" r="2.2"/><path d="M1.8 15.2a3.1 3.1 0 0 1 6.2 0z"/><circle cx="19.1" cy="9.6" r="2.2"/><path d="M16 15.2a3.1 3.1 0 0 1 6.2 0z"/><path d="M6.6 13.6h10.8l2.2 7.8H4.4z"/></symbol>
+        <symbol id="icon-print" viewBox="0 0 24 24"><path d="M6.4 2.8h11.2v4.4H6.4z"/><path d="M4 8.4h16a1.6 1.6 0 0 1 1.6 1.6v5.6a1.6 1.6 0 0 1-1.6 1.6h-1.6v-2.8H6v2.8H4a1.6 1.6 0 0 1-1.6-1.6V10A1.6 1.6 0 0 1 4 8.4z"/><path d="M7.2 15.6h9.6v5.6H7.2z"/></symbol>
+        <symbol id="icon-rss" viewBox="0 0 24 24"><circle cx="4.8" cy="19.2" r="2.4"/><path d="M2.4 11.2v3.2a6.4 6.4 0 0 1 6.4 6.4H12A9.6 9.6 0 0 0 2.4 11.2z"/><path d="M2.4 4.8V8A13.6 13.6 0 0 1 16 21.6h3.2A16.8 16.8 0 0 0 2.4 4.8z"/></symbol>
+        <symbol id="icon-search-plus" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10 2.8a7.2 7.2 0 1 0 0 14.4 7.2 7.2 0 0 0 0-14.4zm0 2.4a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6z"/><path d="M15.3 14.6 21.2 20.5l-1.5 1.5-5.9-5.9z"/><path d="M9.2 6.8h1.6v2.4h2.4v1.6h-2.4v2.4H9.2v-2.4H6.8V9.2h2.4z"/></symbol>
+        <symbol id="icon-share" viewBox="0 0 24 24"><circle cx="18" cy="5.6" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="18.4" r="3"/><path d="M8.3 10.9 15.7 7.2l.9 1.8-7.4 3.7z"/><path d="M9.2 13.1 16.6 16.8l-.9 1.8-7.4-3.7z"/></symbol>
+        <symbol id="icon-twitter" viewBox="0 0 24 24"><path d="M4.2 3h4.3l11.3 18h-4.3z"/><path d="M19.3 3h-2.6L4.2 21h2.6z"/></symbol>
+        <symbol id="icon-university" viewBox="0 0 24 24"><path d="M12 2.4 21.6 7.2v1.6H2.4V7.2z"/><path d="M4.8 10.4h2.4v8H4.8z"/><path d="M9.2 10.4h2.4v8H9.2z"/><path d="M13.4 10.4h2.4v8h-2.4z"/><path d="M17.6 10.4H20v8h-2.4z"/><path d="M3.2 19.8h17.6v1.8H3.2z"/></symbol>
+        <symbol id="icon-volume-up" viewBox="0 0 24 24"><path d="M3.2 9.2h3.3l5-4.2v14l-5-4.2H3.2z"/><path d="M14.6 8.4a5 5 0 0 1 0 7.2l1.6 1.6a7.2 7.2 0 0 0 0-10.4z"/><path d="M17.4 5.6a8.8 8.8 0 0 1 0 12.8l1.5 1.5a10.9 10.9 0 0 0 0-15.8z"/></symbol>
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4a9.5 9.5 0 0 0-8.1 14.5L2.4 21.6l4.8-1.4A9.5 9.5 0 1 0 12 2.4zm0 2.2a7.3 7.3 0 1 1-3.8 13.5l-.4-.2-2.6.7.7-2.5-.3-.4A7.3 7.3 0 0 1 12 4.6z"/><path d="M9.4 7.8c-.2-.5-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.6.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3-1.6-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6 6 0 0 1-1.8-1.1 6.6 6.6 0 0 1-1.2-1.6c-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5z"/></symbol>
+        <symbol id="icon-youtube" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8zM10.2 15.1V8.9l5.1 3.1z"/></symbol>
+    </defs>
+</svg>
+
+    <form method="post" action="./PressReleasePage.aspx?PRID=2214514&amp;reg=48&amp;lang=2" id="form1">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+
+<script src="/ScriptResource.axd?d=x6wALODbMJK5e0eRC_p1LdIxBJXt0U_WW5GWfJqHAqo6frgCmGRfEywglicTersO2OKrFhK1gAIp0Wk2al2YrpdR3uWqH6f4nfjBsCyRUfTUUVmb0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a8613aea7%3af9cec9bc%3a3202a5a2%3aab09e3fe%3a87104b7c%3a720a52bf%3a589eaa30%3aa67c2700%3abe6fb298" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="F47/jkbNir4Ka7UeyaGPVFWCgrQqfIeBgcbheJxiun9Ia8ararUTP9XH6djj+DbcPY+nEyCBA34nnFNk38wyNn00HwKjBieG+MJpOgdr1RgVddNFoJF0nxZhywpMNVt4vL9UB4i4qTzmh+DvuVgRe6Jwkto1SGe+O9lohcbszWqHRQvIizDOho2+gcKx6oUFHWeNQj83WFH6geqpcpoQTrvCSjPmHwKZg8Fe5uIVRLqC/5rrjVHbHmwF0jydEIQT1hPdx9CgbP9J9Qn0pUxuCIqUMyE=" />
+        
+        <div id="templateCss"></div>
+        
+        <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+        <div class="container" style='margin-bottom: 50px;'>
+            <div id="accessories">
+                
+                <div class="pull-right" style="display: flex">
+                    <div id="voll"></div>
+                    <div id="vollDT"></div>
+                    
+
+<span class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</span>
+                </div>
+            </div>
+            <input type="hidden" name="hydpermid" id="hydpermid" value="2214514" />
+            
+
+            <div class="innner-page-main-about-us-content-right-part">
+                <div id="MinistryName" class="MinistryNameSubhead text-center">
+                    NITI Aayog
+                </div>
+                <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2026/sep/ph_9768_20260902_10000501.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+                <div class="text-center event-heading-background">
+                    
+                    <h1 id="Titleh2">
+                        NITI Aayog Releases Export Preparedness Index (EPI) 2024
+                    </h1>
+                    <h3 id="Subtitleh3">
+                        <span id="ltrSubtitle"></span>
+                    </h3>
+                </div>
+
+                <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                    Posted On:
+                              14 JAN 2026 2:59PM by PIB Delhi
+                </div>
+                
+                <div class='pt20'>
+                </div>
+                <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                
+
+                <!-- Release content wrapper for client-side zero-reflow word count -->
+                <div id="pibReleaseBody">
+                    <p style="margin-left:0in; margin-right:0in; text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">NITI Aayog released the Export Preparedness Index (EPI) 2024, a comprehensive assessment of export readiness across India&rsquo;s States and Union Territories (UTs). The Index recognises the diversity of subnational economic structures and their critical role in advancing India&rsquo;s global trade ambitions. The first edition of the EPI was published in August 2020 and this is the 4<sup>th</sup> edition.</span></span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Aligned with India&rsquo;s objective of achieving USD 1 trillion in merchandise exports by 2030 and the vision of Viksit Bharat @2047, the Export Preparedness Index provides an evidence-based framework to evaluate the strength, resilience, and inclusiveness of subnational export ecosystems. The Index identifies key structural challenges, growth levers, and policy opportunities for enhancing export competitiveness at the State and district levels.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">At the release, CEO, NITI Aayog, highlighted that India&rsquo;s export trajectory is increasingly shaped by the preparedness of States and districts. Emphasis was placed on strengthening export infrastructure, improving cost competitiveness, building robust institutions, and fostering predictable and transparent policy environments. Enhancing export readiness at the subnational level was noted as essential for sustaining long-term growth, employment generation, reduction of regional disparities, and deeper integration into global value chains amid heightened global volatility. Dr. Arvind Virmani, Member, emphasized on the role of the states and UTs in sustaining and amplifying this momentum by &nbsp;identifying&nbsp; strengths, addressing structural gaps, and designing strategies to leverage new trade opportunities. Dr. Virmani further reiterated PM&rsquo;s call for the quality of products for competitiveness.</span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><strong>I. Framework and Coverage</strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">The Export Preparedness Index (EPI) 2024 is structured around four pillars, further disaggregated into 13 sub-pillars and 70 indicators, enabling a granular and policy-relevant assessment of export preparedness.</span></span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Pillars of Export Preparedness Index (EPI) 2024</span></span></p>
+
+<table border="1" class="Table" style="border:solid windowtext 1.0pt; width:461.05pt">
+	<thead>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Infrastructure</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Business Ecosystem</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Policy &amp; Governance</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Performance</span></span></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Trade &amp; Logistics Infrastructure</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Access to Finance</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">State Export Policy</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Outcomes</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Connectivity &amp; Utilities</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Human Capital</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Institutional Capacity</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Diversification</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Industrial Infrastructure</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">MSME Ecosystem</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Trade Facilitation</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Global Integration</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">The 2024 edition strengthens analytical depth through the inclusion of new dimensions such as macroeconomic stability, cost competitiveness, human capital, financial access, and the MSME ecosystem, while refining existing indicators to enhance precision and policy relevance.</span></p>
+
+<p style="text-align:justify"><strong style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">II. Classification of States and Union Territories</strong></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">For comparative assessment and peer learning, States and UTs have been categorised into Large States &amp; Small States, North East States and Union Territories. Within each category, they are further classified as Leaders, Challengers, and Aspirers.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Performance Classification under EPI 2024:</span></p>
+
+<table border="1" class="Table" style="border:solid windowtext 1.0pt">
+	<thead>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><strong>Category</strong></span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><strong>Description</strong></span></span></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Leaders</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">States/UTs demonstrating relatively high export preparedness</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Challengers</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">States/UTs with moderate preparedness and scope for improvement</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Aspirers</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">States/UTs at early stages of export ecosystem development</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Greater emphasis has been placed on districts as the core units of export competitiveness, translating national export objectives into actionable, place-based strategies anchored in local capabilities, industrial clusters, and value-chain linkages.</span></p>
+
+<p style="text-align:justify"><strong style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">III. Methodology and Data Sources</strong></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">The Export Preparedness Index 2024 follows a data-driven, indicator-based methodology, drawing upon official datasets from Central Ministries, State Governments, and public institutions. Indicators are normalised and aggregated using appropriate statistical techniques, with balanced weightages assigned across pillars and sub-pillars to reflect their relative contribution to export preparedness.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Methodological refinements introduced in the 2024 edition aim to enhance robustness, comparability, and policy relevance. Detailed methodology, indicator definitions, and State-wise results are provided in the Export Preparedness Index (EPI) 2024 Report.</span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse; border:none; width:408.45pt">
+	<tbody>
+		<tr>
+			<td rowspan="2" style="background-color:#ddebf7; width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><span style="color:black">Pillar</span></span></span></p>
+			</td>
+			<td rowspan="2" style="background-color:#ddebf7; width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><span style="color:black">Weightage</span></span></span></p>
+			</td>
+			<td rowspan="2" style="background-color:#ddebf7; width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><span style="color:black">Sub-pillars</span></span></span></p>
+			</td>
+			<td style="height:51.95pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="height:51.95pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="2" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Infrastructure</span></span></p>
+			</td>
+			<td rowspan="2" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">20%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Utilities</span></span></p>
+			</td>
+			<td style="height:13.05pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Logistics</span></span></p>
+			</td>
+			<td style="height:26.25pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="6" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Business Ecosystem</span></span></p>
+			</td>
+			<td rowspan="6" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">40%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Macroeconomy</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Cost competitiveness</span></span></p>
+			</td>
+			<td style="height:13.05pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Human capital</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Finance and credit accessibility</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">MSME ecosystem</span></span></p>
+			</td>
+			<td style="height:13.05pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Industrial and innovation environment</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="2" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Policy and Governance</span></span></p>
+			</td>
+			<td rowspan="2" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">20%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">State level policy support and governance</span></span></p>
+			</td>
+			<td style="height:32.25pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Regulatory environment and compliance</span></span></p>
+			</td>
+			<td style="height:32.25pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="3" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Performance</span></span></p>
+			</td>
+			<td rowspan="3" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">20%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">State level exports and trends</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export promotion and facilitation</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export portfolio and market access</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><strong style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">IV. Top Performing States and Union Territories</strong></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Based on the overall assessment under EPI 2024, the following States and UTs have emerged as leading performers in their respective categories:</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Leading Performers &ndash; Export Preparedness Index (EPI) 2024</span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><u>A. Large States</u></span></span></p>
+
+<ol>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Maharashtra</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Tamil Nadu</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Gujarat</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Uttar Pradesh</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Andhra Pradesh</span></span></li>
+</ol>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><u>B. Small States, North Eastern States &amp; Union Territories</u></span></span></p>
+
+<ol>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Uttarakhand</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Jammu and Kashmir</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Nagaland</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Dadra and Nagar Haveli &amp; Daman and Diu</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Goa </span></span></li>
+</ol>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><em>(Detailed scores, indicator-level performance, and State-wise profiles are provided in the link to the Export Preparedness Index (EPI) 2024 Report.</em></span></span></p>
+
+<p style="text-align:justify"><em style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Access the full report here: </em><a href="https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf" style="font-family: &quot;Times New Roman&quot;, Times, serif; font-size: 16px;" target="_blank"><em>https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf</em></a></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:center"><span style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">****</span></span></span></p>
+
+<p><span style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">MJPS/SR</span></span></span></p>
+
+                </div>
+
+                <div id="reel_pic">
+                </div>
+
+                <br />
+                <span id="ReleaseId">(Release ID: 2214514)</span>
+                <span id="lblViews">Visitor Counter : 20074</span>
+                <div>
+                    
+                </div>
+                
+
+                <span id="lblRefPhoto"></span>
+
+                <div class="BackgroundRelease">
+                    
+                </div>
+                <div>
+                    
+                </div>
+                <div class="ReleaseLang">Read this release in: 
+                
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2214548' target="_blank">
+                            Urdu </a>
+                    
+                        ,
+                    
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2214573' target="_blank">
+                            हिन्दी </a>
+                    
+                        ,
+                    
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2214617' target="_blank">
+                            Marathi </a>
+                    
+                        ,
+                    
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2214713' target="_blank">
+                            Tamil </a>
+                    
+                </div>
+
+                <div class="RelTag">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="clear">
+                </div>
+
+                <!-- DBIM 3.0 Option 4: Separator Line with Left Share Rail & Right Reading Metrics -->
+                <div class="pr-share pr-share--footer" role="region" aria-label="Share and reading details">
+                    <div class="pr-share__left">
+                        <span class="pr-share__label" aria-hidden="true">Share</span>
+                        <ul class="pr-share__list">
+                            <li><a class="pr-share__btn pr-share__btn--facebook"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2214514"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on Facebook">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-facebook" xlink:href="#icon-facebook"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--twitter"
+                                href="https://twitter.com/intent/tweet?url=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2214514"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on X">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-twitter" xlink:href="#icon-twitter"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--whatsapp"
+                                href="https://api.whatsapp.com/send?text=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2214514"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on WhatsApp">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-whatsapp" xlink:href="#icon-whatsapp"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--linkedin"
+                                href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2214514"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on LinkedIn">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-linkedin" xlink:href="#icon-linkedin"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--mail"
+                                href="mailto:?subject=Press+release+from+PIB&amp;body=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2214514"
+                                aria-label="Share by email">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-mail" xlink:href="#icon-mail"></use>
+                                </svg>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="pr-reading-meta" id="prReadingMeta" aria-label="Reading statistics">
+                        <span class="pr-reading-meta__item">
+                            <!-- Modern Document / Word Count Icon -->
+                            <svg class="pr-reading-meta__icon" width="18" height="18" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                            </svg>
+                            <span id="prWordCount">-- words</span>
+                        </span>
+
+                        <span class="pr-reading-meta__divider" aria-hidden="true">|</span>
+
+                        <span class="pr-reading-meta__item">
+                            <!-- Modern Precision Clock / Read Time Icon -->
+                            <svg class="pr-reading-meta__icon" width="18" height="18" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+                            </svg>
+                            <span id="prReadTime">-- min read</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div id="RelLink" class="RelLink">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <center>
+                    
+                </center>
+            </div>
+
+            <div id="update12">
+	
+                    
+                    <input type="hidden" name="Hidden" id="Hidden" />
+                    <div id="P_CategoryManagement" class="ModalWindow" style="display: none">
+		
+                        <div>
+                            <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                        </div>
+                        <div id="description">
+                        </div>
+                        <div class="text-center">
+                            <h2>
+                                
+                                <br>
+                                
+                            </h2>
+                        </div>
+                        <br />
+                        <div class="clear">
+                        </div>
+                        
+                    
+	</div>
+                
+</div>
+        </div>
+
+        <div id="PdfDiv" style="display: none;">
+            <table width="100%">
+                <tr>
+                    <td style="font-weight: 200; text-align: center">
+                        NITI Aayog
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                            NITI Aayog Releases Export Preparedness Index (EPI) 2024
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                            
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="text-align: center; font-size: 14px;">
+                            Posted On:
+                                          14 JAN 2026 2:59PM by PIB Delhi
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                            <p style="margin-left:0in; margin-right:0in; text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">NITI Aayog released the Export Preparedness Index (EPI) 2024, a comprehensive assessment of export readiness across India&rsquo;s States and Union Territories (UTs). The Index recognises the diversity of subnational economic structures and their critical role in advancing India&rsquo;s global trade ambitions. The first edition of the EPI was published in August 2020 and this is the 4<sup>th</sup> edition.</span></span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Aligned with India&rsquo;s objective of achieving USD 1 trillion in merchandise exports by 2030 and the vision of Viksit Bharat @2047, the Export Preparedness Index provides an evidence-based framework to evaluate the strength, resilience, and inclusiveness of subnational export ecosystems. The Index identifies key structural challenges, growth levers, and policy opportunities for enhancing export competitiveness at the State and district levels.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">At the release, CEO, NITI Aayog, highlighted that India&rsquo;s export trajectory is increasingly shaped by the preparedness of States and districts. Emphasis was placed on strengthening export infrastructure, improving cost competitiveness, building robust institutions, and fostering predictable and transparent policy environments. Enhancing export readiness at the subnational level was noted as essential for sustaining long-term growth, employment generation, reduction of regional disparities, and deeper integration into global value chains amid heightened global volatility. Dr. Arvind Virmani, Member, emphasized on the role of the states and UTs in sustaining and amplifying this momentum by &nbsp;identifying&nbsp; strengths, addressing structural gaps, and designing strategies to leverage new trade opportunities. Dr. Virmani further reiterated PM&rsquo;s call for the quality of products for competitiveness.</span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><strong>I. Framework and Coverage</strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">The Export Preparedness Index (EPI) 2024 is structured around four pillars, further disaggregated into 13 sub-pillars and 70 indicators, enabling a granular and policy-relevant assessment of export preparedness.</span></span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Pillars of Export Preparedness Index (EPI) 2024</span></span></p>
+
+<table border="1" class="Table" style="border:solid windowtext 1.0pt; width:461.05pt">
+	<thead>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Infrastructure</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Business Ecosystem</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Policy &amp; Governance</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Performance</span></span></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Trade &amp; Logistics Infrastructure</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Access to Finance</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">State Export Policy</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Outcomes</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Connectivity &amp; Utilities</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Human Capital</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Institutional Capacity</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Diversification</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:132.2pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Industrial Infrastructure</span></span></p>
+			</td>
+			<td style="width:114.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">MSME Ecosystem</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Trade Facilitation</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Global Integration</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">The 2024 edition strengthens analytical depth through the inclusion of new dimensions such as macroeconomic stability, cost competitiveness, human capital, financial access, and the MSME ecosystem, while refining existing indicators to enhance precision and policy relevance.</span></p>
+
+<p style="text-align:justify"><strong style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">II. Classification of States and Union Territories</strong></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">For comparative assessment and peer learning, States and UTs have been categorised into Large States &amp; Small States, North East States and Union Territories. Within each category, they are further classified as Leaders, Challengers, and Aspirers.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Performance Classification under EPI 2024:</span></p>
+
+<table border="1" class="Table" style="border:solid windowtext 1.0pt">
+	<thead>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><strong>Category</strong></span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><strong>Description</strong></span></span></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Leaders</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">States/UTs demonstrating relatively high export preparedness</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Challengers</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">States/UTs with moderate preparedness and scope for improvement</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Aspirers</span></span></p>
+			</td>
+			<td>
+			<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">States/UTs at early stages of export ecosystem development</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Greater emphasis has been placed on districts as the core units of export competitiveness, translating national export objectives into actionable, place-based strategies anchored in local capabilities, industrial clusters, and value-chain linkages.</span></p>
+
+<p style="text-align:justify"><strong style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">III. Methodology and Data Sources</strong></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">The Export Preparedness Index 2024 follows a data-driven, indicator-based methodology, drawing upon official datasets from Central Ministries, State Governments, and public institutions. Indicators are normalised and aggregated using appropriate statistical techniques, with balanced weightages assigned across pillars and sub-pillars to reflect their relative contribution to export preparedness.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Methodological refinements introduced in the 2024 edition aim to enhance robustness, comparability, and policy relevance. Detailed methodology, indicator definitions, and State-wise results are provided in the Export Preparedness Index (EPI) 2024 Report.</span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse; border:none; width:408.45pt">
+	<tbody>
+		<tr>
+			<td rowspan="2" style="background-color:#ddebf7; width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><span style="color:black">Pillar</span></span></span></p>
+			</td>
+			<td rowspan="2" style="background-color:#ddebf7; width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><span style="color:black">Weightage</span></span></span></p>
+			</td>
+			<td rowspan="2" style="background-color:#ddebf7; width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><span style="color:black">Sub-pillars</span></span></span></p>
+			</td>
+			<td style="height:51.95pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="height:51.95pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="2" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Infrastructure</span></span></p>
+			</td>
+			<td rowspan="2" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">20%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Utilities</span></span></p>
+			</td>
+			<td style="height:13.05pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Logistics</span></span></p>
+			</td>
+			<td style="height:26.25pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="6" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Business Ecosystem</span></span></p>
+			</td>
+			<td rowspan="6" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">40%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Macroeconomy</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Cost competitiveness</span></span></p>
+			</td>
+			<td style="height:13.05pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Human capital</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Finance and credit accessibility</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">MSME ecosystem</span></span></p>
+			</td>
+			<td style="height:13.05pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Industrial and innovation environment</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="2" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Policy and Governance</span></span></p>
+			</td>
+			<td rowspan="2" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">20%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">State level policy support and governance</span></span></p>
+			</td>
+			<td style="height:32.25pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Regulatory environment and compliance</span></span></p>
+			</td>
+			<td style="height:32.25pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td rowspan="3" style="width:138.55pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export Performance</span></span></p>
+			</td>
+			<td rowspan="3" style="width:66.5pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">20%</span></span></p>
+			</td>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">State level exports and trends</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export promotion and facilitation</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width:203.4pt">
+			<p style="text-align:center"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Export portfolio and market access</span></span></p>
+			</td>
+			<td style="height:23.15pt">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><strong style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">IV. Top Performing States and Union Territories</strong></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Based on the overall assessment under EPI 2024, the following States and UTs have emerged as leading performers in their respective categories:</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Leading Performers &ndash; Export Preparedness Index (EPI) 2024</span></p>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><u>A. Large States</u></span></span></p>
+
+<ol>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Maharashtra</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Tamil Nadu</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Gujarat</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Uttar Pradesh</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Andhra Pradesh</span></span></li>
+</ol>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><u>B. Small States, North Eastern States &amp; Union Territories</u></span></span></p>
+
+<ol>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Uttarakhand</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Jammu and Kashmir</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Nagaland</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Dadra and Nagar Haveli &amp; Daman and Diu</span></span></li>
+	<li style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">Goa </span></span></li>
+</ol>
+
+<p style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif"><em>(Detailed scores, indicator-level performance, and State-wise profiles are provided in the link to the Export Preparedness Index (EPI) 2024 Report.</em></span></span></p>
+
+<p style="text-align:justify"><em style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Access the full report here: </em><a href="https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf" style="font-family: &quot;Times New Roman&quot;, Times, serif; font-size: 16px;" target="_blank"><em>https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf</em></a></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:center"><span style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">****</span></span></span></p>
+
+<p><span style="text-align:justify"><span style="font-size:16px"><span style="font-family:Times New Roman,Times,serif">MJPS/SR</span></span></span></p>
+
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                            (Release ID: 2214514)
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="clearfix">
+        </div>
+
+        <div class="section1">
+            <div id="frst_t">
+                <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514' target='_blank'><li class='fb_b'   ></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514&text=NITI Aayog Releases Export Preparedness Index (EPI) 2024' target='_blank'><li class='twitter_r'  > </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514' target='_blank'><li class='whatsapp_r'  ></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=NITI Aayog Releases Export Preparedness Index (EPI) 2024&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514&title=NITI Aayog Releases Export Preparedness Index (EPI) 2024&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ></li></a></ul></div></div>
+            </div>
+            <div id="second_t">
+                <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514' target='_blank'><li class='fb_b'   ></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514&text=NITI Aayog Releases Export Preparedness Index (EPI) 2024' target='_blank'><li class='twitter_r'  > </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514' target='_blank'><li class='whatsapp_r'  ></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=NITI Aayog Releases Export Preparedness Index (EPI) 2024&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2214514&title=NITI Aayog Releases Export Preparedness Index (EPI) 2024&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ></li></a></ul></div></div>
+            </div>
+        </div>
+        <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="NITI Aayog Releases Export Preparedness Index (EPI) 2024" />
+        <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" />
+        <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;margin-left:0in; margin-right:0in; text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>NITI Aayog released the Export Preparedness Index (EPI) 2024, a comprehensive assessment of export readiness across India&amp;rsquo;s States and Union Territories (UTs). The Index recognises the diversity of subnational economic structures and their critical role in advancing India&amp;rsquo;s global trade ambitions. The first edition of the EPI was published in August 2020 and this is the 4th edition.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Aligned with India&amp;rsquo;s objective of achieving USD 1 trillion in merchandise exports by 2030 and the vision of Viksit Bharat @2047, the Export Preparedness Index provides an evidence-based framework to evaluate the strength, resilience, and inclusiveness of subnational export ecosystems. The Index identifies key structural challenges, growth levers, and policy opportunities for enhancing export competitiveness at the State and district levels.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>At the release, CEO, NITI Aayog, highlighted that India&amp;rsquo;s export trajectory is increasingly shaped by the preparedness of States and districts. Emphasis was placed on strengthening export infrastructure, improving cost competitiveness, building robust institutions, and fostering predictable and transparent policy environments. Enhancing export readiness at the subnational level was noted as essential for sustaining long-term growth, employment generation, reduction of regional disparities, and deeper integration into global value chains amid heightened global volatility. Dr. Arvind Virmani, Member, emphasized on the role of the states and UTs in sustaining and amplifying this momentum by &amp;nbsp;identifying&amp;nbsp; strengths, addressing structural gaps, and designing strategies to leverage new trade opportunities. Dr. Virmani further reiterated PM&amp;rsquo;s call for the quality of products for competitiveness.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;strong>I. Framework and Coverage&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>The Export Preparedness Index (EPI) 2024 is structured around four pillars, further disaggregated into 13 sub-pillars and 70 indicators, enabling a granular and policy-relevant assessment of export preparedness.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Pillars of Export Preparedness Index (EPI) 2024&lt;/span>&lt;/span>&lt;/p>
+
+&lt;table border=&quot;1&quot; class=&quot;Table&quot; style=&quot;border:solid windowtext 1.0pt; width:461.05pt&quot;>
+	&lt;thead>
+		&lt;tr>
+			&lt;td style=&quot;width:132.2pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export Infrastructure&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:114.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Business Ecosystem&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Policy &amp;amp; Governance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export Performance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/thead>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;width:132.2pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Trade &amp;amp; Logistics Infrastructure&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:114.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Access to Finance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>State Export Policy&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export Outcomes&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:132.2pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Connectivity &amp;amp; Utilities&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:114.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Human Capital&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Institutional Capacity&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export Diversification&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:132.2pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Industrial Infrastructure&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:114.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>MSME Ecosystem&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Trade Facilitation&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Global Integration&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>The 2024 edition strengthens analytical depth through the inclusion of new dimensions such as macroeconomic stability, cost competitiveness, human capital, financial access, and the MSME ecosystem, while refining existing indicators to enhance precision and policy relevance.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;strong style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>II. Classification of States and Union Territories&lt;/strong>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>For comparative assessment and peer learning, States and UTs have been categorised into Large States &amp;amp; Small States, North East States and Union Territories. Within each category, they are further classified as Leaders, Challengers, and Aspirers.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>Performance Classification under EPI 2024:&lt;/span>&lt;/p>
+
+&lt;table border=&quot;1&quot; class=&quot;Table&quot; style=&quot;border:solid windowtext 1.0pt&quot;>
+	&lt;thead>
+		&lt;tr>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;strong>Category&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;strong>Description&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/thead>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Leaders&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>States/UTs demonstrating relatively high export preparedness&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Challengers&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>States/UTs with moderate preparedness and scope for improvement&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Aspirers&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>States/UTs at early stages of export ecosystem development&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>Greater emphasis has been placed on districts as the core units of export competitiveness, translating national export objectives into actionable, place-based strategies anchored in local capabilities, industrial clusters, and value-chain linkages.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;strong style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>III. Methodology and Data Sources&lt;/strong>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>The Export Preparedness Index 2024 follows a data-driven, indicator-based methodology, drawing upon official datasets from Central Ministries, State Governments, and public institutions. Indicators are normalised and aggregated using appropriate statistical techniques, with balanced weightages assigned across pillars and sub-pillars to reflect their relative contribution to export preparedness.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>Methodological refinements introduced in the 2024 edition aim to enhance robustness, comparability, and policy relevance. Detailed methodology, indicator definitions, and State-wise results are provided in the Export Preparedness Index (EPI) 2024 Report.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;table cellspacing=&quot;0&quot; class=&quot;Table&quot; style=&quot;border-collapse:collapse; border:none; width:408.45pt&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td rowspan=&quot;2&quot; style=&quot;background-color:#ddebf7; width:138.55pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;color:black&quot;>Pillar&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td rowspan=&quot;2&quot; style=&quot;background-color:#ddebf7; width:66.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;color:black&quot;>Weightage&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td rowspan=&quot;2&quot; style=&quot;background-color:#ddebf7; width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;color:black&quot;>Sub-pillars&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:51.95pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;height:51.95pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td rowspan=&quot;2&quot; style=&quot;width:138.55pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export Infrastructure&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td rowspan=&quot;2&quot; style=&quot;width:66.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>20%&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Utilities&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:13.05pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Logistics&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:26.25pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td rowspan=&quot;6&quot; style=&quot;width:138.55pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Business Ecosystem&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td rowspan=&quot;6&quot; style=&quot;width:66.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>40%&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Macroeconomy&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Cost competitiveness&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:13.05pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Human capital&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Finance and credit accessibility&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>MSME ecosystem&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:13.05pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Industrial and innovation environment&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td rowspan=&quot;2&quot; style=&quot;width:138.55pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Policy and Governance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td rowspan=&quot;2&quot; style=&quot;width:66.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>20%&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>State level policy support and governance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:32.25pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Regulatory environment and compliance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:32.25pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td rowspan=&quot;3&quot; style=&quot;width:138.55pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export Performance&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td rowspan=&quot;3&quot; style=&quot;width:66.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>20%&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>State level exports and trends&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export promotion and facilitation&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:203.4pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Export portfolio and market access&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;height:23.15pt&quot;>&amp;nbsp;&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;strong style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>IV. Top Performing States and Union Territories&lt;/strong>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Based on the overall assessment under EPI 2024, the following States and UTs have emerged as leading performers in their respective categories:&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>Leading Performers &amp;ndash; Export Preparedness Index (EPI) 2024&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;u>A. Large States&lt;/u>&lt;/span>&lt;/span>&lt;/p>
+
+
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Maharashtra&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Tamil Nadu&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Gujarat&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Uttar Pradesh&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Andhra Pradesh&lt;/span>&lt;/span>&lt;/li>
+
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;u>B. Small States, North Eastern States &amp;amp; Union Territories&lt;/u>&lt;/span>&lt;/span>&lt;/p>
+
+
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Uttarakhand&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Jammu and Kashmir&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Nagaland&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Dadra and Nagar Haveli &amp;amp; Daman and Diu&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>Goa &lt;/span>&lt;/span>&lt;/li>
+
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;em>(Detailed scores, indicator-level performance, and State-wise profiles are provided in the link to the Export Preparedness Index (EPI) 2024 Report.&lt;/em>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;em style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>Access the full report here: &lt;/em>&lt;a href=&quot;https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf&quot; style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, Times, serif; font-size: 16px;&quot; target=&quot;_blank&quot;>&lt;em>https://niti.gov.in/sites/default/files/2026-01/Export_Preparedness_Index_2024.pdf&lt;/em>&lt;/a>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>****&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>MJPS/SR&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+" />
+        <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+        </script>
+        <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+                  function CleanHtml(html) {
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+        </script>
+        <script type="text/javascript">
+                  $(document).ready(function () {
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                        }
+                  });
+        </script>
+        <style type="text/css">
+            @media print {
+                .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                    display: none !important;
+                }
+            }
+
+            .f_vl {
+                padding-right: 30px;
+                font-size: 17px;
+                cursor: pointer;
+            }
+
+            .log_oo {
+                display: flex;
+                justify-content: space-between;
+            }
+
+                .log_oo img {
+                    width: 150px;
+                }
+
+            .sticky-social_mb {
+                position: fixed;
+                bottom: 0px;
+                padding: 0px;
+                margin: 0px;
+                width: 100%;
+            }
+
+            .social_mb {
+                list-style: none;
+                display: flex;
+                width: 100%;
+                margin-bottom: -8px;
+            }
+
+                .social_mb a {
+                    padding: 8px 0px;
+                    font-size: 30px;
+                    transition: all 0.8s ease-in-out;
+                    width: 20% !important;
+                    text-align: center;
+                }
+        </style>
+        <style type="text/css">
+            .section1 {
+                position: relative;
+                padding: 10px 0px;
+                width: 100%;
+            }
+
+            .sticky-social {
+                position: fixed;
+                top: 20px;
+                left: 0px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .social {
+                list-style: none;
+            }
+
+                .social a li {
+                    padding: 8px 12px;
+                    font-size: 25px;
+                    transition: all 0.8s ease-in-out;
+                }
+
+                    .social a li:hover {
+                        margin-right: -30px;
+                        box-shadow: 2px 5px 10px grey;
+                    }
+
+                        .social a li:hover .fa {
+                            margin-left: 20px;
+                        }
+
+            .fb_b {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .twitter_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .whatsapp_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .fa-envelope_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .fa-linkedin_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+        </style>
+        <style type="text/css">
+            @media only screen and (max-device-width: 767px) {
+                p span img {
+                    max-width: 90% !important;
+                    height: auto !important;
+                }
+
+                p img {
+                    max-width: 90% !important;
+                    height: auto !important;
+                }
+
+                h2 {
+                    font-size: var(--dbim-h2, 20px);
+                    font-weight: 600 !important;
+                }
+
+                h3 {
+                    font-size: var(--dbim-h3, 16px);
+                    font-weight: 600 !important;
+                }
+            }
+        </style>
+        <style type="text/css">
+            .film-roll-badge {
+                position: absolute;
+                top: 82%;
+                right: 20px;
+                width: 230px;
+                height: 70px;
+                background: repeating-linear-gradient( to right, var(--dbim-green-key, #0F5757) 0px, var(--dbim-green-key, #0F5757) 18px, var(--dbim-text, #150202) 18px, var(--dbim-text, #150202) 36px );
+                border-top: 8px solid var(--dbim-green-key, #0F5757);
+                border-bottom: 8px solid var(--dbim-green-key, #0F5757);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                animation: moveFilm 8s linear infinite;
+                z-index: 10;
+            }
+
+                .film-roll-badge::before,
+                .film-roll-badge::after {
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 10px;
+                    background: repeating-linear-gradient( to right, var(--dbim-green-key, #0F5757) 0px, var(--dbim-green-key, #0F5757) 10px, #fff 10px, #fff 20px );
+                    left: 0;
+                    z-index: 2;
+                }
+
+                .film-roll-badge::before {
+                    top: -4px;
+                }
+
+                .film-roll-badge::after {
+                    bottom: -4px;
+                }
+
+            .film-roll-inner {
+                position: relative;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: flicker 2s infinite ease-in-out;
+            }
+
+            .countdown-text {
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: #fff;
+                text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                white-space: nowrap;
+            }
+
+            @keyframes moveFilm {
+                0% {
+                    background-position: 0 0;
+                }
+
+                100% {
+                    background-position: 120px 0;
+                }
+            }
+
+            @keyframes flicker {
+                0%, 100% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.9;
+                }
+
+                25% {
+                    opacity: 0.95;
+                }
+
+                75% {
+                    opacity: 0.85;
+                }
+            }
+
+            @media (max-width: 1500px) {
+                .film-roll-badge {
+                    top: 68%;
+                    right: 18px;
+                    height: 65px;
+                    font-size: 0.85rem;
+                }
+
+                .press-section {
+                    margin-top: 35px;
+                }
+            }
+
+            @media (max-width: 992px) {
+                .film-roll-badge {
+                    top: 52%;
+                    right: 10px;
+                    width: 200px;
+                    height: 60px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .film-roll-badge {
+                    top: 56%;
+                    right: 10px;
+                    width: 124px;
+                    height: 55px;
+                }
+
+                .countdown-text {
+                    font-size: 0.9rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .film-roll-badge {
+                    top: 59%;
+                    right: 5px;
+                    height: 50px;
+                }
+
+                .countdown-text {
+                    font-size: 0.85rem;
+                }
+            }
+        </style>
+        <script type="text/javascript">
+                  const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                  const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+                  const countdownElement = document.getElementById("countdown");
+
+                  if (countdownElement) {
+                        const interval = setInterval(() => {
+                              const now = new Date().getTime();
+
+                              if (now < festivalStart) {
+                                    const diff = festivalStart - now;
+                                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                                    countdownElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to go`;
+                              } else if (now >= festivalStart && now <= festivalEnd) {
+                                    const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                                    countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                              } else {
+                                    countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+                                    const elements = document.querySelectorAll('.film-roll-badge');
+                                    elements.forEach(el => el.style.width = "350px");
+                                    clearInterval(interval);
+                              }
+                        }, 1000);
+                  }
+        </script>
+        <script type="text/javascript">
+                  const miffStart = new Date("2026-06-15T00:00:00").getTime();
+                  const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+                  const miffElement = document.getElementById("miff");
+
+                  if (miffElement) {
+                        const miffInterval = setInterval(() => {
+                              const now = new Date().getTime();
+
+                              if (now < miffStart) {
+                                    const diff = miffStart - now;
+                                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                    miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+                              } else if (now >= miffStart && now <= miffEnd) {
+                                    const dayNumber = Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+                                    miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                              } else {
+                                    miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+                                    document.querySelectorAll('.film-roll-badge').forEach(el => el.style.width = "350px");
+                                    clearInterval(miffInterval);
+                              }
+                        }, 1000);
+                  }
+        </script>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="Q4ICujzomrVt6g28J5l60_ikVTQZhf2MKzsnnrWeIp2tY91I_RYTdeAtJ_DCMv5fsS2hyXTihflVoqIvz3LZGeIibfD4_piY"/></form>
+    
+
+<script type="application/json" id="pibConsentConfig">{"ga4Id":"G-Q414Y0X6EE,G-QJJ6LZ8LHV","policyUrl":"/CookiePolicy.aspx","text":{"bannerLabel":"Cookie consent","title":"Cookies on this website","body":"We use essential cookies to make this website work. We also set analytics cookies when you arrive, so we can see how the site is used and improve it - you can switch these off below or at any time from the Cookie Policy page. Cookies from embedded social media content are set only if you allow them.","policyLink":"Read our Cookie Policy","accept":"Accept all","reject":"Reject optional","customize":"Customise","prefsTitle":"Cookie preferences","prefsIntro":"Choose which cookies this website may set. Essential cookies cannot be switched off because the site does not work without them. Analytics cookies are on unless you turn them off. Social media cookies stay off until you allow them. You can change these choices at any time from the Cookie Policy page.","essentialName":"Essential cookies","essentialDesc":"Needed for the site to function. These remember your session, your language and region, your text size and colour theme, and verify the security check on forms. They are always on.","analyticsName":"Analytics cookies","analyticsDesc":"Help us understand how visitors use the site - which pages are read and how long people stay - so it can be improved. The information is collected in a form that does not directly identify you. These are on when you arrive; switching them off here stops them and deletes the ones already set.","socialName":"Social media cookies","socialDesc":"Set by content embedded from X, Facebook and YouTube, such as timelines and videos. These platforms may use them to track you across websites. They stay off until you allow them.","save":"Save preferences","cancel":"Cancel"}}</script>
+<script type="text/javascript" src='/js/consent.js?v=10'></script>
+
+<script type="text/javascript" src='/js/consent-embeds.js?v=10'></script>
+
+
+    <!-- Minimal O(N) Time and O(1) Auxiliary Space Word Count & Read Time Calculation -->
+    <script type="text/javascript">
+            (function () {
+                  function calculateReadingStats() {
+                        var bodyEl = document.getElementById("pibReleaseBody");
+                        if (!bodyEl) return;
+
+                        // textContent extracts text without triggering expensive layout/reflow computations
+                        var text = bodyEl.textContent || "";
+                        var words = 0;
+                        var inWord = false;
+
+                        // O(N) single pass character code scan: achieves O(1) space with zero array allocations
+                        for (var i = 0, len = text.length; i < len; i++) {
+                              var code = text.charCodeAt(i);
+                              // Delimits on ASCII whitespace, control characters, tabs, newlines, and non-breaking spaces (160)
+                              if (code <= 32 || code === 160) {
+                                    inWord = false;
+                              } else if (!inWord) {
+                                    inWord = true;
+                                    words++;
+                              }
+                        }
+
+                        // Standard 250 WPM reading speed (e.g., 612 words yields 2 min read)
+                        var minutes = Math.max(1, Math.round(words / 250));
+
+                        var elWords = document.getElementById("prWordCount");
+                        var elTime = document.getElementById("prReadTime");
+
+                        if (elWords) elWords.textContent = words + (words === 1 ? " word" : " words");
+                        if (elTime) elTime.textContent = minutes + " min read";
+                  }
+
+                  if (document.readyState === "loading") {
+                        document.addEventListener("DOMContentLoaded", calculateReadingStats);
+                  } else {
+                        calculateReadingStats();
+                  }
+            })();
+    </script>
+
+    <script type="text/javascript">
+            (function () {
+                  try {
+                        if (window.self === window.top) { return; }
+                  } catch (e) { return; }
+                  var s = document.createElement("style");
+                  s.textContent = ".sticky-social, .sticky-social_mb { display: none !important; }";
+                  (document.head || document.documentElement).appendChild(s);
+            }());
+    </script>
+</body>
+</html>
