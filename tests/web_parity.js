@@ -9,6 +9,7 @@ const out = cases.map((c) => {
   const r = E.score(c.profile);
   return { ranking: r.ranking.map((x) => ({ s: x.state_id, score: x.score, rank: x.rank })), weights: r.dim_weights,
            counter: r.counter, stability: (r.stability || []).map((x) => ({ s: x.state_id, same: x.share_same_rank })),
-           message: r.message };
+           message: r.message,
+           reasons: Object.fromEntries(r.ranking.map((x) => { const q = E.reasons(r, x.state_id, 3); return [x.state_id, [q.pos.map((y) => y.indicator), q.neg.map((y) => y.indicator)]]; })) };
 });
 process.stdout.write(JSON.stringify(out));

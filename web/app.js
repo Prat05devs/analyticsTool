@@ -70,13 +70,15 @@
     const vm = reg.validation_mae, hm = reg.holdout_mae;
     return { ok: true, text: `Next-year forecast of ${reg.target}: ${reg.selected_spec.split('|')[0]} on lagged growth, trained with expanding-window CV (${reg.trained_on}). Validation MAE ${vm.model.toFixed(1)} pp vs ${vm[reg.best_baseline].toFixed(1)} pp for the ${reg.best_baseline === 'mean3' ? '3-year mean' : reg.best_baseline} baseline; untouched FY 2024-25 hold-out MAE ${hm.model.toFixed(1)} pp vs ${Math.min(hm.persistence, hm.mean3).toFixed(1)} pp for the best baseline. The bootstrap interval for the gain crosses zero and the 80% band is about ±12 pp, so read the forecast as a direction, not a promise. Drivers (last year's growth, 3-year mean, national growth) are model attributions, not causes.` };
   }
+  // Plain-language reading of the ranking, built from the same relative reasons as the state cards.
   function managerial(res) {
-    const dims = Object.keys(res.dim_weights); const parts = [];
+    const parts = [];
     res.ranking.slice(0, 3).forEach((r, i) => {
-      const vals = dims.filter((d) => isNum(r['dim_' + d]));
-      const best = vals.reduce((a, d) => (r['dim_' + d] > r['dim_' + a] ? d : a), vals[0]);
-      const worst = vals.reduce((a, d) => (r['dim_' + d] < r['dim_' + a] ? d : a), vals[0]);
-      parts.push(`${r.state} ${['leads', 'follows', 'is third'][i]} (${r.score.toFixed(1)}): strongest on ${S.dimensions[best].label.toLowerCase()} (${Math.round(r['dim_' + best])}/100), weakest on ${S.dimensions[worst].label.toLowerCase()} (${Math.round(r['dim_' + worst])}/100).`);
+      const { pos, neg } = E.reasons(res, r.state_id, 1);
+      let txt = `${r.state} ${['leads', 'follows', 'is third'][i]} (${r.score.toFixed(1)})`;
+      if (pos.length) txt += `. Biggest edge over the other compared states: ${pos[0].meaning} (${pos[0].dimension_label.toLowerCase()})`;
+      if (neg.length) txt += `${pos.length ? ';' : '.'} main watch-out: ${neg[0].meaning} (${neg[0].dimension_label.toLowerCase()})`;
+      parts.push(txt + '.');
     });
     if (res.ranking.length > 1) {
       const gap = res.ranking[0].score - res.ranking[1].score;
@@ -85,7 +87,17 @@
     parts.push('State averages hide corridor- and district-level differences; use this list to decide where to look next, not where to sign.');
     return parts.join(' ');
   }
-  const reasonLine = (r) => `${r.label}: ${fmt(r.value, r.unit)} vs pilot median ${fmt(r.pilot_median, r.unit)} (${sourceTag(r)})`;
+  const lowerFirst = (l) => (/^[A-Z]{2}/.test(l) ? l : l.charAt(0).toLowerCase() + l.slice(1));
+  const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  // one strength / watch-out: what the number means, the evidence vs the other compared states, why it matters here
+  function reasonHtml(x, kind) {
+    const tags = [];
+    if (x.priority) tags.push('Your priority: ' + x.dimension_label.toLowerCase());
+    x.needs.forEach((n) => tags.push('Your need: ' + NEEDS[n].toLowerCase()));
+    return `<div class="why"><span class="${kind}" aria-hidden="true">${kind === 'p' ? '+' : '–'}</span><span><strong>${esc(cap(x.meaning || x.label))}</strong>: ${esc(lowerFirst(x.label))} ${esc(fmt(x.value, x.unit))} vs ${esc(fmt(x.peer_median, x.unit))} median of the other ${x.n_peers} compared state${x.n_peers === 1 ? '' : 's'} <span class="src" style="display:inline">(${esc(sourceTag(x))})</span>. ${esc(x.why)}${tags.length ? `<span class="tags">${tags.map((t) => `<span class="badge b-blue">${esc(t)}</span>`).join('')}</span>` : ''}</span></div>`;
+  }
+  const NO_POS = 'No indicator in this profile is materially stronger than the other compared states.';
+  const NO_NEG = 'No indicator in this profile is materially weaker than the other compared states.';
 
   // ---------- views
   function home() {
@@ -158,7 +170,7 @@
       $('#sts').innerHTML = B.pilots.map((s) => `<button type="button" class="chip" aria-pressed="${p.states.includes(s)}" data-st="${s}">${esc(label(s))}</button>`).join('');
       $('#excl').disabled = !p.current_state;
       const ew = E.effectiveWeights(p); const base = prof.weights; const tot = Object.values(base).reduce((a, b) => a + b, 0);
-      $('#wnote').textContent = prof.label + ' defaults (v1), adjusted by your choices. Design defaults, not learned optima.';
+      $('#wnote').textContent = prof.label + ' defaults (v2), adjusted by your choices. Design defaults, not learned optima.';
       $('#wts').innerHTML = Object.entries(ew.w).map(([d, v]) => `<div class="s14" style="display:flex;justify-content:space-between"><span>${esc(S.dimensions[d].label)}</span><span class="mono">${(100 * v).toFixed(1)}%</span></div><div class="wbar"><div class="${Math.abs(v - base[d] / tot) > 1e-6 ? 'up' : ''}" style="width:${(100 * v).toFixed(1)}%"></div></div>`).join('');
       $('#wnotes').innerHTML = ew.notes.map((n) => `<p style="margin:6px 0">· ${esc(n)}</p>`).join('');
       $('#go').disabled = p.states.length < 2;
@@ -291,8 +303,8 @@
         } else fc = `<div class="fc"><span class="src">Forecast</span><strong>Ranking only</strong><span class="src">No validated sector target for this industry.</span></div>`;
         return `<article class="card ${i === 0 ? 'lead-card' : ''}"><div style="display:flex;justify-content:space-between;gap:12px"><div><span class="mono small muted">#${r.rank}</span><h2 style="font-size:26px">${esc(r.state)}</h2></div><div style="text-align:right"><span class="score">${r.score.toFixed(1)}</span><span class="src">index / 100</span></div></div>
           <div style="margin-top:12px">${b}</div>${fc}
-          <p class="s14" style="margin:8px 0 2px;font-weight:600;color:var(--blue-dark)">Why it ranks here</p>${pos.map((x) => `<div class="why"><span class="p" aria-hidden="true">+</span><span>${esc(reasonLine(x))}</span></div>`).join('')}
-          <p class="s14" style="margin:10px 0 2px;font-weight:600;color:var(--neg)">Watch-outs</p>${neg.map((x) => `<div class="why"><span class="n" aria-hidden="true">–</span><span>${esc(reasonLine(x))}</span></div>`).join('')}
+          <p class="s14" style="margin:8px 0 2px;font-weight:600;color:var(--blue-dark)">Why it ranks here</p>${pos.length ? pos.map((x) => reasonHtml(x, 'p')).join('') : `<p class="small muted">${NO_POS}</p>`}
+          <p class="s14" style="margin:10px 0 2px;font-weight:600;color:var(--neg)">Watch-outs</p>${neg.length ? neg.map((x) => reasonHtml(x, 'n')).join('') : `<p class="small muted">${NO_NEG}</p>`}
           ${r.disclosure ? `<div class="caveat small" style="margin-top:10px">${esc(r.disclosure)}</div>` : ''}</article>`;
       }).join('');
       // map
@@ -383,8 +395,8 @@
     const head = ['state', 'rank', 'suitability_index', 'dimension', 'indicator', 'value', 'unit', 'period', 'quality', 'source_file', 'source_url', 'national_percentile_score', 'indicator_weight_in_dimension', 'dimension_weight', 'contribution_to_index', 'caveat', 'note'];
     const rows = res.indicators.slice().sort((a, b) => rk[a.state_id].rank - rk[b.state_id].rank || a.dimension.localeCompare(b.dimension)).map((r) =>
       [r.state, rk[r.state_id].rank, rk[r.state_id].score, r.dimension, r.label, r.value, r.unit, r.period, r.quality, r.source_file, r.url, r.score, r.w_ind_eff, r.dim_weight, r.contribution, r.proxy, r.note].map(q).join(','));
-    const meta = [`# India Expansion Intelligence export, ${new Date().toISOString().slice(0, 10)}`, `# Profile: ${describe(p)}`, '# Scoring version: weights_v1.yaml',
-      '# Relative suitability index (0-100) for state screening. It is NOT a probability of commercial success, profit or survival, and not financial advice. Weights are design defaults (v1), not learned optima.'];
+    const meta = [`# India Expansion Intelligence export, ${new Date().toISOString().slice(0, 10)}`, `# Profile: ${describe(p)}`, '# Scoring version: weights_v2.yaml',
+      '# Relative suitability index (0-100) for state screening. It is NOT a probability of commercial success, profit or survival, and not financial advice. Weights are design defaults (v2), not learned optima.'];
     const blob = new Blob([meta.join('\n') + '\n' + head.join(',') + '\n' + rows.join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'expansion_screening.csv'; document.body.appendChild(a); a.click(); a.remove();
   }
@@ -392,10 +404,11 @@
   function methodsView() {
     const steps = [['01', 'Raw files', 'Official XLSX/HTML/PDF saved unchanged with sha256 in the source register'], ['02', 'Parse & map', 'Fixed state alias map, units converted once, footnotes stripped'],
       ['03', 'Validate', 'Duplicates, ±40% jumps flagged, single price base, edition revisions logged'], ['04', 'Warehouse', 'DuckDB: dim_state, fact_economic, fact_indicator'],
-      ['05', 'Model', 'Lag features as of release date; ridge vs persistence and 3-year-mean baselines'], ['06', 'Score', 'Percentiles vs 30 states, weights v1, your priorities (computed in your browser)']];
+      ['05', 'Model', 'Lag features as of release date; ridge vs persistence and 3-year-mean baselines'], ['06', 'Score', 'Percentiles vs 30 states, weights v2, your priorities (computed in your browser)']];
     const regRows = Object.entries(S.industries).map(([k, v]) => { const r = B.registry[v.model_target || k] || {}; return `<tr><th scope="row">${esc(v.label)}</th><td>${badge((r.status || 'not trained').replace('_', ' '), r.status === 'validated' ? 'blue' : 'grey')}</td><td class="s14">${esc(r.reason || v.target_note || '')}</td></tr>`; }).join('');
     const dkeys = Object.keys(S.dimensions);
-    const wRows = Object.values(S.industries).map((v) => `<tr><th scope="row">${esc(v.label)}</th>${dkeys.map((d) => `<td class="num">${v.weights[d]}</td>`).join('')}</tr>`).join('');
+    const wRows = Object.values(S.industries).map((v) => `<tr><th scope="row">${esc(v.label)}</th>${dkeys.map((d) => `<td class="num">${v.weights[d] === undefined ? '<span class="muted" title="no auditable indicator for this industry">—</span>' : v.weights[d]}</td>`).join('')}</tr>`).join('');
+    const whyRows = Object.values(S.industries).map((v) => `<details><summary>${esc(v.label)}</summary><div class="tbl-wrap"><table><thead><tr><th>Dimension</th><th>Indicator</th><th class="num">Weight</th><th>Why it is in this profile</th></tr></thead><tbody>${Object.entries(v.indicators).map(([d, m]) => Object.entries(m).map(([c, w]) => `<tr><td class="small">${esc(S.dimensions[d].label)}</td><td>${esc(S.indicators[c].label)}</td><td class="num">${w}</td><td class="small">${esc((v.why || {})[c] || '')}</td></tr>`).join('')).join('')}</tbody></table></div></details>`).join('');
     const indRows = Object.entries(S.indicators).map(([k, v]) => `<tr><td>${esc(v.label)}</td><td class="small">${esc(v.unit)}</td><td class="small">${v.direction > 0 ? 'higher is better' : 'lower is better'}</td><td class="small">${esc(v.proxy || '')}</td></tr>`).join('');
     const em = {}; B.eligibility.forEach((r) => { (em[r.state] = em[r.state] || {})[r.industry] = r.status; });
     const inds = Object.keys(S.industries);
@@ -403,12 +416,14 @@
     const urls = {}; B.indicators.forEach((r) => { String(r.url || '').split(' ; ').filter(Boolean).forEach((u) => { urls[u] = (urls[u] || 0) + 1; }); });
     const srcList = Object.keys(urls).sort().map((u) => `<li><a href="${esc(u)}" rel="noopener" target="_blank">${esc(u.replace(/^https?:\/\//, '').slice(0, 110))}</a></li>`).join('');
     const md = window.marked ? window.marked.parse(B.model_card) : `<pre>${esc(B.model_card)}</pre>`;
-    main.innerHTML = `<div class="stack"><div><h1>Methods and data lineage</h1><p class="lead">How each number gets from a government file to your screen, what the model can and cannot say, and the exact weights used. Data refreshed ${esc(B.generated)} · scoring weights v1.</p></div>
+    main.innerHTML = `<div class="stack"><div><h1>Methods and data lineage</h1><p class="lead">How each number gets from a government file to your screen, what the model can and cannot say, and the exact weights used. Data refreshed ${esc(B.generated)} · scoring weights v2.</p></div>
       <section><h2 style="margin-bottom:12px">Lineage</h2><ol class="lineage grid" style="--min:170px;gap:10px">${steps.map(([n, t, d]) => `<li class="card"><span class="mono small muted">${n}</span><br><strong>${t}</strong><p class="small muted" style="margin:4px 0 0">${esc(d)}</p></li>`).join('')}</ol></section>
       <section><h2 style="margin-bottom:12px">Forecast models and targets</h2><div class="tbl-wrap"><table><thead><tr><th>Industry</th><th>Status</th><th>Reason</th></tr></thead><tbody>${regRows}</tbody></table></div>
         <details style="margin-top:12px"><summary>Model card: manufacturing (full)</summary><div class="md">${md}</div></details></section>
-      <section><h2 style="margin-bottom:6px">Default weights (v1)</h2><p class="small muted">Design defaults from the blueprint, tilted by industry. NOT learned optima. Indicators are scored as their percentile among 30 states (cost and risk reversed); missing indicators are dropped and weights renormalised, never filled; a state missing a mandatory dimension is excluded.</p>
+      <section><h2 style="margin-bottom:6px">Default weights (v2)</h2><p class="small muted">Design defaults from the blueprint, tilted by industry. NOT learned optima. Indicators are scored as their percentile among 30 states (cost and risk reversed); missing indicators are dropped and weights renormalised, never filled; a state missing a mandatory dimension is excluded.</p>
         <div class="tbl-wrap"><table><thead><tr><th>Industry</th>${dkeys.map((d) => `<th class="num">${esc(S.dimensions[d].label)}</th>`).join('')}</tr></thead><tbody>${wRows}</tbody></table></div>
+        <p class="small muted" style="margin:12px 0 4px">— = the industry has no such dimension: no auditable indicator exists for it, so its weight is spread over the others.</p>
+        <h3 style="margin:16px 0 6px">Indicators used by each industry, and why</h3><p class="small muted">Only indicators with a stated business link are scored. Operational needs can add indicators (e.g. digital-first adds internet subscriptions). Strengths and watch-outs on the results page compare each state with the other states you chose.</p>${whyRows}
         <details style="margin-top:12px"><summary>Indicator definitions</summary><div class="tbl-wrap"><table><thead><tr><th>Indicator</th><th>Unit</th><th>Direction</th><th>Caveat</th></tr></thead><tbody>${indRows}</tbody></table></div></details></section>
       <section><h2 style="margin-bottom:12px">Eligibility matrix (7 states × 6 industries, default settings)</h2><div class="tbl-wrap"><table><thead><tr><th>State</th>${inds.map((i) => `<th>${esc(S.industries[i].label)}</th>`).join('')}</tr></thead><tbody>${emRows}</tbody></table></div></section>
       <section><h2 style="margin-bottom:12px">Coverage of the state accounts panel</h2><img src="coverage_heatmap.png" alt="Heatmap of state by fiscal year by activity coverage in the RBI Handbook 2024-25; Gujarat lacks 2023-24 and 2024-25, several small states lack 2024-25" style="width:100%;border:1px solid var(--line);border-radius:12px;background:#fff"></section>

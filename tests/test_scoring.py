@@ -10,10 +10,13 @@ from scoring.score import Profile, effective_weights, percentile, score
 
 def test_weights_are_versioned_design_defaults():
     s = spec()
-    assert s["version"] == "v1"
+    assert s["version"] == "v2"
+    assert spec("v1")["version"] == "v1"  # previous version kept for the audit trail
     for ind, prof in s["industries"].items():
         assert sum(prof["weights"].values()) == 100, ind
-        assert set(prof["weights"]) == set(s["dimensions"]), ind
+        assert set(prof["weights"]) <= set(s["dimensions"]), ind
+        assert set(prof["weights"]) == set(prof["indicators"]), ind
+        assert set(prof["mandatory_dimensions"]) <= set(prof["weights"]), ind
 
 
 def test_percentile_midrank_and_direction():
@@ -104,10 +107,14 @@ def test_too_many_priorities_rejected():
         effective_weights(Profile("retail", priorities=["demand", "cost", "labour", "growth"]))
 
 
-def test_unsupported_operational_need_is_disclosed_not_applied():
-    w0, _, _ = effective_weights(Profile("manufacturing"))
-    w1, _, notes = effective_weights(Profile("manufacturing", needs=["digital_first"]))
-    assert w0 == w1 and any("no supported indicator" in n for n in notes)
+def test_operational_need_adds_its_indicators_and_is_disclosed():
+    _, i0, _ = effective_weights(Profile("manufacturing"))
+    w1, i1, notes = effective_weights(Profile("manufacturing", needs=["digital_first"]))
+    assert "internet_subs_per_100" not in i0["infrastructure"]
+    assert i1["infrastructure"]["internet_subs_per_100"] == 2  # added at weight 1, then x2 for the need
+    assert any("adds internet_subs_per_100" in n for n in notes)
+    t = score(Profile("manufacturing", needs=["digital_first"]), with_stability=False).indicators
+    assert "internet_subs_per_100" in set(t.indicator)
 
 
 def test_frozen_reference_scores_do_not_depend_on_comparison_set():

@@ -7,6 +7,8 @@ import pandas as pd
 
 from etl.states import name_of
 from scoring.data import registry, spec
+from scoring.score import reasons as score_reasons
+from ui.state import NEED_LABELS
 
 
 def indian(n: float, decimals: int = 0) -> str:
@@ -58,32 +60,52 @@ def source_tag(row) -> str:
     return f"{tbl} · {row.period}".strip(" ·")
 
 
-def reasons(res, sid: str, k: int = 3) -> tuple[list[str], list[str]]:
-    g = res.indicators[(res.indicators.state_id == sid) & res.indicators.observed].copy()
-    g["lever"] = (g.score - 50) * g.w_ind_eff * g.dim_weight
-    g = g[(g.value != g.pilot_median) | g.pilot_median.isna()]  # ties with every pilot say nothing
+def lower_first(label: str) -> str:
+    """'Urban household spending (MPCE)' -> 'urban household spending (MPCE)'; keeps acronyms such as 'GSDP'."""
+    return label if label[:2].isupper() else label[:1].lower() + label[1:]
 
-    def line(r):
-        return (f"{r.label}: {fmt(r.value, r.unit)} vs pilot median {fmt(r.pilot_median, r.unit)} "
-                f"({source_tag(r)})")
-    pos = [line(r) for r in g.sort_values("lever", ascending=False).head(k).itertuples() if r.lever > 0]
-    neg = [line(r) for r in g.sort_values("lever").head(k).itertuples() if r.lever < 0]
-    return pos, neg
+
+def reason_line(x: dict) -> str:
+    """One strength / watch-out: what the number means, the evidence vs the other compared states, and why it
+    matters for this industry."""
+    peers = f"the other {x['n_peers']} compared state{'s' if x['n_peers'] != 1 else ''}"
+    tags = []
+    if x["priority"]:
+        tags.append(f"your priority: {x['dimension_label'].lower()}")
+    tags += [f"your need: {NEED_LABELS.get(n, n).lower()}" for n in x["needs"]]
+    meaning = x["meaning"][:1].upper() + x["meaning"][1:] if x["meaning"] else x["label"]
+    return (f"{meaning}: {lower_first(x['label'])} {fmt(x['value'], x['unit'])} vs {fmt(x['peer_median'], x['unit'])} "
+            f"median of {peers} ({source_tag(_Row(x))}). {x['why']}"
+            + (f" [{'; '.join(tags)}]" if tags else "")).replace(" . ", " ").strip()
+
+
+class _Row:
+    def __init__(self, x):
+        self.source_file, self.quality, self.period = x["source_file"], x["quality"], x["period"]
+
+
+NO_POS = "No indicator in this profile is materially stronger than the other compared states."
+NO_NEG = "No indicator in this profile is materially weaker than the other compared states."
+
+
+def reasons(res, sid: str, k: int = 3) -> tuple[list[str], list[str]]:
+    pos, neg = score_reasons(res, sid, k)
+    return [reason_line(x) for x in pos] or [NO_POS], [reason_line(x) for x in neg] or [NO_NEG]
 
 
 def managerial(res) -> str:
-    """Plain-language reading of the ranking, built from dimension scores."""
-    s = spec()
+    """Plain-language reading of the ranking, built from the same relative reasons as the state cards."""
     rk = res.ranking
-    dims = [c[4:] for c in rk.columns if c.startswith("dim_")]
-    lab = {d: s["dimensions"][d]["label"].lower() for d in dims}
     parts = []
     for i, r in enumerate(rk.head(3).itertuples()):
-        row = pd.Series({d: getattr(r, f"dim_{d}") for d in dims}).dropna()
-        best, worst = row.idxmax(), row.idxmin()
+        pos, neg = score_reasons(res, r.state_id, 1)
         lead = ["leads", "follows", "is third"][i]
-        parts.append(f"{r.state} {lead} ({r.score:.1f}): strongest on {lab[best]} ({row[best]:.0f}/100), "
-                     f"weakest on {lab[worst]} ({row[worst]:.0f}/100).")
+        txt = f"{r.state} {lead} ({r.score:.1f})"
+        if pos:
+            txt += f". Biggest edge over the other compared states: {pos[0]['meaning']} ({pos[0]['dimension_label'].lower()})"
+        if neg:
+            txt += f"{';' if pos else '.'} main watch-out: {neg[0]['meaning']} ({neg[0]['dimension_label'].lower()})"
+        parts.append(txt + ".")
     gap = rk.score.iloc[0] - rk.score.iloc[1] if len(rk) > 1 else float("nan")
     if gap == gap and gap < 2:
         parts.append(f"The top two are {gap:.1f} points apart, which is within what a modest change of weights "

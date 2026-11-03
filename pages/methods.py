@@ -8,7 +8,7 @@ from ui import theme
 S = spec()
 st.title("Methods and data lineage")
 theme.lead("How each number gets from a government file to your screen, what the model can and cannot say, and the "
-           "exact weights used. Last refresh 3 Nov 2026 · scoring weights v1.")
+           "exact weights used. Last refresh 3 Nov 2026 · scoring weights v2.")
 
 st.subheader("Lineage")
 steps = [("01", "Raw files", "Official XLSX/HTML/PDF saved unchanged under data/raw/<source>/<vintage>/ with sha256 "
@@ -18,7 +18,7 @@ steps = [("01", "Raw files", "Official XLSX/HTML/PDF saved unchanged under data/
          ("04", "Warehouse", "DuckDB: dim_state, fact_economic, fact_indicator (+ derived ratios)"),
          ("05", "Model", "features/build_panel.py + models/train.py: lag features as of release date, ridge vs "
                          "baselines"),
-         ("06", "Score", "scoring/score.py: percentile vs 30 states, weights v1, your priorities")]
+         ("06", "Score", "scoring/score.py: percentile vs 30 states, weights v2, your priorities")]
 cols = st.columns(len(steps))
 for c, (n, t, d) in zip(cols, steps):
     c.markdown(f"<div class='ei-stat'><span class='ei-mono' style='font-size:12px;color:#4A5361'>{n}</span><br>"
@@ -39,13 +39,24 @@ if card.exists():
     with st.expander("Model card: manufacturing (full)"):
         st.markdown(card.read_text())
 
-st.subheader("Default weights (v1)")
+st.subheader("Default weights (v2)")
 st.caption("Design defaults from the blueprint, tilted by industry. NOT learned optima. Indicators are scored as their "
            "percentile among 30 states (cost and risk reversed); missing indicators are dropped and weights "
            "renormalised, never filled; a state missing a mandatory dimension is excluded.")
-w = pd.DataFrame({p["label"]: p["weights"] for p in S["industries"].values()}).T
+w = pd.DataFrame({p["label"]: p["weights"] for p in S["industries"].values()}).T[list(S["dimensions"])]
 w.columns = [S["dimensions"][c]["label"] for c in w.columns]
-st.dataframe(w, use_container_width=True)
+st.dataframe(w.astype(object).where(w.notna(), "—"), use_container_width=True)
+st.caption("— = the industry has no such dimension: no auditable indicator exists for it, so its weight is spread over "
+           "the others.")
+st.markdown("**Indicators used by each industry, and why.** Only indicators with a stated business link are scored; "
+            "operational needs can add indicators (e.g. digital-first adds internet subscriptions). Strengths and "
+            "watch-outs on the results page compare each state with the other states you chose.")
+for prof_ in S["industries"].values():
+    with st.expander(prof_["label"]):
+        st.dataframe(pd.DataFrame([{"Dimension": S["dimensions"][d]["label"], "Indicator": S["indicators"][c]["label"],
+                                    "Weight": wt, "Why it is in this profile": prof_.get("why", {}).get(c, "")}
+                                   for d, m in prof_["indicators"].items() for c, wt in m.items()]),
+                     hide_index=True, use_container_width=True)
 with st.expander("Indicator definitions"):
     ind = pd.DataFrame([{"code": k, "indicator": v["label"], "unit": v["unit"],
                          "direction": "higher is better" if v["direction"] > 0 else "lower is better",

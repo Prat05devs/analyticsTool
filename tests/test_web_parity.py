@@ -43,3 +43,9 @@ def test_stability_close(pair):
         gs = {x["s"]: x["same"] for x in g["stability"]}
         for x in e["stability"]:
             assert abs(x["same"] - gs[x["s"]]) <= 0.08, (e["profile"], x)
+
+
+def test_reasons_match(pair):
+    """Strengths and watch-outs (indicator and order) are identical in the browser and in Python."""
+    for e, g in zip(*pair):
+        assert e["reasons"] == g["reasons"], e["profile"]

@@ -3,7 +3,7 @@
 
 **Prepared for:** MBA (Big Data Analytics) evaluation panel
 **Role:** Lead Analytics Solution Architect & Project Lead
-**Build date / data refresh:** 3 November 2026 · **Scoring version:** `weights_v1` · **Live app:** https://india-expansion-intel.vercel.app
+**Build date / data refresh:** 3 November 2026 · **Scoring version:** `weights_v2` (v1 kept for audit) · **Live app:** https://india-expansion-intel.vercel.app
 
 ---
 
@@ -14,7 +14,7 @@
 | *Where should an established Indian business expand next?* | A state-screening decision app: 7 pilot states × 6 industries, scored against a 30-state national reference | A relative 0–100 suitability index with evidence, trade-offs, rank stability and data caveats for every recommendation |
 | *Can we predict which states will grow?* | A leakage-controlled, one-year-ahead forecast of real manufacturing GSVA growth | Validated: 12% lower error than the best naive baseline; hold-out error 3.3 pp vs 3.9 pp. Other five sectors are **ranking-only** because no defensible state-level target exists |
 | *Which states are structurally alike?* | Unsupervised segmentation of 30 states on 15 de-correlated indicators | 5 state baskets (k = 5), from "Mature industrial & services cores" to "Remote frontier economies" |
-| *How much should we trust the ranking?* | ±20% weight perturbation, equal-weight and PCA-weight challengers, counter-explanations | Rankings are robust in 4 of 6 industries; manufacturing's default top-3 is a **near-tie** (63.2 / 63.0 / 62.7) and the app says so |
+| *How much should we trust the ranking?* | ±20% weight perturbation, equal-weight and PCA-weight challengers, counter-explanations | Leaders are robust for IT services and healthcare (Karnataka, ≥99% of draws); in the other four industries the top two are a **near-tie** (e.g. manufacturing 63.2 / 63.0 / 62.7) and the app says so |
 
 > **Governing principle.** The index is a *relative screening score*. It is **not** a probability of commercial success, profit or survival. Every number shown to a user traces to a raw government file with a recorded SHA-256 checksum. Nothing is imputed.
 
@@ -22,6 +22,7 @@
 
 1. **Honest scope over impressive scope.** Five of six industries have no state-level sector output series, so we refused to train "five forecasts" on the same broad services aggregate (a common analytics anti-pattern). They are ranking-only by design.
 2. **Governance as a feature.** Each value carries its source table, period and checksum on screen. In a decision product, auditability builds executive trust, and with it adoption.
+3. **Every reason must be a business reason.** Each industry scores only indicators with a stated link to that business, and every strength or watch-out shown to a user says why it matters for that industry and how the state compares with the *other states the user chose*.
 
 ---
 
@@ -104,11 +105,23 @@ State macro data in India has a **structural reporting lag of 12–24 months**, 
 | Business pillar | Indicators (examples) | Proxy caveat stated in the app |
 |---|---|---|
 | Market demand | Real GSDP (log), per-capita NSDP, urban/rural MPCE, personal loans per person, exports, tourist visits | High state demand ≠ store-site demand |
-| Infrastructure | Energy shortage %, peak demand not met, power per person, national highways & rail per lakh people, internet subscriptions per 100, govt hospital beds per lakh | Subscriptions ≠ measured speed; shortage ≠ plant outages |
+| Infrastructure | Energy shortage %, peak demand not met, power per person, national highways & rail per lakh people, internet subscriptions per 100 | Subscriptions ≠ measured speed; shortage ≠ plant outages |
 | Economic outlook | 3-year real growth momentum (sector or aggregate); validated manufacturing forecast | Services aggregate is broad, not sector-specific |
-| Labour availability | Urban/rural unemployment rate (as *available pool*), factory workers, public specialists | Pool size ≠ job-specific talent |
+| Labour availability | Urban/rural unemployment rate (as *available pool*), factory workers, public specialists and PHC doctors per lakh | Pool size ≠ job-specific talent |
+| Healthcare care gap | Public hospital beds per lakh, read as unmet demand (fewer public beds → more patients relying on private care) | Not a measure of private capacity |
 | Business ecosystem | Factories, manufacturing/services/financial share of GSVA, credit to industry, bank offices | Density can mean cluster **or** saturation |
 | Operating cost & policy | Rural wages, CPI, urban housing inflation, power T&D losses | No auditable policy metric, so policy is informational only |
+
+**Industry relevance rule (scoring v2).** An indicator enters an industry's profile only with a written business rationale (`why` in `scoring/weights_v2.yaml`), and the build tests enforce it. Version 1 used a generic list, so a healthcare user was shown internet subscriptions as a strength and urban unemployment as a watch-out. v2 removed those, added PHC doctors and population for healthcare, and dropped household spending from IT services. It also dropped the ecosystem dimension for healthcare and hospitality, because no auditable cluster indicator exists for them. Indicators that only matter for some business models are brought in by **operational needs**: *digital-first* adds internet subscriptions, *power-intensive* adds power indicators and *logistics-heavy* adds highways and rail. The app tags each such reason with the need behind it.
+
+| Industry | Indicators scored (v2) |
+|---|---|
+| Manufacturing | GSDP, per-capita income, exports · energy shortage, peak unmet, power per person, highways, rail · forecast + manufacturing momentum · factory workers, urban & rural labour pool · factories, manufacturing share, credit to industry · rural non-farm wage, T&D losses, CPI |
+| Retail | Urban MPCE, per-capita income, personal loans, GSDP · internet, energy shortage, highways · services momentum · urban labour pool · services share, bank offices · urban rent inflation, CPI |
+| IT / professional | GSDP, per-capita income · urban & total internet, energy shortage · services and financial-services momentum · urban labour pool · services and financial-services share · urban rent inflation |
+| Logistics | GSDP, exports · highways, rail, energy shortage · whole-economy momentum · urban & rural labour pool · factories, credit to industry · rural non-farm wage, CPI |
+| Healthcare | Per-capita income, urban & rural MPCE, population, public-bed care gap · energy shortage, power per person · services momentum · public specialists & PHC doctors per lakh · urban rent inflation, CPI |
+| Hospitality | Domestic & foreign tourist visits, urban MPCE · highways, rail · services momentum · urban labour pool · urban rent inflation, CPI |
 
 **Derived features (computed, never imputed).** Population is derived as NSDP ÷ per-capita NSDP, which is the definition of per-capita NSDP. Every ratio carries all its component files. Power shortage % is (requirement − availability) / requirement, floored at 0.
 
@@ -283,8 +296,10 @@ Medians of raw values per cluster (national median in the last column). Source: 
 | Retail | **30** | 15 | 20 | 15 | 10 | 10 |
 | IT / professional | 20 | **25** | 20 | 20 | 10 | 5 |
 | Logistics | 20 | **30** | 20 | 10 | 10 | 10 |
-| Healthcare | **30** | 20 | 15 | 15 | 10 | 10 |
-| Hospitality | **35** | 20 | 15 | 10 | 10 | 10 |
+| Healthcare | **35** | 20 | 15 | 20 | — | 10 |
+| Hospitality | **40** | 20 | 15 | 15 | — | 10 |
+
+*— = no ecosystem dimension (no auditable indicator); its weight is spread over the other dimensions.*
 
 **Why not purely statistical (PCA/factor) weights in production?** PCA weights *variance*, not *business relevance*. An indicator that varies a lot can be strategically minor. AHP pairwise elicitation was not run because no expert panel was convened; that is listed as the next step. Instead we treat **PCA and equal weights as challenger models** to stress-test the design weights:
 
@@ -292,14 +307,14 @@ Medians of raw values per cluster (national median in the last column). Source: 
 |---|---|---|---|---|---|
 | Manufacturing | 46% | 0.99 | 0.97 | 2 / 3 | 1 / 3 |
 | Retail | 41% | 0.94 | 0.92 | 2 / 3 | 2 / 3 |
-| IT / professional | 36% | 0.89 | 0.92 | 2 / 3 | 2 / 3 |
-| Logistics | 37% | 0.93 | **0.66** | 2 / 3 | 2 / 3 |
-| Healthcare | 36% | 0.86 | 0.96 | 2 / 3 | 2 / 3 |
-| Hospitality | 26% | 0.79 | 0.77 | 3 / 3 | 3 / 3 |
+| IT / professional | 35% | 0.86 | 0.94 | 2 / 3 | 3 / 3 |
+| Logistics | 38% | 0.93 | **0.62** | 2 / 3 | 2 / 3 |
+| Healthcare | 33% | 0.80 | 0.91 | 2 / 3 | 3 / 3 |
+| Hospitality | 29% | 0.76 | 0.88 | 1 / 3 | 2 / 3 |
 
 *(Spearman rank correlations across all 30 states; source `reports/segmentation/weighting_comparison.csv`.)*
 
-**Interpretation.** Across 30 states, the national ordering is largely weight-insensitive (ρ ≥ 0.86 in five industries). The fine top-3 order is not, and that is exactly where user priorities should matter. Logistics diverges most under PCA weights because PCA puts 31% on ecosystem against the design's 10%. A manager who believes clustering effects dominate logistics should raise that weight, and the what-if panel lets them.
+**Interpretation.** Across 30 states, the national ordering is largely weight-insensitive (ρ ≥ 0.86 in four industries, ≥ 0.76 in all). The fine top-3 order is not, and that is exactly where user priorities should matter. Logistics diverges most under PCA weights because PCA puts 30% on ecosystem against the design's 10%. A manager who believes clustering effects dominate logistics should raise that weight, and the what-if panel lets them.
 
 ### 4.2 Composite index formulation
 
@@ -331,25 +346,35 @@ $$
 
 6. **Forecast factor.** The forecast enters "Outlook" **only** if the industry's model passed validation and the state has current data. Otherwise outlook uses historical momentum, labelled as such.
 
+7. **Explanations (strengths and watch-outs).** Reasons are relative to the *other states the user is comparing*, not to the national median, so they explain the rank the user actually sees:
+
+$$
+\text{gap}_{s,j} = \tilde p_{s,j} - \operatorname{median}_{e \in E \setminus \{s\}} \tilde p_{e,j},
+\qquad
+\text{lever}_{s,j} = \text{gap}_{s,j} \cdot v^{\text{eff}}_{s,j} \cdot \hat w_d
+$$
+
+   Here $E$ is the set of eligible compared states. The largest positive levers are shown as strengths and the largest negative ones as watch-outs. An item is shown only if $|\text{gap}| \ge 5$ percentile points **and** the raw difference from the peers' median is material: at least the indicator's floor (for example 0.1 pp for energy shortage, 0.5 pp for growth rates) or 5% of the median. This stops a 0.03% vs 0.00% shortage from being presented as a business reason. Because the lever uses the user's effective weights, priorities and needs change which reasons appear, and each reason carries tags such as "your priority: infrastructure" or "your need: digital-first". The browser and Python engines produce identical reasons (parity test).
+
 ### 4.3 Sensitivity & robustness
 
 **Method.** For each of 500 draws, every dimension weight is multiplied by $U(0.8, 1.2)$ and renormalised, and the pilots are re-ranked. In the app each state shows the share of draws in which it keeps its rank, plus its best and worst rank.
 
 | Industry (default weights) | Leader | Gap 1st–2nd (pts) | Leader kept in draws | Mean ρ vs base | Worst ρ |
 |---|---|---|---|---|---|
-| Healthcare | Karnataka | 6.1 | **100%** | 1.00 | 1.00 |
-| Hospitality | Karnataka | 2.4 | **100%** | 1.00 | 1.00 |
-| Logistics | Maharashtra | 0.7 | 82% | 0.97 | 0.89 |
-| IT / professional | Karnataka | 0.9 | 82% | 0.99 | 0.96 |
+| IT / professional | Karnataka | 3.1 | **100%** | 1.00 | 0.96 |
+| Healthcare | Karnataka | 0.8 | **99%** | 1.00 | 0.96 |
 | Retail | Telangana | 0.3 | 59% | 0.98 | 0.93 |
+| Logistics | Maharashtra | 0.1 | 55% | 0.96 | 0.89 |
 | **Manufacturing** | Telangana | **0.2** | **51%** | 0.91 | 0.64 |
+| Hospitality | Maharashtra | 0.1 | 36% | 0.95 | 0.82 |
 
 **Counter-explanation.** For every result the engine computes what would make the runner-up win. Example (UP manufacturer demo, power/logistics/labour priorities): *"Gujarat scores 95 vs 63 for Telangana on business ecosystem (mainly manufacturing share of GSVA). If that dimension carried about 1.5× its current weight, Gujarat would rank first."*
 
 **Policy & strategic allocation implications**
 
-- **Robust leaders** (healthcare, hospitality → Karnataka) can support a *concentrated* bet.
-- **Near-ties** (manufacturing default: Telangana 63.2, Maharashtra 63.0, Tamil Nadu 62.7) argue for a **shortlist and site visits**, not a single-state commitment. The app states this explicitly.
+- **Robust leaders** (IT services and healthcare → Karnataka) can support a *concentrated* bet. Healthcare shows that a small gap (0.8 points) can still be robust when the leader is ahead on most dimensions at once.
+- **Near-ties** (manufacturing default: Telangana 63.2, Maharashtra 63.0, Tamil Nadu 62.7; hospitality: Maharashtra 66.2, Karnataka 66.0, Rajasthan 65.3) argue for a **shortlist and site visits**, not a single-state commitment. The app states this explicitly.
 - Personalisation helps: once the UP manufacturer's priorities are applied, Telangana's lead becomes stable (same rank in 99% of draws). The engine converts stated strategy into a clearer answer.
 - For policymakers, weight-insensitive *weakness* (e.g. UP's infrastructure dimension at 30/100 under every reasonable weighting) is a robust intervention target, unlike rank changes driven by weighting choices.
 
@@ -422,7 +447,7 @@ $$
 
 1. State averages hide corridor and district variation; this is *screening*, not site selection.
 2. One data vintage: the forecast backtest uses revised data.
-3. Weights are expert-style defaults, not AHP-elicited or learned.
+3. Weights and the indicator-to-industry mapping are expert-style defaults (v2), not AHP-elicited or learned.
 4. Segmentation structure is weak (silhouette 0.21): useful for framing, not for hard rules.
 5. Ookla speed data is non-commercial (CC BY-NC-SA). A commercial deployment needs a licence.
 

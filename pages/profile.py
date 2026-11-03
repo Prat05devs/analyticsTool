@@ -72,7 +72,7 @@ profile = {"industry": industry, "current_state": current, "capital_rs_crore": c
 with side:
     with st.container(border=True):
         st.subheader("Weights you will use")
-        st.caption(f"{industries()[industry]} defaults (v1), adjusted by your choices. Design defaults, not learned "
+        st.caption(f"{industries()[industry]} defaults (v2), adjusted by your choices. Design defaults, not learned "
                    "optima.")
         w, _, notes = effective_weights(to_profile(profile))
         base = S["industries"][industry]["weights"]

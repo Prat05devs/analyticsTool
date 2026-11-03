@@ -60,6 +60,20 @@
 - `reports/audit_report.md`: 20 random displayed values traced to raw files, 20/20 PASS.
 - **Not done without your go-ahead**: creating a GitHub repository and pushing (outward-facing).
 
+## Scoring v2 — industry-relevant reasons (3 Nov 2026)
+- User report: healthcare results cited internet subscriptions as a strength and urban unemployment as a watch-out,
+  and reasons looked the same whatever the industry or choices. Causes: v1 profiles contained generic indicators,
+  and reasons were ranked against the national median (50) rather than the compared states.
+- `scoring/weights_v2.yaml` (v1 kept): every industry indicator has a written business rationale (`why`, enforced
+  by `tests/test_reasons.py`); healthcare drops internet and unemployment, gains PHC doctors per lakh (new derived
+  ratio, `etl/build_indicators.py`, RBI T16 / population) and population, and reads public beds as a care gap;
+  IT drops household spending; healthcare and hospitality have no ecosystem dimension. Operational needs now add
+  their indicators to profiles that lack them.
+- Reasons = gap vs the median of the other compared states x effective weights, with a materiality floor; tagged
+  with the user's priorities and needs. Python and browser engines produce identical reasons (parity test).
+- New frozen reference `scoring/reference_v2.parquet`; eligibility, web bundle, parity fixtures and the
+  weighting/sensitivity outputs regenerated; panel documentation updated. 109 tests pass; audit trace 20/20.
+
 ## Open questions
 1. Download the RBI XLSX files by hand? Optional: the HTML tables are the same official data.
 2. Gujarat FY 2023-24/2024-25 GSVA from Gujarat DES — different source; add as a separate, labelled panel?

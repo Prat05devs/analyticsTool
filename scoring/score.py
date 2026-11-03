@@ -3,14 +3,14 @@
     S(state, industry, user) = sum_j w(industry, user, j) x normalised_indicator(state, j)
 
 - Normalisation: percentile rank (mid-rank, 0-100) of the state's latest value within a FROZEN national reference
-  (28 states + Delhi + J&K, scoring/reference_v1.parquet), so a state's score does not move when the user changes
+  (28 states + Delhi + J&K, scoring/reference_<version>.parquet), so a state's score does not move when the user changes
   the comparison set. Cost/risk indicators (direction -1) are scored 100 - percentile.
 - Missing data: never filled. A missing indicator is dropped and the remaining indicator weights in its dimension are
   renormalised; a dimension with no observed indicator is dropped and dimension weights are renormalised. Both are
   disclosed per state. A missing MANDATORY dimension excludes the state (etl/eligibility.py rule).
 - Forecast factor: only when models/registry.json marks the industry's model 'validated'; otherwise the outlook
   dimension uses historical momentum only.
-- Weights are design defaults (scoring/weights_v1.yaml), not learned optima. The score is a relative screening
+- Weights are design defaults (scoring/weights_<version>.yaml; v2 is current), not learned optima. The score is a relative screening
   index, NOT a probability of success.
 """
 from __future__ import annotations
@@ -23,14 +23,18 @@ import pandas as pd
 
 from etl.common import ROOT
 from etl.states import name_of
-from scoring.data import PILOT_IDS, forecasts, latest, reference_ids, registry, spec
+from scoring.data import CURRENT_VERSION, PILOT_IDS, forecasts, latest, reference_ids, registry, spec
 
-REFERENCE_PATH = ROOT / "scoring" / "reference_v1.parquet"
+def reference_path(version: str = CURRENT_VERSION):
+    return ROOT / "scoring" / f"reference_{version}.parquet"
+
+
+REFERENCE_PATH = reference_path()
 FORECAST_SOURCE = "models/registry.json; data/curated/forecast_manufacturing.parquet"
 
 
 # ---------------------------------------------------------------- reference -------------------------------------------
-def build_reference(version: str = "v1") -> pd.DataFrame:
+def build_reference(version: str = CURRENT_VERSION) -> pd.DataFrame:
     """Freeze the national reference distribution for every catalogue indicator (run once per weights version)."""
     s = spec(version)
     lat = latest(s["indicators"].keys())
@@ -39,14 +43,14 @@ def build_reference(version: str = "v1") -> pd.DataFrame:
     if len(fc):
         ref = pd.concat([ref, fc[fc.state_id.isin(reference_ids())].assign(
             feature_code="forecast_manufacturing", value=fc.forecast, period=fc.forecast_fy)[ref.columns]])
-    ref.to_parquet(REFERENCE_PATH, index=False)
+    ref.to_parquet(reference_path(version), index=False)
     return ref
 
 
-def reference() -> pd.DataFrame:
-    if not REFERENCE_PATH.exists():
-        return build_reference()
-    return pd.read_parquet(REFERENCE_PATH)
+def reference(version: str = CURRENT_VERSION) -> pd.DataFrame:
+    if not reference_path(version).exists():
+        return build_reference(version)
+    return pd.read_parquet(reference_path(version))
 
 
 def _transform(x, how):
@@ -76,7 +80,7 @@ class Profile:
     dimension_weights: dict | None = None                      # what-if override (raw, renormalised)
 
 
-def effective_weights(p: Profile, version: str = "v1") -> tuple[dict, dict, list[str]]:
+def effective_weights(p: Profile, version: str = CURRENT_VERSION) -> tuple[dict, dict, list[str]]:
     """Return (dimension weights summing to 1, indicator weights per dimension, notes)."""
     s = spec(version)
     prof = s["industries"][p.industry]
@@ -94,11 +98,26 @@ def effective_weights(p: Profile, version: str = "v1") -> tuple[dict, dict, list
         if d is None:
             notes.append(s["priorities"]["policy_note"])
             continue
-        dims[d] = dims.get(d, 0) * s["priorities"]["multiplier"]
+        if d not in dims:
+            notes.append(f"Priority '{pr}': {prof['label']} has no {s['dimensions'][d]['label'].lower()} dimension, "
+                         "so it does not change the scores.")
+            continue
+        dims[d] = dims[d] * s["priorities"]["multiplier"]
         notes.append(f"Priority '{pr}': {s['dimensions'][d]['label']} weight x{s['priorities']['multiplier']}.")
     for need in p.needs:
         rule = s["operational_needs"][need]
-        supported = [i for i in rule["boost"] if i in inds.get(rule["dimension"], {})]
+        if rule["dimension"] not in dims:
+            notes.append(f"Operational need '{need}' maps to a dimension the {prof['label']} profile does not have, "
+                         "so it does not change the scores.")
+            continue
+        have = inds.setdefault(rule["dimension"], {})
+        added = [i for i in rule.get("add", []) if i not in have]
+        for i in added:  # the need brings its own indicators into a profile that lacks them
+            have[i] = 1.0
+        if added:
+            notes.append(f"Operational need '{need}' adds {', '.join(added)} to "
+                         f"{s['dimensions'][rule['dimension']]['label']}.")
+        supported = [i for i in rule["boost"] if i in have]
         if not supported:
             notes.append(f"Operational need '{need}' has no supported indicator in the {prof['label']} profile, "
                          "so it does not change the scores.")
@@ -117,17 +136,18 @@ def effective_weights(p: Profile, version: str = "v1") -> tuple[dict, dict, list
 
 
 # ---------------------------------------------------------------- core ------------------------------------------------
-def indicator_table(p: Profile, version: str = "v1") -> pd.DataFrame:
+def indicator_table(p: Profile, version: str = CURRENT_VERSION) -> pd.DataFrame:
     """Long table: state x indicator with raw value, period, provenance and normalised score (NaN if missing)."""
     s = spec(version)
     prof = s["industries"][p.industry]
     reg = registry()
     model_ok = reg.get(prof.get("model_target") or "", {}).get("status") == "validated"
     lat = latest().set_index(["state_id", "feature_code"])
-    ref = reference()
+    ref = reference(version)
+    _, eff_inds, _ = effective_weights(p, version)   # industry profile plus indicators added by operational needs
     fc = forecasts().set_index("state_id") if model_ok else pd.DataFrame()
     rows = []
-    for dim, inds in prof["indicators"].items():
+    for dim, inds in eff_inds.items():
         for code in inds:
             meta = s["indicators"][code]
             if meta.get("requires_model") and not model_ok:
@@ -167,10 +187,11 @@ class Result:
     stability: pd.DataFrame | None = None
     counter: str | None = None
     message: str | None = None
-    weights_version: str = "v1"
+    weights_version: str = CURRENT_VERSION
+    profile: Profile | None = None
 
 
-def score(p: Profile, version: str = "v1", with_stability: bool = True) -> Result:
+def score(p: Profile, version: str = CURRENT_VERSION, with_stability: bool = True) -> Result:
     s = spec(version)
     prof = s["industries"][p.industry]
     states = [x for x in p.states if not (p.exclude_current and x == p.current_state)]
@@ -191,7 +212,7 @@ def score(p: Profile, version: str = "v1", with_stability: bool = True) -> Resul
     excluded = pd.DataFrame(excl, columns=["state_id", "state", "reason"])
     elig = [x for x in states if x not in set(excluded.state_id)]
     if len(elig) < 2:
-        return Result(p.industry, pd.DataFrame(), tab, dimw, notes, excluded,
+        return Result(p.industry, pd.DataFrame(), tab, dimw, notes, excluded, weights_version=version, profile=p,
                       message="Fewer than two comparable states pass the mandatory data gates, so no ranking is shown.")
 
     # within-dimension renormalisation over OBSERVED indicators only
@@ -244,7 +265,7 @@ def score(p: Profile, version: str = "v1", with_stability: bool = True) -> Resul
     pilot_median = t.groupby("indicator").value.median()
     t["pilot_median"] = t.indicator.map(pilot_median)
 
-    res = Result(p.industry, rk, t, dimw, notes, excluded, weights_version=version)
+    res = Result(p.industry, rk, t, dimw, notes, excluded, weights_version=version, profile=p)
     if with_stability:
         res.stability = stability(ds.loc[rk.state_id], dimw, s["stability"])
     res.counter = counter_explanation(rk, ds, dimw, t, s)
@@ -274,6 +295,11 @@ def stability(ds: pd.DataFrame, dimw: dict, cfg: dict) -> pd.DataFrame:
                         ).sort_values("rank").reset_index(drop=True)
 
 
+def _lower_first(label: str) -> str:
+    """'Manufacturing share of GSVA' -> 'manufacturing share of GSVA' (acronyms kept)."""
+    return label if label[:2].isupper() else label[:1].lower() + label[1:]
+
+
 def counter_explanation(rk, ds, dimw, t, s) -> str | None:
     """One reason the runner-up could outperform the leader under different preferences (blueprint 7.2)."""
     if len(rk) < 2:
@@ -291,7 +317,7 @@ def counter_explanation(rk, ds, dimw, t, s) -> str | None:
     drv = t[(t.dimension == d) & t.state_id.isin([a, b])].pivot_table(index="indicator", columns="state_id",
                                                                         values="score")
     drv = (drv[b] - drv[a]).sort_values(ascending=False) if a in drv and b in drv else pd.Series(dtype=float)
-    lab = s["indicators"][drv.index[0]]["label"].lower() if len(drv) else d
+    lab = _lower_first(s["indicators"][drv.index[0]]["label"]) if len(drv) else d
     lead = (f"{name_of(b)} scores {ds.loc[b, d]:.0f} vs {ds.loc[a, d]:.0f} for {name_of(a)} on "
             f"{s['dimensions'][d]['label'].lower()} (mainly {lab}).")
     if k < 1.15:
@@ -300,14 +326,51 @@ def counter_explanation(rk, ds, dimw, t, s) -> str | None:
     return f"{lead} If that dimension carried about {k:.1f}x its current weight, {name_of(b)} would rank first."
 
 
-def reasons(res: Result, sid: str, k: int = 3) -> tuple[list[str], list[str]]:
-    """Evidence-linked 'why' and 'why not': strongest and weakest weighted indicators vs the pilot median."""
-    g = res.indicators[(res.indicators.state_id == sid) & res.indicators.observed].copy()
-    g["lever"] = (g.score - 50) * g.w_ind_eff * g.dim_weight
-    fmt = lambda r: (f"{r.label}: {fmt_value(r.value, r.unit)} ({r.period}) vs pilot median "
-                     f"{fmt_value(r.pilot_median, r.unit)}; national percentile score {r.score:.0f}")
-    pos = [fmt(r) for r in g.sort_values("lever", ascending=False).head(k).itertuples() if r.lever > 0]
-    neg = [fmt(r) for r in g.sort_values("lever").head(k).itertuples() if r.lever < 0]
+def reasons(res: Result, sid: str, k: int = 3) -> tuple[list[dict], list[dict]]:
+    """Why a state ranks where it does: its strongest and weakest indicators RELATIVE TO THE OTHER COMPARED STATES.
+
+    gap   = indicator score - median score of the other eligible states (percentile points); the raw difference from
+            the peers' median must also be material (spec `reasons`), so a 0.03% vs 0.00% shortage is not a reason
+    lever = gap x within-dimension weight x dimension weight (the user's effective weights)
+    Strengths are the largest positive levers, watch-outs the largest negative ones; gaps under `min_gap` points are
+    not reported. Each item carries the industry-specific reason the indicator is in the profile (`why`) and tags
+    for the user's priorities and operational needs that raised its weight.
+    """
+    s = spec(res.weights_version)
+    if res.ranking.empty:
+        return [], []
+    prof = s["industries"][res.industry]
+    t = res.indicators[res.indicators.observed]
+    me, others = t[t.state_id == sid], t[t.state_id != sid]
+    p = res.profile or Profile(industry=res.industry)
+    pri_dims = {s["priorities"]["map"].get(x) for x in p.priorities} - {None}
+    if p.dimension_weights is not None:
+        pri_dims = set()
+    min_gap = s.get("reasons", {}).get("min_gap", 5)
+    items = []
+    for r in me.itertuples():
+        o = others[others.indicator == r.indicator]
+        if o.empty:
+            continue
+        gap = float(r.score - o.score.median())
+        meta = s["indicators"][r.indicator]
+        needs = [n for n in p.needs if r.indicator in s["operational_needs"][n]["boost"]
+                 and s["operational_needs"][n]["dimension"] == r.dimension]
+        why = prof.get("why", {}).get(r.indicator) or (s["operational_needs"][needs[0]]["why"] if needs else "")
+        peer_med = float(o.value.median())
+        floor = meta.get("min_diff", s.get("reasons", {}).get("min_rel_diff", 0.05) * abs(peer_med))
+        if abs(r.value - peer_med) < floor:   # e.g. 0.03% vs 0.00% energy shortage: real but immaterial
+            continue
+        higher = gap * meta["direction"] > 0
+        items.append({"indicator": r.indicator, "label": r.label, "dimension": r.dimension,
+                      "dimension_label": s["dimensions"][r.dimension]["label"], "value": r.value, "unit": r.unit,
+                      "period": r.period, "source_file": r.source_file, "quality": r.quality,
+                      "peer_median": peer_med, "n_peers": int(o.state_id.nunique()),
+                      "score": float(r.score), "gap": gap, "lever": gap * r.w_ind_eff * r.dim_weight,
+                      "meaning": meta.get("hi" if higher else "lo", ""), "why": why,
+                      "priority": r.dimension in pri_dims, "needs": needs})
+    pos = sorted([x for x in items if x["gap"] >= min_gap and x["lever"] > 0], key=lambda x: -x["lever"])[:k]
+    neg = sorted([x for x in items if x["gap"] <= -min_gap and x["lever"] < 0], key=lambda x: x["lever"])[:k]
     return pos, neg
 
 

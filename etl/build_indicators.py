@@ -108,6 +108,7 @@ def derive(ind: pd.DataFrame, econ: pd.DataFrame) -> pd.DataFrame:
         ("personal_loans_scb", "personal_loans_per_capita", 1e7, "Rs per person", "year"),  # Rs crore -> Rs
         ("govt_beds_total", "govt_beds_per_lakh_pop", 1e5, "per lakh people", "snapshot"),
         ("health_staff_chc_specialists_in_position", "specialists_per_lakh_pop", 1e5, "per lakh people", "year"),
+        ("health_staff_phc_doctors_in_position", "phc_doctors_per_lakh_pop", 1e5, "per lakh people", "year"),
     ]
     for src, code, scale, unit, kind in ratio_specs:
         sub = ind[(ind.feature_code == src) & ind.value.notna()]

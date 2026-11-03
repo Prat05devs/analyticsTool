@@ -86,7 +86,7 @@ def stat(value: str, label: str):
 
 def footer():
     st.markdown('<div class="ei-footer"><span>Public data only: RBI, MoSPI, TRAI, CEA, MoRTH. No business data is '
-                'stored.</span><span class="ei-mono">scoring weights v1 · data refreshed 3 Nov 2026</span></div>',
+                'stored.</span><span class="ei-mono">scoring weights v2 · data refreshed 3 Nov 2026</span></div>',
                 unsafe_allow_html=True)
 
 

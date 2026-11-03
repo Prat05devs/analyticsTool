@@ -63,12 +63,21 @@
       for (const pr of override ? [] : pri) {
         const d = S.priorities.map[pr];
         if (d === null || d === undefined) { notes.push(S.priorities.policy_note); continue; }
-        dims[d] = (dims[d] || 0) * S.priorities.multiplier;
+        if (!(d in dims)) { notes.push("Priority '" + pr + "': " + prof.label + ' has no ' + S.dimensions[d].label.toLowerCase() + ' dimension, so it does not change the scores.'); continue; }
+        dims[d] = dims[d] * S.priorities.multiplier;
         notes.push("Priority '" + pr + "': " + S.dimensions[d].label + ' weight x' + S.priorities.multiplier + '.');
       }
       for (const need of p.needs || []) {
         const rule = S.operational_needs[need];
-        const supported = rule.boost.filter((i) => i in (inds[rule.dimension] || {}));
+        if (!(rule.dimension in dims)) {
+          notes.push("Operational need '" + need + "' maps to a dimension the " + prof.label + ' profile does not have, so it does not change the scores.');
+          continue;
+        }
+        const have = inds[rule.dimension] = inds[rule.dimension] || {};
+        const added = (rule.add || []).filter((i) => !(i in have));
+        for (const i of added) have[i] = 1.0;  // the need brings its own indicators into a profile that lacks them
+        if (added.length) notes.push("Operational need '" + need + "' adds " + added.join(', ') + ' to ' + S.dimensions[rule.dimension].label + '.');
+        const supported = rule.boost.filter((i) => i in have);
         if (!supported.length) {
           notes.push("Operational need '" + need + "' has no supported indicator in the " + prof.label + ' profile, so it does not change the scores.');
           continue;
@@ -86,11 +95,11 @@
     }
 
     function indicatorTable(p) {
-      const prof = S.industries[p.industry];
       const ok = modelOk(p.industry);
+      const effInds = effectiveWeights(p).inds;  // industry profile plus indicators added by operational needs
       const rows = [];
-      for (const dim of Object.keys(prof.indicators)) {
-        for (const code of Object.keys(prof.indicators[dim])) {
+      for (const dim of Object.keys(effInds)) {
+        for (const code of Object.keys(effInds[dim])) {
           const meta = S.indicators[code];
           if (meta.requires_model && !ok) continue;
           const refv = (bundle.reference[code] || []).map((v) => transform(v, meta.transform)).filter(isNum);
@@ -131,7 +140,7 @@
       }
       const exSet = new Set(excluded.map((e) => e.state_id));
       const elig = states.filter((x) => !exSet.has(x));
-      const res = { industry: p.industry, dim_weights: dimw, notes, excluded, ranking: [], indicators: [], stability: null, counter: null, message: null };
+      const res = { industry: p.industry, profile: p, dim_weights: dimw, notes, excluded, ranking: [], indicators: [], stability: null, counter: null, message: null };
       if (elig.length < 2) {
         res.indicators = tab;
         res.message = 'Fewer than two comparable states pass the mandatory data gates, so no ranking is shown.';
@@ -240,19 +249,45 @@
         if (sA && sB && isNum(sA.score) && isNum(sB.score)) diffs.push([code, sB.score - sA.score]);
       }
       diffs.sort((x, y) => y[1] - x[1]);
-      const lab = diffs.length ? S.indicators[diffs[0][0]].label.toLowerCase() : d;
+      const l0 = diffs.length ? S.indicators[diffs[0][0]].label : d;
+      const lab = /^[A-Z]{2}/.test(l0) ? l0 : l0.charAt(0).toLowerCase() + l0.slice(1);
       const lead = B + ' scores ' + Math.round(ds[b][d]) + ' vs ' + Math.round(ds[a][d]) + ' for ' + A + ' on ' +
         S.dimensions[d].label.toLowerCase() + ' (mainly ' + lab + ').';
       if (k < 1.15) return lead + " The top two are close: raising that dimension's weight by about " + Math.round(100 * (k - 1)) + '% would put ' + B + ' first, so treat them as a near-tie.';
       return lead + ' If that dimension carried about ' + k.toFixed(1) + 'x its current weight, ' + B + ' would rank first.';
     }
 
+    // Strengths / watch-outs RELATIVE TO THE OTHER COMPARED STATES (port of scoring/score.py reasons):
+    // gap = score - median score of the other eligible states; lever = gap x within-dimension weight x dimension weight;
+    // reported only if |gap| >= min_gap and the raw difference from the peers' median is material.
     function reasons(res, sid, k) {
       k = k || 3;
-      const g = res.indicators.filter((r) => r.state_id === sid && r.observed && (r.value !== r.pilot_median || !isNum(r.pilot_median)))
-        .map((r) => Object.assign({}, r, { lever: (r.score - 50) * r.w_ind_eff * r.dim_weight }));
-      const pos = g.slice().sort((x, y) => y.lever - x.lever).slice(0, k).filter((r) => r.lever > 0);
-      const neg = g.slice().sort((x, y) => x.lever - y.lever).slice(0, k).filter((r) => r.lever < 0);
+      if (!res.ranking.length) return { pos: [], neg: [] };
+      const prof = S.industries[res.industry];
+      const p = res.profile || { priorities: [], needs: [] };
+      const cfg = S.reasons || {};
+      const minGap = cfg.min_gap === undefined ? 5 : cfg.min_gap, minRel = cfg.min_rel_diff === undefined ? 0.05 : cfg.min_rel_diff;
+      const override = !!p.dimension_weights && Object.keys(p.dimension_weights).length > 0;
+      const priDims = new Set(override ? [] : (p.priorities || []).map((x) => S.priorities.map[x]).filter((d) => d !== null && d !== undefined));
+      const obs = res.indicators.filter((r) => r.observed);
+      const items = [];
+      for (const r of obs.filter((x) => x.state_id === sid)) {
+        const o = obs.filter((x) => x.state_id !== sid && x.indicator === r.indicator);
+        if (!o.length) continue;
+        const meta = S.indicators[r.indicator];
+        const peerMed = median(o.map((x) => x.value));
+        const floor = meta.min_diff !== undefined ? meta.min_diff : minRel * Math.abs(peerMed);
+        if (Math.abs(r.value - peerMed) < floor) continue;
+        const gap = r.score - median(o.map((x) => x.score));
+        const needs = (p.needs || []).filter((n) => S.operational_needs[n].boost.includes(r.indicator) && S.operational_needs[n].dimension === r.dimension);
+        const why = (prof.why || {})[r.indicator] || (needs.length ? S.operational_needs[needs[0]].why : '');
+        const higher = gap * meta.direction > 0;
+        items.push(Object.assign({}, r, { dimension_label: S.dimensions[r.dimension].label, peer_median: peerMed,
+          n_peers: new Set(o.map((x) => x.state_id)).size, gap, lever: gap * r.w_ind_eff * r.dim_weight,
+          meaning: meta[higher ? 'hi' : 'lo'] || '', why, priority: priDims.has(r.dimension), needs }));
+      }
+      const pos = items.filter((x) => x.gap >= minGap && x.lever > 0).sort((x, y) => y.lever - x.lever).slice(0, k);
+      const neg = items.filter((x) => x.gap <= -minGap && x.lever < 0).sort((x, y) => x.lever - y.lever).slice(0, k);
       return { pos, neg };
     }
 

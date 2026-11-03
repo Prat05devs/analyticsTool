@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT))
 
 from etl.states import name_of  # noqa: E402
 from scoring.data import PILOT_IDS, latest, registry, sources_url, spec  # noqa: E402
-from scoring.score import Profile, reference, score  # noqa: E402
+from scoring.score import Profile, reasons, reference, score  # noqa: E402
 from ui.charts import geo  # noqa: E402
 from ui.state import DEMOS  # noqa: E402
 
@@ -88,6 +88,8 @@ def main():
         r = score(p)
         exp.append({"profile": c, "ranking": [{"s": x.state_id, "score": x.score, "rank": int(x.rank)} for x in r.ranking.itertuples()],
                     "weights": r.dim_weights, "counter": r.counter,
+                    "reasons": {sid: [[x["indicator"] for x in part] for part in reasons(r, sid, 3)]
+                                for sid in r.ranking.state_id},
                     "stability": [{"s": x.state_id, "same": float(x.share_same_rank)} for x in r.stability.itertuples()]
                     if r.stability is not None else []})
     (ROOT / "tests" / "fixtures" / "web_parity.json").write_text(json.dumps(exp, default=str))
