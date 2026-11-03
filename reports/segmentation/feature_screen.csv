@@ -1,0 +1,28 @@
+feature,decision,reason
+rail_km_per_lakh_pop,dropped,coverage 29/30 states (no imputation)
+cpi_inflation_general,dropped,coverage 29/30 states (no imputation)
+rural_wage_nonagri,dropped,coverage 19/30 states (no imputation)
+mpce_urban,dropped,coverage 18/30 states (no imputation)
+peak_unmet_pct,dropped,near-constant: 100% of states share one value
+gsdp_rs_crore,dropped,VIF 505.2 > 10 (multicollinear)
+per_capita_nsdp_real,dropped,VIF 124.5 > 10 (multicollinear)
+asi_workers,dropped,VIF 76.3 > 10 (multicollinear)
+bank_offices_per_lakh_pop,dropped,VIF 72.9 > 10 (multicollinear)
+internet_subs_per_100,dropped,VIF 17.6 > 10 (multicollinear)
+share_manufacturing,dropped,VIF 13.4 > 10 (multicollinear)
+asi_factories,dropped,VIF 10.7 > 10 (multicollinear)
+share_services,kept,VIF 3.5
+share_financial_services,kept,VIF 4.5
+momentum_gsva_total,kept,VIF 1.9
+momentum_manufacturing,kept,VIF 2.0
+per_capita_power_availability,kept,VIF 5.4
+power_shortage_pct,kept,VIF 1.6
+nh_km_per_lakh_pop,kept,VIF 4.3
+credit_industry_share,kept,VIF 2.9
+cd_ratio_utilisation,kept,VIF 2.2
+personal_loans_per_capita,kept,VIF 5.4 (log1p)
+ur_urban_us_adj,kept,VIF 2.9
+ur_rural_us_adj,kept,VIF 4.0
+td_losses_pct,kept,VIF 2.3
+exports_usd_mn,kept,VIF 3.8 (log1p)
+govt_beds_per_lakh_pop,kept,VIF 2.8

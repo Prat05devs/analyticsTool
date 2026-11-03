@@ -1,0 +1,31 @@
+state_id,state,cluster,ward_cluster,pilot
+AP,Andhra Pradesh,1,1,False
+AR,Arunachal Pradesh,5,3,False
+AS,Assam,4,0,False
+BR,Bihar,4,2,False
+CT,Chhattisgarh,4,2,False
+DL,Delhi,1,1,False
+GA,Goa,2,4,False
+GJ,Gujarat,1,1,True
+HP,Himachal Pradesh,2,4,False
+HR,Haryana,1,1,False
+JH,Jharkhand,4,2,False
+JK,Jammu & Kashmir,5,3,False
+KA,Karnataka,1,1,True
+KL,Kerala,1,1,False
+MH,Maharashtra,1,1,True
+ML,Meghalaya,5,0,False
+MN,Manipur,5,3,False
+MP,Madhya Pradesh,4,2,False
+MZ,Mizoram,3,0,False
+NL,Nagaland,5,3,False
+OR,Odisha,4,2,False
+PB,Punjab,1,1,False
+RJ,Rajasthan,4,1,True
+SK,Sikkim,3,0,False
+TG,Telangana,1,1,True
+TN,Tamil Nadu,1,1,True
+TR,Tripura,3,0,False
+UK,Uttarakhand,2,4,False
+UP,Uttar Pradesh,4,2,True
+WB,West Bengal,4,2,False

@@ -1,0 +1,93 @@
+{
+ "n_states": 30,
+ "features_kept": [
+  "share_services",
+  "share_financial_services",
+  "momentum_gsva_total",
+  "momentum_manufacturing",
+  "per_capita_power_availability",
+  "power_shortage_pct",
+  "nh_km_per_lakh_pop",
+  "credit_industry_share",
+  "cd_ratio_utilisation",
+  "personal_loans_per_capita",
+  "ur_urban_us_adj",
+  "ur_rural_us_adj",
+  "td_losses_pct",
+  "exports_usd_mn",
+  "govt_beds_per_lakh_pop"
+ ],
+ "k": 5,
+ "selection_rule_met": true,
+ "chosen_row": {
+  "k": 5.0,
+  "inertia": 17.760904320987656,
+  "silhouette_kmeans": 0.2129347464318935,
+  "davies_bouldin_kmeans": 1.3052823672212148,
+  "calinski_harabasz_kmeans": 6.817676386598182,
+  "silhouette_ward": 0.18377942433638916,
+  "davies_bouldin_ward": 1.3972627787997367,
+  "ari_kmeans_vs_ward": 0.7594100476263635,
+  "min_cluster_size": 3.0,
+  "bootstrap_ari": 0.662258548664056
+ },
+ "ari_kmeans_rank_vs_zscore": 0.8370974246701619,
+ "rejected_robust_spec": {
+  "k": 3,
+  "rule_met": false,
+  "cluster_sizes": [
+   28,
+   1,
+   1
+  ]
+ },
+ "pca_variance": [
+  0.28415493796389474,
+  0.17404472776044744,
+  0.12710828394265541,
+  0.10612251947586336,
+  0.07393993169693541
+ ],
+ "clusters": {
+  "1": [
+   "Andhra Pradesh",
+   "Delhi",
+   "Gujarat",
+   "Haryana",
+   "Karnataka",
+   "Kerala",
+   "Maharashtra",
+   "Punjab",
+   "Telangana",
+   "Tamil Nadu"
+  ],
+  "2": [
+   "Goa",
+   "Himachal Pradesh",
+   "Uttarakhand"
+  ],
+  "3": [
+   "Mizoram",
+   "Sikkim",
+   "Tripura"
+  ],
+  "4": [
+   "Assam",
+   "Bihar",
+   "Chhattisgarh",
+   "Jharkhand",
+   "Madhya Pradesh",
+   "Odisha",
+   "Rajasthan",
+   "Uttar Pradesh",
+   "West Bengal"
+  ],
+  "5": [
+   "Arunachal Pradesh",
+   "Jammu & Kashmir",
+   "Meghalaya",
+   "Manipur",
+   "Nagaland"
+  ]
+ }
+}

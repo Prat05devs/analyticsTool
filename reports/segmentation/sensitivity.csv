@@ -1,0 +1,7 @@
+industry,pilot_leader,leader_kept_share,mean_spearman_vs_base,min_spearman_vs_base,gap_1st_2nd_points,states_always_same_rank
+Manufacturing,Telangana,0.51,0.9091428571428575,0.642857142857143,0.19189856825973095,1
+Retail,Telangana,0.59,0.9768571428571431,0.9285714285714288,0.29022988505748515,3
+IT / professional services,Karnataka,0.816,0.9932857142857144,0.9642857142857145,0.8697318007662886,3
+Logistics,Maharashtra,0.824,0.9700000000000002,0.8928571428571429,0.7080056462996538,0
+Healthcare,Karnataka,1.0,1.0,1.0,6.1388888888889,7
+Hospitality,Karnataka,1.0,1.0,1.0,2.3687739463601645,7
