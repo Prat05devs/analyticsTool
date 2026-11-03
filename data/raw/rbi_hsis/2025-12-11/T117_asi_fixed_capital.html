@@ -1,0 +1,1532 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+     <title>Publications | Official Website of Reserve Bank of India </title>
+    <meta name="description" content="Publications  - Reserve Bank of India" />
+    <meta name="keyword" content="RBI Publications" />
+
+    <meta name="author " content="Reserve Bank of India" />
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript" src="/js/libs/modernizr-2.5.3.min.js"></script>
+    <style type="text/css">
+        table.tablebg tbody tr td center table tbody tr td
+        {
+            border: 0 !important;
+        }
+    </style>
+    
+</head>
+<body>
+    <form method="post" action="./PublicationsView.aspx?id=23566" id="Form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE4NTY4NTgxMTBkZP0vDnvtfsRCn5XUJo+bCd4QLNtQc23FpaFdub4aKT3o" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D0871D1A" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAqWtD3Lc+SkD1nbei8dGsdM1M3Bty/y91Zj0Fc5ws4PAQfbocKy7aJ/BuDsjZynoxFcKzMGywzkCgUBMK8qIblscKRVxySSqPBbjWEgYFq6oN4CXOm5gLqnVNDMOumlx4N3yDx+viEz0KA+zpTnDJMcIOHTnF3JyjiqMf5GzERVpbuDvVd/sZ5fGHPMuqYK+c3EJaSB9mi4BETX1/sTVM06WoEsmWwtw2w/xExT/zLcUW4zM+9g7fS0sMsz9+ALHRs=" />
+    
+<link href="/JQuery/css/jquery-ui-1.8.18.custom2.css" rel="stylesheet" type="text/css" />
+<link href="/includes/print.css" rel="stylesheet" media="print" type="text/css" />
+
+<link href="/Styles/960.css?v=1.0" rel="stylesheet" type="text/css" />
+<link href="/Includes1/rbi.css?v=5.0" rel="Stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/JQuery/ui/jquery.ui.revampRBI.js"></script>
+<script type="text/javascript" src="/js/ImgSaveDisable.js"></script>
+
+<script type="text/javascript">
+  
+//Redirect to mobile site start
+    function detectmob() {
+        if (screen.width <= 599 || screen.Height <= 975) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    if (detectmob()) {
+       window.location.href = "https://m.rbi.org.in" + window.location.pathname;
+		
+       
+    }
+
+	//Redirect to mobile site End
+    $(document).ready(function () {
+        Search();
+	SearchLastUpdateDate(); //Fetch Last Date Page
+    });
+
+
+
+  // Fetch Last Date Page
+
+    function SearchLastUpdateDate() {
+        var strFilterComments = new RegExp("^[a-zA-Z0-9 =_:.&?'%,()-–]+$");
+	var url=window.location.href;
+	if(url.indexOf("WSSViewDetail.aspx")>0 || url.indexOf("PublicationReportDetails.aspx")>0)
+	{
+		url=url.substring(url,url.indexOf("?"));
+	}
+        var param = { keyWord1: url.slice(url.lastIndexOf('/') + 1) };
+	param.keyWord1=param.keyWord1.replaceAll("%20"," ");
+	if(param.keyWord1.indexOf("#")>0)
+	{
+		param.keyWord1=param.keyWord1.substring(param.keyWord1,param.keyWord1.indexOf("#"));
+	}
+        if (!strFilterComments.test(param.keyWord1)) {            
+            return false;
+        }
+        else {
+            $.ajax({
+                url: "/Home.aspx/GetLastUpdateDate_new",
+                data: JSON.stringify(param),
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataFilter: function (data) { return data; },
+                success: function (data) {
+                    if (data.d.length > 0) {
+                        $('#lblGetLastUpdateDate').text(data.d);
+                    }
+                    else {
+                        response([{ label: "No results found", value: ""}]);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        }
+    }
+    // Fetch Last Date Page
+
+
+
+    function Search() {
+        highlightTextAutocomplete();
+        $(".autoSuggest").autocomplete({
+
+
+            source: function (request, response) {
+                var param = { keyWord: document.getElementById('txtSearch').value };
+
+                $.ajax({
+                    url: "/Home.aspx/GetKeywords",
+                    data: JSON.stringify(param),
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataFilter: function (data) { return data; },
+                    success: function (data) {
+
+                        if (data.d.length > 0) {
+                            response($.map(data.d, function (item) {
+                                return {
+                                    value: RemoveSpecialChars(item)
+
+                                }
+                            }))
+                        }
+                        else {
+                            response([{ label: "No results found", value: ""}]);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus);
+                    }
+                });
+            },
+
+            
+            minLength: 3
+
+        });
+    }
+
+    function highlightTextAutocomplete() {
+
+        var oldFn = $.ui.autocomplete.prototype._renderItem;
+
+        $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+
+            var t = String(item.value).replace(
+                new RegExp(this.term, "gi"),
+                "<span class='ui-state-highlight'>$&</span>");
+            if (item.value != "") {
+                return $("<li class='borderAutocomplete'></li>")
+                  .data("item.autocomplete", item)
+                  .append("<a role='link'>" + t + "</a>")
+                  .appendTo(ul);
+            }
+
+            else {
+                return $("<li></li>")
+                  .data("item.autocomplete", item)
+                  .append("")
+                  .appendTo(ul);
+            }
+        };
+    }
+
+
+    function RemoveSpecialChars(inputText) {
+        var filteredString = inputText.replace(/[\*\^\'\!\@\$\.\#\(\)\-\?\<\>\;\"\&\+\{\}\:]/g, '');
+        
+        return filteredString;
+    }
+    
+
+    function LoadSearchData(id, key) {
+        if (id == "txtSearch") {
+            if (key == 13) {
+                validateSearchText();
+                return false;
+            }
+        }
+        else validateSearchText();
+        return true;
+    }
+    function validateSearchText() {
+        if (validation()) {
+            var strloc = new String(document.location.href.toString());
+            if (strloc.indexOf("SearchResults.aspx") == -1) {//             
+                window.open("/scripts/SearchResults.aspx?search=" + document.getElementById("txtSearch").value,"_self");
+            }
+            else window.open("/scripts/SearchResults.aspx?search=" + document.getElementById("txtSearch").value,"_self");
+        }
+    }
+    function validation() {
+        strSearch = trim(document.getElementById('txtSearch').value);
+        if (strSearch == "") { alert('Please enter the search text'); return false; }
+        else {
+           
+            var strFilterChars = new RegExp("^[0-9a-zA-Z ]*$");
+            if (!strFilterChars.test(strSearch)) { alert("Please remove special characters from search text"); return false; }
+        }
+        return true;
+    }
+    function trim(value) {
+        value = value.replace(/^\s+/, '');
+        value = value.replace(/\s+$/, '');
+        return value;
+    }
+
+</script>
+
+    <style type="text/css">
+    .blink_msm1 
+{
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+.blink_NewWebsite {
+        animation:blinker 1.5s linear 3;
+        color:blue;
+        font-size:1.5em;
+        margin-bottom:0px;
+        }
+    @keyframes blinker
+    {
+        50%{
+            opacity:0;
+        }
+    }
+
+.sr-only {
+position: absolute;
+left: -9999px;
+}
+</style>
+<div class="top_setting">
+    <div class="container_12">
+        <div class="grid_5 top_settings">
+            <a href="#mainsection">Skip to main content </a>
+        </div>
+        <div id="Setting1_tblThemes" style="float: right" class="grid_4 prefix_3 top_settings">
+            <ul style="margin:0px; padding:0px;">
+               <li class="fonts"> 
+                <a id="Setting1_LinkBtnSpace" role="button" title="Increase Letter Spacing" href="javascript:__doPostBack(&#39;Setting1$LinkBtnSpace&#39;,&#39;&#39;)"><img src="/images/letspace.png" alt="Increase Letter Spacing" />
+                                <span id="Setting1_spanBtnSpace" class="sr-only">Not Pressed</span></a>                                
+            </li>
+
+            <li class="fonts">
+                <a id="Setting1_LinkBtnFontIncrease" role="button" title="Increase Font Size" href="javascript:__doPostBack(&#39;Setting1$LinkBtnFontIncrease&#39;,&#39;&#39;)"><img src="/images/font-increase.gif" alt="Increase Font Size" />
+                    
+                </a>
+            </li>
+            <li class="fonts">
+                <a id="Setting1_LinkBtnFontRegular" role="button" title="Regular Font Size" href="javascript:__doPostBack(&#39;Setting1$LinkBtnFontRegular&#39;,&#39;&#39;)"><img src="/images/font-reset.gif" alt="Regular Font Size" />
+                    
+                </a>
+            </li>
+            <li class="fonts">
+                <a id="Setting1_LinkBtnFontDecrease" role="button" title="Decrease Font Size" href="javascript:__doPostBack(&#39;Setting1$LinkBtnFontDecrease&#39;,&#39;&#39;)"><img src="/images/font-decrease.gif" alt="Decrease Font Size" />
+                    
+                </a>
+            </li></ul>
+		<ul style="margin:0px;padding:0px;">
+            <li class="black">
+                <a id="Setting1_LinkBtnAccessibilty" role="button" title="Apply Dark Theme" href="javascript:__doPostBack(&#39;Setting1$LinkBtnAccessibilty&#39;,&#39;&#39;)"><img src="/images/dark-theme.gif" alt="Apply Dark Theme" />
+                    
+                </a>
+            </li>
+            <li class="white">
+                <a id="Setting1_LinkBtnUndoAccessibilty" role="button" title="Apply Normal Theme" href="javascript:__doPostBack(&#39;Setting1$LinkBtnUndoAccessibilty&#39;,&#39;&#39;)"><img src="/images/bright-theme.gif" alt="Apply Normal Theme" />
+                     
+                </a>
+            </li>
+            <li class="white">
+            <a id="Setting1_LinkBtnGreyScale" role="button" title="Apply Grey Theme" href="javascript:__doPostBack(&#39;Setting1$LinkBtnGreyScale&#39;,&#39;&#39;)"><img src="/images/graytheme.gif" alt="Apply Grey Theme" />
+                                
+                                </a></li>
+
+            </ul>
+		<div>
+		     <a href="#" onclick="javascript:window.print();" id="A1" title="Print This Page" style="text-decoration:none;" >
+                <img src="/images/print-icon.png" alt="Print this page" class="print" />
+		</a></div>
+            <div style="float: right">
+                <label style="margin-right: 6px;">
+                    Change Language</label>
+			
+			<a href="#" onclick="SetLink();" class="link1" title="Change language to Hindi">हिंदी</a>
+			</div>
+                   
+        </div>
+        <div class="clearfix">
+        </div>
+    </div>
+   
+</div>
+<div class="container_12">
+    <div class="grid_4" role="banner">
+        <div class="logo">
+            <a href="/home.aspx" >
+                <img src="/images/rbi-company-logo.jpg" alt="Logo of Official website of Reserve Bank of India" /></a></div>
+    </div>
+    <div class="grid_5" align="right" role="search" style="float: right">
+        <label for="searchbox" class="search_label">
+            Search the Website</label>
+        <input name="Setting1$txtSearch" type="text" maxlength="103" id="txtSearch" class="search_box autoSuggest" title="Search the Website" aria-label="Search the Website" onkeydown="return LoadSearchData(&#39;txtSearch&#39;,event.keyCode);" placeHolder="Search" />
+        <button id="btnSearch" onclick="return LoadSearchData('btnSearch',event.keyCode);"
+            type="button" class="search_button">
+            Search</button>
+    </div>
+	<div class="grid_2" align="CENTER" role="" style="float: right">
+        <div class="logo" >
+           
+            <img src="../images/BBBP_Logo_4.png" alt="Beti Bachao Beti Padhao Logo" style="width:47%;">
+        </div>
+    	</div>
+    <div class="clearfix">
+    </div>
+</div>
+<!--  NAVIGATION START-->
+<nav role="navigation" aria-label="Main">
+       <div class="menu"><div class="centermenu">
+<ul class="menu">
+  <li><a href="https://rbi.org.in/home.aspx">Home</a></li>
+<li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-Sub1">About Us ▼</a>
+ <ul class="submenu1" id="Ab-Sub1" >
+	 <li><a href="/scripts/AboutUsDisplay.aspx">About Us</a></li>
+     <li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-org">Organisation & Functions <span aria-hidden="true">▶</span></a>
+		 <ul class="submenu1" id="Ab-org">             
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=OrganizationStructure.htm">Organisation Structure</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=Depts.htm">Departments</a></li>
+            <li><a href="Regionaloffices.aspx">Offices</a></li>
+			<li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-tra">Training Establishment <span aria-hidden="true">▶</span></a>                
+				<ul class="submenu1" id="Ab-tra">
+                    <li ><a href="https://cab.rbi.org.in" target="_blank" id="CBOverview">College of Agricultural Banking</a></li>
+                    <li ><a href="/scripts/rbsc.aspx" id="CBNotifications">Reserve Bank Staff College</a></li>
+					<li ><a href="https://cos.rbi.org.in/" id="CBSupervisors">College of Supervisors</a></li>
+                </ul>
+            </li>
+            <li><a href="/scripts/OccasionalPublications.aspx?head=RBI%27s%20Functions%20and%20Working">RBI's Functions and Working</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=PastGovernors.htm">Governors</a></li>
+			<li><a href="/scripts/AboutUsDisplay.aspx?pg=deputygovernors.htm">Deputy Governors</a></li>
+			<li><a href="/scripts/AboutUsDisplay.aspx?pg=ExecutiveDirectors.htm">Executive Directors</a></li>
+        </ul>		
+	 </li>
+<li><a href="AboutUsDisplay.aspx?pg=MediaKit.htm">Media Kit</a></li>
+	 <li><a href="CommunicationPolicy.aspx">Communication Policy of RBI</a></li>
+	
+     <li>
+        <a href="#" aria-expanded="false" role="button" aria-controls="Ab-soi">Sources of Information <span aria-hidden="true">▶</span></a>
+        <ul class="submenu1" id="Ab-soi">
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#AP">Annual Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#HP">Half-yearly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#QP">Quarterly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#MP">Monthly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#WP">Weekly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#OP">Occasional Publications</a></li>
+            <li><a href="/scripts/SDDSview.aspx">SDDS</a></li>
+            <li><a href="/scripts/BS_NSDPDisplay.aspx">NSDP</a></li>
+            <li><a href="/scripts/Statistics.aspx">Data Releases</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#PS">Publications available on Subscription</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#GI">General Information</a></li>	  
+        </ul>
+     </li>  
+	 <li><a href="/scripts/Project1.aspx">RBI History</a></li>
+	 <li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-mus">Museum <span aria-hidden="true">▶</span></a>
+		<ul class="submenu1" id="Ab-mus">
+			<li><a href="https://therbimuseum.rbi.org.in/">The RBI Museum</a></li>
+			<li><a href="/scripts/ic_museum.aspx">RBI Monetary Museum</a></li>
+         </ul>
+	 </li>
+</ul>
+</li>
+  <li>
+    <a href="#" aria-expanded="false" role="button" aria-controls="No-Sub1">Notifications ▼</a>
+    <ul class="submenu1" id="No-Sub1">
+      <li><a href="/scripts/NotificationUser.aspx">Notifications </a></li>
+             <li><a href="/scripts/BS_ViewMasterDirections.aspx">Master Directions </a></li>
+             <li><a href="/scripts/BS_ViewMasterCirculardetails.aspx">Master Circulars </a></li> 
+	     <li><a href="/scripts/Fs_AmendmentDirections.aspx">Amendment Directions </a></li> 
+	     <li><a href="#" aria-expanded="false" role="button" aria-controls="No-draft">Draft Notifications/Guidelines <span aria-hidden="true">▶</span></a>
+		<ul class="submenu1" id="No-draft">
+			<li><a href="/scripts/DraftNotificationsGuildelines.aspx">Draft Notifications/Guidelines</a></li>
+			<li><a href="/scripts/BS_ViewREwiseDraftDirections.aspx">Draft Directions (RE-wise)</a></li> 
+         	</ul>
+	     </li>
+
+            
+             <li><a href="/scripts/BS_CircularIndexDisplay.aspx">Index To RBI Circulars </a></li> 
+             <li><a href="/scripts/BS_ViewListofstandalonecirculars.aspx">Standalone Circulars </a></li>
+             <li><a href="/scripts/NotificationUserWithdrawnCircular.aspx">Circulars Withdrawn </a></li>
+
+      
+    </ul>
+  </li>
+
+  <li><a href="/scripts/BS_PressReleaseDisplay.aspx">Press Releases</a></li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="Sp-Sub1">Speeches & Media Interactions ▼</a>
+	<ul class="submenu1" id="Sp-Sub1">
+	  <li><a href="/scripts/BS_ViewSpeeches.aspx">Speeches</a></li>
+      <li><a href="/scripts/BS_ViewInterviews.aspx">Media Interactions</a></li>
+      <li><a href="/scripts/Lectures.aspx">Memorial Lectures</a></li>
+      <li><a href="/scripts/BS_ViewPodcast.aspx">Podcasts</a></li>
+	</ul>
+  </li>
+  <li><a href="#"  aria-expanded="false" role="button" aria-controls="Pu-Sub1">Publications ▼</a>
+		<ul class="submenu1" id="Pu-Sub1">
+			<li><a href="/scripts/Publications.aspx?publication=Biennial">Biennial</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Annual">Annual</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=HalfYearly">Half-Yearly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Quarterly">Quarterly</a></li>
+		    <li><a href="/scripts/Publications.aspx?publication=Bimonthly">Bi-monthly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Monthly">Monthly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Weekly">Weekly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Occasional">Occasional</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Reports">Reports</a></li>
+		    <li><a href="/scripts/OccasionalPublications.aspx?head=Working Papers">Working Papers</a></li>
+		</ul>
+	</li>				  
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="Le-Sub1">Legal Framework ▼</a>
+	<ul class="submenu1" id="Le-Sub1">
+	   <li><a href="/scripts/Act.aspx">Act </a></li>
+       <li><a href="/scripts/Rules.aspx">Rules </a></li>
+       <li><a href="/scripts/Regulations.aspx">Regulations </a></li> 
+       <li class="last"><a href="/scripts/Schemes.aspx">Schemes </a></li>
+	   </ul>
+  </li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="Re-Sub1">Research ▼</a>
+		<ul class="submenu1" id="Re-Sub1">
+			<li><a href="/Scripts/ExternalResearchSchemes.aspx">External Research Schemes</a></li>
+			<li><a href="/Scripts/OccasionalPapers.aspx">RBI Occasional Papers</a></li>
+			<li><a href="/Scripts/OccasionalPublications.aspx?head=Working%20Papers">Working Papers</a></li>
+			<li><a href="/Scripts/BS_ViewBulletin.aspx">RBI Bulletin</a></li>
+			<li><a href="/Scripts/Project1.aspx">History</a></li>
+			<li><a href="/Scripts/Occas_DRG_Studies.aspx">DRG Studies</a></li>
+			<li><a href="/Scripts/KLEMS.aspx">KLEMS</a></li>
+			<li class="last"><a href="/Scripts/StateStatisticsFinances.aspx">State Statistics and Finances</a></li>
+        </ul>
+  </li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="St-Sub1">Statistics ▼</a>
+		<ul class="submenu1" id="St-Sub1">
+		  <li><a href="/scripts/Statistics.aspx">Data Releases</a></li>
+          <li><a href="https://data.rbi.org.in" target="_blank">Database on Indian Economy</a></li>
+          <li><a href="/scripts/FS_PDS.aspx">Public Debt Statistics</a></li>
+		</ul> 
+  </li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="St-Sub1">Regulatory Reporting ▼</a>
+		<ul class="submenu1">
+			<li><a href="/scripts/BS_Listofallreturns.aspx">List of Returns</a></li>
+			<li><a href="/scripts/DataDefinition.aspx">Data Definition</a></li>
+			<li><a href="/scripts/ValidationRules.aspx">Validation rules/ Taxonomy</a></li>
+			<li><a href="/scripts/ReportingPlaform.aspx">List of RBI Reporting Portals</a></li>
+			<li class="last"><a href="/scripts/ReportingFAQ.aspx">FAQs of RBI Reporting Portals</a></li>
+		</ul>
+   </li>
+</ul>
+</div></div>
+</nav>
+<div class="container_12" >
+    <section>
+        <div class="grid_12" >
+            <div id="dialogAlert" title="" tabindex="-1"  style="text-align: center; display: none;">
+                <p id="AM_Message" tabindex="-1" style="color: #444; font-size: 15px; margin: 20px 0; min-height: 40px;"></p>
+            </div>
+        </div>
+    </section>
+</div>
+<!--  NAVIGATION END-->
+<!--HEADER END-->
+<input type="submit" name="Setting1$btn" value="" id="btn" style="visibility: hidden; height: 0px; width: 0px;" />
+
+<script type="text/javascript">
+    function SetLink() {
+        //a.href = "https://www.rbi.org.in/hindi/Home.aspx";
+        var txt="This will lead you to Hindi (हिन्दी) language website. Are you sure you want to switch to this language?"
+        if(window.confirm(txt)==true){
+            //document.cookie = 'preferLang' + '=;secure; expires=Thu, 01-Jan-70 00:00:01 GMT;path=/;';
+            window.location.replace("https://www.rbi.org.in/hindi/");
+        }
+        else return false;
+        
+    }
+
+
+
+
+	const allMenuItems = document.querySelectorAll("nav ul li");
+	
+	allMenuItems.forEach(item => {
+		item.addEventListener("focusin", (event) => {	
+			const MenuText =event.target.textContent;
+			const allMenuItems1 = document.querySelectorAll(".hasSubmenu");
+			allMenuItems1.forEach(item1 => {
+				if (MenuText === 'Press Releases')
+				{	
+					
+					item1.classList.remove('focused');
+					rollback(item1)
+					item1.classList.remove('open');
+				}
+			});
+			
+		});
+	});
+
+
+const menuItems = document.querySelectorAll(".hasSubmenu");
+menuItems.forEach(item => {
+	item.addEventListener("mouseenter", (event) => {
+		item.className="hasSubmenu open focused"
+		expandThis(item);
+	});
+	item.addEventListener("mouseleave", (event) => {		
+		rollback(item)
+		item.className="hasSubmenu"
+	});
+	item.addEventListener("focusin", (event) => {		
+		const allMenuItems = document.querySelectorAll("nav ul li");
+		allMenuItems.forEach(item1 => {
+			item1.classList.remove('focused');
+			if(item!==item1)
+			rollback(item1)
+			item1.classList.remove('open');	
+		});							
+		item.classList.add('focused');
+	});
+	item.addEventListener("focusout", (event) => {
+		
+		if(!item.className.includes('focused')){
+		
+		rollback(item)
+		item.className="hasSubmenu"
+		}
+		item.classList.remove('focused');
+		item.classList.remove('open');
+	});
+
+    item.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+		if(item.className.includes("hasSubmenu open")){
+			rollback(item)
+			item.className="hasSubmenu"
+		}
+		else{
+          	item.className="hasSubmenu open focused"
+		var ele=item.querySelectorAll("a")[0];
+		
+		expandThis(item);	
+		}
+				
+        }
+	
+    });
+	
+});
+function expandThis(menu){
+ var $targetul = $(menu).children("ul:eq(0)")
+				    if ($targetul.queue().length <= 1) 
+				        if (this.istopheader)
+					$targetul.css({ left: $(this).children('a').eq(0).position().left, top: $mainmenu.position().top + this._dimensions.h - 2 })
+				            
+				    if (document.all && !window.XMLHttpRequest) 
+				        $mainmenu.find('ul').css({ overflow: (this.istopheader) ? 'hidden' : 'visible' })
+					
+					
+				    $targetul.dequeue().stop(true, true).slideDown(droplinemenu.animateduration.over)
+}
+const menuItemsf = document.querySelectorAll("nav .midmenu ul li");
+
+menuItemsf.forEach(item => {
+    item.addEventListener("keydown", (event) => {
+	
+	if(item.className.includes("last") ){
+		 if (pressedKeys['shift'] && event.key === "Tab"){}else{
+		var lastItem = document.getElementsByClassName('hasSubmenu open');
+		rollback(lastItem[0])
+		lastItem[0].className="hasSubmenu";
+		}
+	}
+	
+	});
+	
+	});
+	
+
+function rollback(menu){
+ var $targetul = $(menu).children("ul:eq(0)")
+$targetul.dequeue().stop(true, true).slideUp(droplinemenu.animateduration.out);
+}
+ 
+
+function setLetterSpace(val) {
+    
+	
+    if (false) {
+                    document.body.setAttribute("style", "letter-spacing:1px; line-height:20px; word-spacing:2px;");
+       
+    }
+    else {
+                    document.body.removeAttribute("style");
+    }
+    return false;
+
+    
+    }
+   
+
+// Toggle submenu
+    document.querySelectorAll('.menu li > a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const submenu = this.nextElementSibling;
+
+            if (submenu && submenu.classList.contains('submenu1')) {linkMessage();
+                e.preventDefault();
+                e.stopPropagation();
+
+                const parentLi = this.parentElement;
+
+                // Close sibling menus ONLY (not entire menu)
+                closeSiblings(parentLi);   
+ 
+
+               
+ 
+                const isExpanded=link.getAttribute('aria-expanded') ==='true';
+                link.setAttribute('aria-expanded',!isExpanded);
+                submenu.hidden=isExpanded;
+                
+                submenu.setAttribute('aria-hidden', isExpanded);
+                setTimeout(()=>{
+                    // Toggle current submenu
+                    submenu.classList.toggle('show', !isExpanded);
+            },50);
+
+        }
+        });
+    });
+
+    //  Close only sibling menus (important fix)
+    function closeSiblings(currentLi) {
+        const siblings = currentLi.parentElement.children;
+
+        Array.from(siblings).forEach(li => {
+            if (li !== currentLi) {
+            const submenus = li.querySelectorAll('.submenu1');
+        submenus.forEach(menu => menu.classList.remove('show'));
+    }
+    });
+    }
+
+    //  Click outside → close all
+    document.addEventListener('click', function () {
+		
+        document.querySelectorAll('.menu li > a').forEach(menu => {
+		if(menu.hasAttribute('aria-expanded')){
+            menu.setAttribute('aria-expanded','false');
+	}
+	
+    });
+
+    document.querySelectorAll('.submenu1').forEach(menu => {
+        menu.setAttribute('aria-hidden','true');
+    menu.classList.remove('show');
+	
+
+    });
+    });
+
+    //  Prevent closing when clicking inside menu
+    document.querySelector('.menu').addEventListener('click', function (e) {linkMessage();
+        e.stopPropagation();
+    });
+
+
+    //  Keyboard support
+    document.querySelectorAll('.menu li > a').forEach(link => {
+        link.addEventListener('keydown', function (e) {
+            const submenu = this.nextElementSibling;
+
+            if ((e.key === 'Enter' || e.key === ' ') && submenu) {
+                e.preventDefault();
+
+                const parentLi = this.parentElement;
+                closeSiblings(parentLi);
+
+
+                const isExpanded=link.getAttribute('aria-expanded') ==='true';
+                link.setAttribute('aria-expanded',!isExpanded);
+                submenu.hidden=isExpanded;
+                submenu.setAttribute('aria-hidden', isExpanded);
+                setTimeout(()=>{
+                    // Toggle current submenu
+                    submenu.classList.toggle('show', !isExpanded);
+            },50);
+
+
+           
+        }
+
+          if (e.key === 'Escape') {
+        document.querySelectorAll('.submenu').forEach(menu => {
+            menu.classList.remove('show');
+    });
+    this.blur();
+    }
+    });
+    });
+    // When focusing main menu items → close other submenus
+    document.querySelectorAll('.menu > li > a').forEach(item => {
+        item.addEventListener('focus', function() {
+
+            document.querySelectorAll('.submenu1').forEach(menu => {
+                
+                if (menu !== this.nextElementSibling) {
+              
+
+            document.querySelectorAll('.menu li > a').forEach(menu => {
+                if(menu.hasAttribute('aria-expanded'))
+                menu.setAttribute('aria-expanded','false');
+		
+            document.querySelectorAll('.submenu1').forEach(menu => {
+                menu.setAttribute('aria-hidden','true');
+            
+            menu.classList.remove('show');
+            
+
+
+        });
+
+	
+    });
+
+    }
+    });
+
+    });
+    });
+
+    //  Close submenu when focus leaves it (TAB navigation)
+    document.querySelectorAll('.menu li').forEach(li => {
+        li.addEventListener('focusout', function (e) {
+            // Check if focus is still inside this <li>
+            if (!li.contains(e.relatedTarget)) {
+                const submenu = li.querySelector('.submenu1');
+                if (submenu) {
+                    submenu.classList.remove('show');
+                    if(li.querySelector('a').hasAttribute('aria-expanded'))
+                        li.querySelector('a').setAttribute('aria-expanded','false');
+	
+
+                    submenu.setAttribute('aria-hidden','true');
+                }
+            }
+        });
+    });
+</script>
+    <div role="main" class="container_12">
+        <!-- InstanceBeginEditable name="Editable Area" -->
+        <a id="mainsection" name="mainsection"></a>
+
+        
+<nav aria-label="Breadcrumb" class="grid_12 breadcrumbs">
+  <ul>
+                <li><a href="../Home.aspx">Home</a></li>
+		
+                <li><a href="Publications.aspx">Publications</a></li>
+                <li><a href="Publications.aspx?Publication=Annual">
+                    Annual</a></li>
+                
+                <li><a href="AnnualPublications.aspx?head=Handbook of Statistics on Indian States">
+                    Handbook of Statistics on Indian States</a></li>
+                
+            </ul>
+ </nav>
+        <div class="clear">
+        </div>
+
+        <div class="grid_12">
+
+            <h1 class="page_title">Publications</h1>
+            <div id="doublescroll">
+                <table align="center" cellpadding="0" cellspacing="0" width="100%">
+
+                    <table class="tablebg" width="100%"><tr><td class="tableheader"><a id='ADOC_117T_1112202588337477580042FDAD87DC3D07DDCD12' target='_blank' href='https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/117T_1112202588337477580042FDAD87DC3D07DDCD12.XLSX' aria-labelledby='ADOC_117T_1112202588337477580042FDAD87DC3D07DDCD12 SDOC_117T_1112202588337477580042FDAD87DC3D07DDCD12'>
+		<img alt='Document - Table 117: State-wise Fixed Capital' style='padding: 8px;' src='../Images/xlsx.gif' width='16' alt="download file" height='16' border=0 align='absmiddle'></a> (<span id='SDOC_117T_1112202588337477580042FDAD87DC3D07DDCD12' aria-hidden="true">18 kb</span>) or <a id='APDF_117T_1112202588337477580042FDAD87DC3D07DDCD12' target='_blank' href='https://rbidocs.rbi.org.in/rdocs/Publications/PDFs/117T_1112202588337477580042FDAD87DC3D07DDCD12.PDF' aria-labelledby='APDF_117T_1112202588337477580042FDAD87DC3D07DDCD12 SPDF_117T_1112202588337477580042FDAD87DC3D07DDCD12'>
+			<img alt='PDF - Table 117: State-wise Fixed Capital' style='padding: 8px;' src='../Images/pdf.gif' width='16' height='16' alt='PDF document' border=0 align='absmiddle'></a> (<span id='SPDF_117T_1112202588337477580042FDAD87DC3D07DDCD12' aria-hidden="true">126 kb</span>)</td></tr><tr><td align="right" class="tableheader"><b> Date : Dec 11, 2025</b></td></tr><tr><td align="center" class="tableheader"><b>Table 117: State-wise Fixed Capital</b></td></tr><tr><td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="1" class="tablebg">  <tr>    <td colspan="10" align="right">(&#8377; Lakh)</td>  </tr>  <tr class="head">    <td width="28%" align="center">Year</td>    <td width="8%" align="center">Andaman & Nicobar Islands</td>    <td width="8%" align="center">Andhra Pradesh</td>    <td width="8%" align="center">Arunachal Pradesh</td>    <td width="8%" align="center">Assam</td>    <td width="8%" align="center">Bihar</td>    <td width="8%" align="center">Chandigarh</td>    <td width="8%" align="center">Chhattisgarh</td>    <td width="8%" align="center">Dadra & Nagar Haveli</td>    <td width="8%" align="center">Daman & Diu</td>  </tr>  <tr>    <td>2004-05</td>    <td align="right">7,696</td>    <td align="right">35,26,698</td>    <td align="right">-</td>    <td align="right">7,02,998</td>    <td align="right">2,96,767</td>    <td align="right">38,533</td>    <td align="right">12,27,351</td>    <td align="right">6,31,911</td>    <td align="right">2,44,536</td>  </tr>  <tr>    <td>2005-06</td>    <td align="right">7,304</td>    <td align="right">39,32,393</td>    <td align="right">-</td>    <td align="right">7,52,035</td>    <td align="right">2,92,352</td>    <td align="right">37,716</td>    <td align="right">15,79,146</td>    <td align="right">6,46,472</td>    <td align="right">3,92,960</td>  </tr>  <tr>    <td>2006-07</td>    <td align="right">6,655</td>    <td align="right">51,08,918</td>    <td align="right">-</td>    <td align="right">8,01,962</td>    <td align="right">2,95,118</td>    <td align="right">55,815</td>    <td align="right">20,61,575</td>    <td align="right">7,94,040</td>    <td align="right">3,76,663</td>  </tr>  <tr>    <td>2007-08</td>    <td align="right">5,870</td>    <td align="right">64,25,102</td>    <td align="right">-</td>    <td align="right">8,91,081</td>    <td align="right">3,01,470</td>    <td align="right">51,643</td>    <td align="right">22,94,829</td>    <td align="right">8,99,735</td>    <td align="right">4,30,938</td>  </tr>  <tr>    <td>2008-09</td>    <td align="right">5,586</td>    <td align="right">74,39,952</td>    <td align="right">-</td>    <td align="right">9,40,427</td>    <td align="right">3,03,254</td>    <td align="right">69,003</td>    <td align="right">28,18,914</td>    <td align="right">13,07,315</td>    <td align="right">4,76,728</td>  </tr>  <tr>    <td>2009-10</td>    <td align="right">7,780</td>    <td align="right">1,30,28,052</td>    <td align="right">-</td>    <td align="right">9,80,140</td>    <td align="right">4,45,230</td>    <td align="right">59,476</td>    <td align="right">33,72,131</td>    <td align="right">17,21,733</td>    <td align="right">6,24,331</td>  </tr>  <tr>    <td>2010-11</td>    <td align="right">3,960</td>    <td align="right">1,60,10,879</td>    <td align="right">-</td>    <td align="right">10,74,713</td>    <td align="right">5,26,212</td>    <td align="right">86,573</td>    <td align="right">34,74,615</td>    <td align="right">18,70,906</td>    <td align="right">6,46,109</td>  </tr>  <tr>    <td>2011-12</td>    <td align="right">3,906</td>    <td align="right">2,53,93,903</td>    <td align="right">-</td>    <td align="right">15,15,746</td>    <td align="right">7,54,715</td>    <td align="right">1,19,032</td>    <td align="right">50,63,239</td>    <td align="right">21,06,676</td>    <td align="right">7,29,488</td>  </tr>  <tr>    <td>2012-13</td>    <td align="right">3,256</td>    <td align="right">1,30,81,848</td>    <td align="right">-</td>    <td align="right">13,10,951</td>    <td align="right">6,46,737</td>    <td align="right">85,345</td>    <td align="right">60,30,773</td>    <td align="right">19,69,476</td>    <td align="right">9,22,625</td>  </tr>  <tr>    <td>2013-14</td>    <td align="right">3,185</td>    <td align="right">1,48,62,643</td>    <td align="right">-</td>    <td align="right">14,44,632</td>    <td align="right">8,03,738</td>    <td align="right">1,77,381</td>    <td align="right">64,08,052</td>    <td align="right">34,10,225</td>    <td align="right">10,27,888</td>  </tr>  <tr>    <td>2014-15</td>    <td align="right">2,309</td>    <td align="right">1,48,24,439</td>    <td align="right">19,175</td>    <td align="right">16,16,940</td>    <td align="right">9,94,456</td>    <td align="right">82,623</td>    <td align="right">77,93,471</td>    <td align="right">23,86,629</td>    <td align="right">9,49,099</td>  </tr>  <tr>    <td>2015-16</td>    <td align="right">1,904</td>    <td align="right">1,68,20,478</td>    <td align="right">20,929</td>    <td align="right">32,04,850</td>    <td align="right">9,91,766</td>    <td align="right">1,09,787</td>    <td align="right">86,01,196</td>    <td align="right">22,31,244</td>    <td align="right">11,77,391</td>  </tr>  <tr>    <td>2016-17</td>    <td align="right">1,536</td>    <td align="right">1,86,32,079</td>    <td align="right">19,982</td>    <td align="right">28,02,255</td>    <td align="right">18,04,252</td>    <td align="right">1,29,447</td>    <td align="right">1,25,13,740</td>    <td align="right">30,03,602</td>    <td align="right">11,97,057</td>  </tr>  <tr>    <td>2017-18</td>    <td align="right">2,142</td>    <td align="right">1,84,44,500</td>    <td align="right">19,343</td>    <td align="right">27,33,666</td>    <td align="right">19,97,672</td>    <td align="right">1,03,779</td>    <td align="right">1,12,76,704</td>    <td align="right">30,16,960</td>    <td align="right">11,49,170</td>  </tr>  <tr>    <td>2018-19</td>    <td align="right">1,511</td>    <td align="right">1,88,75,049</td>    <td align="right">17,139</td>    <td align="right">30,63,797</td>    <td align="right">23,53,563</td>    <td align="right">98,553</td>    <td align="right">1,15,23,679</td>    <td align="right">31,02,487</td>    <td align="right">11,35,121</td>  </tr>  <tr>    <td>2019-20</td>    <td align="right">1,378</td>    <td align="right">2,06,54,656</td>    <td align="right">16,100</td>    <td align="right">31,85,207</td>    <td align="right">15,01,129</td>    <td align="right">96,626</td>    <td align="right">1,14,66,364</td>    <td align="right">29,58,793</td>    <td align="right">12,39,408</td>  </tr>  <tr>    <td>2020-21</td>    <td align="right">1,432</td>    <td align="right">2,12,41,079</td>    <td align="right">15,985</td>    <td align="right">32,55,125</td>    <td align="right">16,00,611</td>    <td align="right">1,01,991</td>    <td align="right">1,00,73,294</td>    <td align="right">42,11,005</td>    <td align="right">.</td>  </tr>  <tr>    <td>2021-22</td>    <td align="right">1,617</td>    <td align="right">2,21,11,956</td>    <td align="right">8,03,041</td>    <td align="right">39,33,763</td>    <td align="right">19,96,689</td>    <td align="right">93,922</td>    <td align="right">1,04,04,289</td>    <td align="right">35,82,156</td>    <td align="right">.</td>  </tr>  <tr>    <td>2022-23</td>    <td align="right">1,529</td>    <td align="right">2,25,23,108</td>    <td align="right">50,340</td>    <td align="right">43,45,796</td>    <td align="right">31,95,023</td>    <td align="right">1,43,136</td>    <td align="right">1,01,79,155</td>    <td align="right">39,60,369</td>    <td align="right">.</td>  </tr>  <tr>    <td>2023-24</td>    <td align="right">1,713</td>    <td align="right">2,51,89,528</td>    <td align="right">47,650</td>    <td align="right">64,90,221</td>    <td align="right">36,04,201</td>    <td align="right">1,47,341</td>    <td align="right">1,30,75,610</td>    <td align="right">45,09,981</td>    <td align="right">.</td>  </tr></table><br><table width="95%" border="0" align="center" cellpadding="0" cellspacing="1" class="tablebg">  <tr class="head">    <td width="36%" align="center">Year</td>    <td width="8%" align="center">Delhi</td>    <td width="8%" align="center">Goa</td>    <td width="8%" align="center">Gujarat</td>    <td width="8%" align="center">Haryana</td>    <td width="8%" align="center">Himachal Pradesh</td>    <td width="8%" align="center">Jammu & Kashmir</td>    <td width="8%" align="center">Jharkhand</td>    <td width="8%" align="center">Karnataka</td>  </tr>  <tr>    <td>2004-05</td>    <td align="right">2,35,621</td>    <td align="right">4,15,697</td>    <td align="right">87,11,140</td>    <td align="right">16,62,464</td>    <td align="right">5,94,781</td>    <td align="right">78,445</td>    <td align="right">16,20,522</td>    <td align="right">38,36,252</td>  </tr>  <tr>    <td>2005-06</td>    <td align="right">2,62,096</td>    <td align="right">3,92,137</td>    <td align="right">1,19,53,996</td>    <td align="right">18,52,399</td>    <td align="right">8,29,821</td>    <td align="right">1,16,996</td>    <td align="right">18,79,988</td>    <td align="right">43,68,896</td>  </tr>  <tr>    <td>2006-07</td>    <td align="right">2,91,392</td>    <td align="right">4,09,597</td>    <td align="right">1,31,62,362</td>    <td align="right">22,37,053</td>    <td align="right">8,28,197</td>    <td align="right">1,63,314</td>    <td align="right">20,63,749</td>    <td align="right">49,75,429</td>  </tr>  <tr>    <td>2007-08</td>    <td align="right">2,92,626</td>    <td align="right">4,50,019</td>    <td align="right">1,45,40,034</td>    <td align="right">28,86,838</td>    <td align="right">20,00,292</td>    <td align="right">2,47,275</td>    <td align="right">22,39,894</td>    <td align="right">59,96,709</td>  </tr>  <tr>    <td>2008-09</td>    <td align="right">3,12,873</td>    <td align="right">5,26,496</td>    <td align="right">1,72,36,698</td>    <td align="right">37,06,457</td>    <td align="right">21,89,156</td>    <td align="right">2,43,669</td>    <td align="right">30,57,109</td>    <td align="right">86,69,455</td>  </tr>  <tr>    <td>2009-10</td>    <td align="right">3,86,652</td>    <td align="right">6,56,422</td>    <td align="right">2,40,38,135</td>    <td align="right">40,22,443</td>    <td align="right">26,71,378</td>    <td align="right">2,86,090</td>    <td align="right">34,59,811</td>    <td align="right">96,38,244</td>  </tr>  <tr>    <td>2010-11</td>    <td align="right">4,46,921</td>    <td align="right">6,22,109</td>    <td align="right">2,71,96,584</td>    <td align="right">51,51,447</td>    <td align="right">34,44,081</td>    <td align="right">3,45,805</td>    <td align="right">63,64,140</td>    <td align="right">1,08,68,616</td>  </tr>  <tr>    <td>2011-12</td>    <td align="right">8,87,343</td>    <td align="right">8,60,627</td>    <td align="right">3,12,74,639</td>    <td align="right">53,85,588</td>    <td align="right">44,49,031</td>    <td align="right">4,40,142</td>    <td align="right">67,42,579</td>    <td align="right">1,31,92,146</td>  </tr>  <tr>    <td>2012-13</td>    <td align="right">10,60,650</td>    <td align="right">8,27,836</td>    <td align="right">3,26,12,528</td>    <td align="right">78,39,623</td>    <td align="right">40,09,160</td>    <td align="right">5,24,823</td>    <td align="right">67,28,469</td>    <td align="right">1,45,15,109</td>  </tr>  <tr>    <td>2013-14</td>    <td align="right">5,72,580</td>    <td align="right">7,93,409</td>    <td align="right">3,82,65,385</td>    <td align="right">70,65,108</td>    <td align="right">47,69,133</td>    <td align="right">5,17,712</td>    <td align="right">71,34,878</td>    <td align="right">1,67,31,050</td>  </tr>  <tr>    <td>2014-15</td>    <td align="right">7,13,774</td>    <td align="right">8,87,143</td>    <td align="right">4,37,70,158</td>    <td align="right">87,94,812</td>    <td align="right">48,75,483</td>    <td align="right">5,77,918</td>    <td align="right">75,66,533</td>    <td align="right">1,69,02,324</td>  </tr>  <tr>    <td>2015-16</td>    <td align="right">6,34,222</td>    <td align="right">9,36,353</td>    <td align="right">5,30,29,669</td>    <td align="right">1,01,89,610</td>    <td align="right">54,25,858</td>    <td align="right">6,86,174</td>    <td align="right">74,43,105</td>    <td align="right">1,73,73,585</td>  </tr>  <tr>    <td>2016-17</td>    <td align="right">6,02,994</td>    <td align="right">9,96,946</td>    <td align="right">6,33,04,138</td>    <td align="right">1,16,32,485</td>    <td align="right">43,04,421</td>    <td align="right">10,03,913</td>    <td align="right">1,03,28,969</td>    <td align="right">1,81,22,114</td>  </tr>  <tr>    <td>2017-18</td>    <td align="right">6,41,472</td>    <td align="right">10,55,445</td>    <td align="right">6,72,66,206</td>    <td align="right">1,18,01,700</td>    <td align="right">45,34,824</td>    <td align="right">9,20,266</td>    <td align="right">1,05,47,093</td>    <td align="right">1,90,18,695</td>  </tr>  <tr>    <td>2018-19</td>    <td align="right">7,35,863</td>    <td align="right">11,35,862</td>    <td align="right">7,09,45,687</td>    <td align="right">1,39,97,025</td>    <td align="right">44,81,462</td>    <td align="right">8,67,609</td>    <td align="right">1,02,12,081</td>    <td align="right">2,07,12,231</td>  </tr>  <tr>    <td>2019-20</td>    <td align="right">6,88,888</td>    <td align="right">13,33,049</td>    <td align="right">7,48,56,033</td>    <td align="right">1,42,27,981</td>    <td align="right">46,99,152</td>    <td align="right">8,32,888</td>    <td align="right">98,92,803</td>    <td align="right">2,24,92,822</td>  </tr>  <tr>    <td>2020-21</td>    <td align="right">7,77,678</td>    <td align="right">13,39,537</td>    <td align="right">7,65,49,797</td>    <td align="right">1,45,85,737</td>    <td align="right">44,19,046</td>    <td align="right">8,07,584</td>    <td align="right">90,38,317</td>    <td align="right">2,21,69,880</td>  </tr>  <tr>    <td>2021-22</td>    <td align="right">5,98,734</td>    <td align="right">13,15,686</td>    <td align="right">6,86,60,073</td>    <td align="right">1,48,46,810</td>    <td align="right">45,95,970</td>    <td align="right">5,43,391</td>    <td align="right">92,07,891</td>    <td align="right">2,48,82,311</td>  </tr>  <tr>    <td>2022-23</td>    <td align="right">8,07,078</td>    <td align="right">14,98,845</td>    <td align="right">8,09,68,475</td>    <td align="right">1,62,73,719</td>    <td align="right">51,16,548</td>    <td align="right">5,55,348</td>    <td align="right">93,59,296</td>    <td align="right">2,51,37,548</td>  </tr>  <tr>    <td>2023-24</td>    <td align="right">6,79,151</td>    <td align="right">17,81,115</td>    <td align="right">9,03,27,908</td>    <td align="right">1,81,94,363</td>    <td align="right">49,45,415</td>    <td align="right">6,96,177</td>    <td align="right">1,06,61,082</td>    <td align="right">2,82,34,751</td>  </tr></table><br><table width="95%" border="0" align="center" cellpadding="0" cellspacing="1" class="tablebg">  <tr>    <td colspan="12" align="center" class="head">TABLE 117: STATE-WISE FIXED CAPITAL (Concld.)</td>  </tr>  <tr>    <td colspan="12" align="right">(&#8377; Lakh)</td>  </tr>  <tr class="head">    <td width="12%" align="center">Year</td>    <td width="8%" align="center">Kerala</td>    <td width="8%" align="center">Ladakh</td>    <td width="8%" align="center">Madhya Pradesh</td>    <td width="8%" align="center">Maharashtra</td>    <td width="8%" align="center">Manipur</td>    <td width="8%" align="center">Meghalaya</td>    <td width="8%" align="center">Mizoram</td>    <td width="8%" align="center">Nagaland</td>    <td width="8%" align="center">Odisha</td>    <td width="8%" align="center">Puducherry</td>    <td width="8%" align="center">Punjab</td>  </tr>  <tr>    <td>2004-05</td>    <td align="right">7,39,885</td>    <td align="right">.</td>    <td align="right">17,46,384</td>    <td align="right">96,16,976</td>    <td align="right">876</td>    <td align="right">14,666</td>    <td align="right">-</td>    <td align="right">2,740</td>    <td align="right">16,04,281</td>    <td align="right">1,96,986</td>    <td align="right">10,71,349</td>  </tr>  <tr>    <td>2005-06</td>    <td align="right">7,69,483</td>    <td align="right">.</td>    <td align="right">19,00,597</td>    <td align="right">1,01,97,038</td>    <td align="right">847</td>    <td align="right">32,133</td>    <td align="right">-</td>    <td align="right">2,898</td>    <td align="right">23,61,133</td>    <td align="right">2,36,638</td>    <td align="right">13,92,579</td>  </tr>  <tr>    <td>2006-07</td>    <td align="right">8,55,082</td>    <td align="right">.</td>    <td align="right">21,28,561</td>    <td align="right">1,21,49,123</td>    <td align="right">970</td>    <td align="right">45,788</td>    <td align="right">-</td>    <td align="right">2,833</td>    <td align="right">29,57,210</td>    <td align="right">2,44,916</td>    <td align="right">18,36,524</td>  </tr>  <tr>    <td>2007-08</td>    <td align="right">9,14,336</td>    <td align="right">.</td>    <td align="right">24,41,823</td>    <td align="right">1,37,29,202</td>    <td align="right">1,141</td>    <td align="right">61,033</td>    <td align="right">-</td>    <td align="right">2,792</td>    <td align="right">43,37,008</td>    <td align="right">3,00,989</td>    <td align="right">21,78,348</td>  </tr>  <tr>    <td>2008-09</td>    <td align="right">11,89,335</td>    <td align="right">.</td>    <td align="right">28,20,091</td>    <td align="right">1,79,01,787</td>    <td align="right">1,367</td>    <td align="right">60,715</td>    <td align="right">-</td>    <td align="right">2,047</td>    <td align="right">54,68,284</td>    <td align="right">3,17,107</td>    <td align="right">26,48,036</td>  </tr>  <tr>    <td>2009-10</td>    <td align="right">12,55,199</td>    <td align="right">.</td>    <td align="right">30,40,541</td>    <td align="right">1,97,27,392</td>    <td align="right">3,411</td>    <td align="right">1,49,539</td>    <td align="right">-</td>    <td align="right">24,107</td>    <td align="right">92,72,234</td>    <td align="right">2,94,558</td>    <td align="right">26,10,606</td>  </tr>  <tr>    <td>2010-11</td>    <td align="right">15,26,329</td>    <td align="right">.</td>    <td align="right">46,35,392</td>    <td align="right">2,32,61,161</td>    <td align="right">5,101</td>    <td align="right">2,64,046</td>    <td align="right">-</td>    <td align="right">13,067</td>    <td align="right">1,21,66,281</td>    <td align="right">2,74,310</td>    <td align="right">33,90,757</td>  </tr>  <tr>    <td>2011-12</td>    <td align="right">15,46,086</td>    <td align="right">.</td>    <td align="right">49,90,615</td>    <td align="right">2,60,96,562</td>    <td align="right">5,826</td>    <td align="right">2,81,066</td>    <td align="right">-</td>    <td align="right">12,731</td>    <td align="right">1,60,80,526</td>    <td align="right">3,90,970</td>    <td align="right">37,34,551</td>  </tr>  <tr>    <td>2012-13</td>    <td align="right">18,70,369</td>    <td align="right">.</td>    <td align="right">1,36,57,975</td>    <td align="right">3,44,92,959</td>    <td align="right">7,561</td>    <td align="right">3,49,006</td>    <td align="right">-</td>    <td align="right">17,412</td>    <td align="right">1,63,77,525</td>    <td align="right">5,07,747</td>    <td align="right">39,06,929</td>  </tr>  <tr>    <td>2013-14</td>    <td align="right">23,42,965</td>    <td align="right">.</td>    <td align="right">86,08,707</td>    <td align="right">3,26,36,160</td>    <td align="right">9,793</td>    <td align="right">3,62,758</td>    <td align="right">-</td>    <td align="right">17,872</td>    <td align="right">2,10,86,599</td>    <td align="right">4,40,126</td>    <td align="right">39,35,562</td>  </tr>  <tr>    <td>2014-15</td>    <td align="right">29,34,983</td>    <td align="right">.</td>    <td align="right">97,29,658</td>    <td align="right">3,37,14,366</td>    <td align="right">11,374</td>    <td align="right">3,50,312</td>    <td align="right">-</td>    <td align="right">20,029</td>    <td align="right">2,29,47,886</td>    <td align="right">5,03,697</td>    <td align="right">41,14,017</td>  </tr>  <tr>    <td>2015-16</td>    <td align="right">38,44,288</td>    <td align="right">.</td>    <td align="right">1,37,28,531</td>    <td align="right">3,46,17,490</td>    <td align="right">12,754</td>    <td align="right">2,97,349</td>    <td align="right">-</td>    <td align="right">21,569</td>    <td align="right">2,69,57,833</td>    <td align="right">4,71,451</td>    <td align="right">43,87,855</td>  </tr>  <tr>    <td>2016-17</td>    <td align="right">45,48,354</td>    <td align="right">.</td>    <td align="right">1,49,32,012</td>    <td align="right">3,37,98,216</td>    <td align="right">15,327</td>    <td align="right">3,77,159</td>    <td align="right">-</td>    <td align="right">21,422</td>    <td align="right">3,38,00,626</td>    <td align="right">4,79,119</td>    <td align="right">41,28,112</td>  </tr>  <tr>    <td>2017-18</td>    <td align="right">43,46,595</td>    <td align="right">.</td>    <td align="right">1,54,16,401</td>    <td align="right">3,58,44,136</td>    <td align="right">15,929</td>    <td align="right">3,61,974</td>    <td align="right">-</td>    <td align="right">20,764</td>    <td align="right">3,39,07,302</td>    <td align="right">4,47,633</td>    <td align="right">47,25,230</td>  </tr>  <tr>    <td>2018-19</td>    <td align="right">47,95,992</td>    <td align="right">.</td>    <td align="right">1,56,04,439</td>    <td align="right">4,23,83,056</td>    <td align="right">15,082</td>    <td align="right">3,62,247</td>    <td align="right">-</td>    <td align="right">20,221</td>    <td align="right">3,09,27,574</td>    <td align="right">5,41,476</td>    <td align="right">49,90,543</td>  </tr>  <tr>    <td>2019-20</td>    <td align="right">56,21,182</td>    <td align="right">74,137</td>    <td align="right">1,87,41,641</td>    <td align="right">4,23,20,376</td>    <td align="right">14,553</td>    <td align="right">3,58,224</td>    <td align="right">5,436</td>    <td align="right">17,982</td>    <td align="right">3,18,67,015</td>    <td align="right">6,42,177</td>    <td align="right">56,24,889</td>  </tr>  <tr>    <td>2020-21</td>    <td align="right">58,66,345</td>    <td align="right">70,034</td>    <td align="right">1,84,83,353</td>    <td align="right">4,31,08,696</td>    <td align="right">18,222</td>    <td align="right">3,47,817</td>    <td align="right">5,850</td>    <td align="right">17,818</td>    <td align="right">3,04,58,251</td>    <td align="right">6,28,532</td>    <td align="right">95,46,604</td>  </tr>  <tr>    <td>2021-22</td>    <td align="right">54,69,094</td>    <td align="right">5,478</td>    <td align="right">1,89,78,956</td>    <td align="right">4,52,12,876</td>    <td align="right">18,439</td>    <td align="right">3,38,344</td>    <td align="right">5,377</td>    <td align="right">17,287</td>    <td align="right">3,12,14,693</td>    <td align="right">5,95,069</td>    <td align="right">1,03,98,150</td>  </tr>  <tr>    <td>2022-23</td>    <td align="right">55,19,625</td>    <td align="right">7,844</td>    <td align="right">1,91,39,327</td>    <td align="right">4,93,44,384</td>    <td align="right">20,041</td>    <td align="right">3,75,910</td>    <td align="right">5,307</td>    <td align="right">17,142</td>    <td align="right">3,32,07,116</td>    <td align="right">6,46,215</td>    <td align="right">1,16,73,588</td>  </tr>  <tr>    <td>2023-24</td>    <td align="right">60,88,909</td>    <td align="right">10,958</td>    <td align="right">2,43,08,082</td>    <td align="right">5,52,29,136</td>    <td align="right">21,460</td>    <td align="right">4,97,304</td>    <td align="right">4,842</td>    <td align="right">16,548</td>    <td align="right">3,68,09,621</td>    <td align="right">6,98,985</td>    <td align="right">1,19,46,181</td>  </tr></table><br><table width="95%" border="0" align="center" cellpadding="0" cellspacing="1" class="tablebg">  <tr class="head">    <td width="20%" align="center">Year</td>    <td width="8%" align="center">Rajasthan</td>    <td width="8%" align="center">Sikkim</td>    <td width="8%" align="center">Tamil Nadu</td>    <td width="8%" align="center">Telangana</td>    <td width="8%" align="center">Tripura</td>    <td width="8%" align="center">Uttar Pradesh</td>    <td width="8%" align="center">Uttarakhand</td>    <td width="8%" align="center">West Bengal</td>    <td width="8%" align="center">Lakshadweep</td>    <td width="8%" align="center">All-India</td>  </tr>  <tr>    <td>2004-05</td>    <td align="right">14,76,796</td>    <td align="right">-</td>    <td align="right">51,01,608</td>    <td align="right">.</td>    <td align="right">6,064</td>    <td align="right">31,52,999</td>    <td align="right">2,87,679</td>    <td align="right">24,56,223</td>    <td align="right">-</td>    <td align="right">5,13,06,925</td>  </tr>  <tr>    <td>2005-06</td>    <td align="right">16,24,464</td>    <td align="right">-</td>    <td align="right">60,34,229</td>    <td align="right">.</td>    <td align="right">12,186</td>    <td align="right">37,63,086</td>    <td align="right">4,19,984</td>    <td align="right">26,50,026</td>    <td align="right">-</td>    <td align="right">6,06,94,028</td>  </tr>  <tr>    <td>2006-07</td>    <td align="right">19,08,983</td>    <td align="right">-</td>    <td align="right">75,06,812</td>    <td align="right">.</td>    <td align="right">22,208</td>    <td align="right">44,99,515</td>    <td align="right">9,49,313</td>    <td align="right">27,73,464</td>    <td align="right">-</td>    <td align="right">7,15,13,139</td>  </tr>  <tr>    <td>2007-08</td>    <td align="right">22,58,736</td>    <td align="right">-</td>    <td align="right">79,33,659</td>    <td align="right">.</td>    <td align="right">24,494</td>    <td align="right">58,45,002</td>    <td align="right">12,97,142</td>    <td align="right">32,33,151</td>    <td align="right">-</td>    <td align="right">8,45,13,209</td>  </tr>  <tr>    <td>2008-09</td>    <td align="right">34,69,297</td>    <td align="right">-</td>    <td align="right">97,78,762</td>    <td align="right">.</td>    <td align="right">41,808</td>    <td align="right">62,67,696</td>    <td align="right">21,89,841</td>    <td align="right">41,37,348</td>    <td align="right">-</td>    <td align="right">10,55,96,614</td>  </tr>  <tr>    <td>2009-10</td>    <td align="right">38,93,226</td>    <td align="right">90,825</td>    <td align="right">1,32,89,599</td>    <td align="right">.</td>    <td align="right">66,440</td>    <td align="right">68,69,662</td>    <td align="right">32,65,713</td>    <td align="right">59,67,266</td>    <td align="right">-</td>    <td align="right">13,52,18,367</td>  </tr>  <tr>    <td>2010-11</td>    <td align="right">50,51,634</td>    <td align="right">1,10,841</td>    <td align="right">1,47,96,543</td>    <td align="right">.</td>    <td align="right">39,036</td>    <td align="right">74,85,582</td>    <td align="right">36,14,107</td>    <td align="right">59,32,796</td>    <td align="right">-</td>    <td align="right">16,07,00,652</td>  </tr>  <tr>    <td>2011-12</td>    <td align="right">53,01,625</td>    <td align="right">1,13,924</td>    <td align="right">1,61,45,171</td>    <td align="right">.</td>    <td align="right">35,095</td>    <td align="right">90,64,742</td>    <td align="right">50,66,863</td>    <td align="right">71,69,937</td>    <td align="right">-</td>    <td align="right">19,49,55,088</td>  </tr>  <tr>    <td>2012-13</td>    <td align="right">61,42,162</td>    <td align="right">1,44,075</td>    <td align="right">1,87,24,233</td>    <td align="right">58,47,297</td>    <td align="right">33,927</td>    <td align="right">1,02,71,141</td>    <td align="right">52,99,803</td>    <td align="right">82,06,693</td>    <td align="right">-</td>    <td align="right">21,80,26,022</td>  </tr>  <tr>    <td>2013-14</td>    <td align="right">71,49,502</td>    <td align="right">1,73,938</td>    <td align="right">2,70,81,648</td>    <td align="right">56,94,436</td>    <td align="right">27,221</td>    <td align="right">1,02,43,627</td>    <td align="right">54,79,327</td>    <td align="right">80,94,660</td>    <td align="right">-</td>    <td align="right">23,73,71,903</td>  </tr>  <tr>    <td>2014-15</td>    <td align="right">76,54,382</td>    <td align="right">1,76,248</td>    <td align="right">2,21,31,634</td>    <td align="right">57,39,296</td>    <td align="right">32,428</td>    <td align="right">1,08,96,835</td>    <td align="right">51,04,228</td>    <td align="right">86,26,799</td>    <td align="right">-</td>    <td align="right">24,74,45,461</td>  </tr>  <tr>    <td>2015-16</td>    <td align="right">84,65,004</td>    <td align="right">3,33,077</td>    <td align="right">2,37,96,264</td>    <td align="right">76,94,317</td>    <td align="right">44,294</td>    <td align="right">1,26,92,774</td>    <td align="right">55,53,203</td>    <td align="right">91,68,552</td>    <td align="right">-</td>    <td align="right">28,09,64,722</td>  </tr>  <tr>    <td>2016-17</td>    <td align="right">1,00,80,805</td>    <td align="right">7,10,069</td>    <td align="right">2,82,44,128</td>    <td align="right">69,31,972</td>    <td align="right">46,357</td>    <td align="right">1,32,70,699</td>    <td align="right">58,70,612</td>    <td align="right">1,13,83,728</td>    <td align="right">-</td>    <td align="right">31,90,38,649</td>  </tr>  <tr>    <td>2017-18</td>    <td align="right">1,09,37,405</td>    <td align="right">7,05,218</td>    <td align="right">2,77,54,189</td>    <td align="right">81,01,026</td>    <td align="right">45,161</td>    <td align="right">1,38,45,026</td>    <td align="right">58,42,010</td>    <td align="right">1,17,43,291</td>    <td align="right">-</td>    <td align="right">32,85,88,927</td>  </tr>  <tr>    <td>2018-19</td>    <td align="right">1,22,70,956</td>    <td align="right">7,43,555</td>    <td align="right">2,82,76,628</td>    <td align="right">99,55,058</td>    <td align="right">45,781</td>    <td align="right">1,43,92,066</td>    <td align="right">56,05,314</td>    <td align="right">1,24,18,268</td>    <td align="right">-</td>    <td align="right">34,66,06,975</td>  </tr>  <tr>    <td>2019-20</td>    <td align="right">1,30,67,726</td>    <td align="right">7,34,106</td>    <td align="right">3,07,25,218</td>    <td align="right">96,90,004</td>    <td align="right">49,991</td>    <td align="right">1,52,94,771</td>    <td align="right">58,41,571</td>    <td align="right">1,33,00,889</td>    <td align="right">-</td>    <td align="right">36,41,35,165</td>  </tr>  <tr>    <td>2020-21</td>    <td align="right">1,40,81,395</td>    <td align="right">5,56,884</td>    <td align="right">3,01,50,291</td>    <td align="right">1,05,39,333</td>    <td align="right">45,382</td>    <td align="right">1,73,34,875</td>    <td align="right">54,63,237</td>    <td align="right">1,25,27,544</td>    <td align="right">-</td>    <td align="right">36,94,38,562</td>  </tr>  <tr>    <td>2021-22</td>    <td align="right">1,37,50,477</td>    <td align="right">5,06,930</td>    <td align="right">3,07,59,568</td>    <td align="right">1,07,19,276</td>    <td align="right">47,064</td>    <td align="right">1,83,10,288</td>    <td align="right">56,52,220</td>    <td align="right">1,30,57,558</td>    <td align="right">-</td>    <td align="right">37,26,35,444</td>  </tr>  <tr>    <td>2022-23</td>    <td align="right">1,76,30,473</td>    <td align="right">5,52,272</td>    <td align="right">3,26,94,850</td>    <td align="right">1,15,55,655</td>    <td align="right">50,778</td>    <td align="right">2,28,71,283</td>    <td align="right">85,75,917</td>    <td align="right">1,41,76,422</td>    <td align="right">-</td>    <td align="right">41,21,79,458</td>  </tr>  <tr>    <td>2023-24</td>    <td align="right">2,02,97,198</td>    <td align="right">5,25,294</td>    <td align="right">3,74,27,225</td>    <td align="right">1,23,05,574</td>    <td align="right">60,442</td>    <td align="right">2,58,25,587</td>    <td align="right">63,40,757</td>    <td align="right">1,54,08,670</td>    <td align="right">54</td>    <td align="right">46,24,09,035</td>  </tr>  <tr>    <td colspan="11">.: Not Applicable. -: Not Available.<br>      Notes: 1. Even though erstwhile Andhra Pradesh was divided into Andhra Pradesh and Telangana w.e.f June 2, 2014, ASI data published for the years 2012-13 and 2013-14 contained break-up figures for the two states, separately.<br>      2. Data for Arunachal Pradesh has been included in ASI from 2014-15.<br>      3. Reference period for ASI 2018-19 is the accounting year of the factory, ending on any day during the fiscal year 2018-19. The field work of ASI 2018-19 was adversely affected by the pandemic situation prevailing in the country, which stretched the survey period beyond its stipulated time. The survey was conducted during November 2019 to November 2020 through ASI Web Portal.<br>      4. Separate estimates for UTs Jammu & Kashmir and Ladakh were available in ASI 2019-20 as the erstwhile State of Jammu & Kashmir was divided in two UTs viz., Jammu & Kashmir and Ladakh w.e.f Oct 31, 2019.<br>      5. Mizoram was included for the first time in ASI 2019-20.<br>      6. Combined estimates for Dadra & Nagar Haveli and Daman & Diu were available in ASI 2020-21 onwards as the erstwhile separate UTs Dadra & Nagar Haveli and Daman & Diu were merged into single UT.<br>      7. Lakshadweep was added for the first time in ASI 2023-24. Additional eligible units are added amid the relaxation of employee criteria for Lakshadweep (see para. 10 of Table 0 ASI Write up 2023-24).<br>      Source: Annual Survey of Industries (ASI), Ministry of Statistics and Programme Implementation, Government of India.</td>  </tr></table></td></tr></table>
+                </table>
+                <br />
+                <div align="right">
+</div>
+            </div>
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+    <div class="clearfix">
+    </div>
+    <a href="#top" class="scrollToTop" id="backToTop">Top</a>
+<div id="backDiv" style=" text-align:center;" >
+<a href="javascript:history.back()" class="paraheader">Back to previous page</a><br/>
+<span id="lblGetLastUpdateDate" class="paraheader"></span>
+</div>
+<footer class="footer">
+
+<div class="footer">
+  <div class="container_12">    
+      <div class="grid_9" style="width: 833px !important; ">
+          
+          <h2><span class="blue">More</span> Links :</h2>
+          
+		<ul class="footerlist" style="column-count:4">
+                  <li ><a href="/Scripts/HolidayMatrixDisplay.aspx">Bank Holidays</a></li>
+                  <li ><a href="https://shabdavali.rbi.org.in/">Banking Glossary</a></li>
+                  <li ><a href="/Scripts/CitiChart.aspx">Citizen's Charter</a></li>
+                  <li ><a href="/Scripts/Complaints.aspx">Complaints</a></li>
+                  <li ><a href="/Scripts/contactus.aspx">Contact Us</a></li>
+  		<li ><a href="https://www.rbi.org.in/scripts/bs_viewcontent.aspx?Id=3894">COVID-19 Measures</a></li>
+                  <li ><a target="_blank" href="https://ncfe.org.in/e-lms">E-LMS</a></li>
+                  <li ><a href="/Scripts/EventsDisplay.aspx">Events</a></li>
+                  <li ><a href="/Scripts/FAQDisplay.aspx">FAQs</a></li>
+                  <li ><a target="_blank" href="https://www.rbi.org.in/FinancialEducation/">Financial Education</a></li>
+		<li ><a href="/Scripts/BS_ViewForms.aspx">Forms</a></li>
+                  <li ><a href="/Scripts/IFSCMICRDetails.aspx">IFSC/MICR Codes</a></li>
+                  <li><a href="/Scripts/OtherLinks.aspx">Important Websites</a></li>
+                  <li><a target="_blank" href="https://opportunities.rbi.org.in/scripts/index.aspx">Opportunities<span>@</span>RBI</a></li>
+                  <li><a href="/Scripts/rbi_clarification.aspx">RBI Clarifications</a></li>
+ 		<li><a target="_blank" href="https://rbikehtahai.rbi.org.in/">RBI Kehta Hai</a></li>
+                  <li><a href="https://rbidocs.rbi.org.in/rdocs/content/pdfs/Utkarsh202910042026.pdf" target="_blank">RBI’s Vision and Values <img src="../Images/pdf.gif" alt="PDF document" style="padding-bottom: 4px; width:12px; border:0; vertical-align:middle;"> (652 KB)</a></li>
+                  <li><a href="/Scripts/Righttoinfoact.aspx">Right to Information Act</a></li>
+                  <li><a href="/Scripts/BS_ViewTenders.aspx">Tenders</a></li>
+                  
+              </ul>
+      </div>
+
+    <div class="grid_3" style="width:197px !important">
+      
+        <h2><span class="blue">Follow</span> RBI</h2>
+      <ul class="footerlist">
+        
+
+          <li style="float: left;background: url(/images/footer_list_arrow.gif) left 8px no-repeat;"><a href="/Scripts/rss.aspx"><img src="/images/rss-icon.png" alt="RSS Icon" class="rss">RSS</a></li>
+
+        
+          <li>
+              <a href="https://twitter.com/RBI" target="_blank" class="twitter">
+                  <img src="/images/Twitter_New.png" alt="Twitter Icon" class="videos" style="padding-left: 18%; width:14px;">Twitter
+              </a>
+          </li>
+
+        
+
+          <li style="float: left;"><a href="https://www.youtube.com/channel/UCIfCOl43tunZVNYafeC4RQA" class="videos" target="_blank"><img src="/images/youtube.png" alt="YouTube Icon" class="videos">YouTube</a></li>
+
+          <li>
+              <a href="https://instagram.com/reservebankofindia" class="videos" target="_blank">
+                  <img src="/images/Instagram.jpg" alt="Instagram Icon" class="videos" style="padding-left: 5%; width:14px;">Instagram
+              </a>
+          </li>
+          <li style="float: left;"><a href="https://www.facebook.com/RBIsays" class="videos" target="_blank"><img src="/images/Facebook.jpg" style="width:14px;" alt="Facebook Icon" class="videos">Facebook</a></li>
+          <li>
+              <a href="https://www.linkedin.com/company/reservebankofindia" class="videos" target="_blank">
+                  <img src="/images/LinkedinIcon1.png" alt="LinkedIn Icon" class="" style="padding-left: 4%;width: 17px;background: bottom no-repeat;display: block;float: left;margin: 2px 3px 0 1px;">LinkedIn
+              </a>
+          </li>
+      </ul>
+	<a href="https://www.india.gov.in" class="videos" target="_blank">
+                  <img src="/images/indiaGov.png" alt="National Portal of India logo" class="">
+              </a>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="copyright">
+    <div class="container_12">
+     <div class="grid_6 pull_left">&copy; Reserve Bank of India. All Rights Reserved. </div>
+        <div class="grid_5 pull_right"><a href="/Scripts/sitemap.aspx">Sitemap</a> <span aria-hidden="true">|</span> <a href="/Scripts/Disclaimer.aspx">Disclaimer</a></div>
+        <div class="clearfix"></div>
+
+        <div class="grid_6 pull_left">Website owned and managed by Reserve Bank of India. Contact us on helpdoc[at]rbi[dot]org[dot]in</div>
+        <div class="grid_5 pull_right">Website last updated date: Nov 03, 2026</div>
+        <div class="clearfix"></div>
+	<div class="grid_6 pull_left"><a href="https://www.rbi.org.in/scripts/wim.aspx">Web Information Manager</a></div>
+	<div class="grid_5 pull_right"><a href="https://rbidocs.rbi.org.in/rdocs/content/pdfs/Accessibility20012026.pdf" target="_blank">Accessibility Statement
+	<img alt="PDF - Accessibility Statement" style="padding: 1px; width:16px; border:0; vertical-align:middle;" src="../Images/pdf.gif" > (133 KB)
+	</a><span aria-hidden="true"> |</span><a href="/scripts/ScreenReader.aspx" title="Information related to screen reader">Screen Reader and Accessibility Help</a></div>
+	<div class="clearfix"></div>
+        <div class="grid_12 pull_left">Supports: Google Chrome 147+ | Firefox 150+ | Microsoft Edge Version 147+ | Safari 17+</div>
+        
+        <div class="clearfix"></div>
+    </div>
+  </div>
+  
+
+
+
+</div>
+
+</footer>
+
+<script src="/js/ReplaceURL.js" ></script>
+<script >
+
+
+    //this is for floating TOP link
+    
+    $(document).ready(function () {
+
+        var offset = 230;
+        var duration = 500;
+
+
+        jQuery(window).scroll(function () {
+            if (jQuery(this).scrollTop() > offset) {
+                jQuery('.scrollToTop').fadeIn(duration);
+                
+            } else {
+                jQuery('.scrollToTop').fadeOut(duration);
+                
+            }
+        });
+
+        
+	$('.page_title').attr('tabindex','-1');
+        $('.scrollToTop').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 800);
+		$('.page_title').focus(); 
+            return false;
+        });
+	
+
+
+	if(!window.location.href.includes("Home.aspx") && !window.location.href.includes("home.aspx"))
+{ 
+if( window.location.href.includes(".aspx")){
+var div= document.getElementById('backDiv');
+	div.removeAttribute("hidden");}
+else{
+var div1= document.getElementById('backDiv');
+	div1.setAttribute("hidden","true");}
+}
+else{
+
+
+	var div1= document.getElementById('backDiv');
+	div1.setAttribute("hidden","true");}
+    });
+
+
+  
+    $(window).scroll(function () {
+
+        if ($('div.banner2').length) {
+
+            if ($(window).scrollTop() >= 265) {
+                $('#menubar').css("position", "fixed");
+                $('#menubar').css("width", "240px");
+                $('#menubar').css("margin-top", "-281px");
+                $('.content_area').css("margin-left", "252px");
+
+                $('.sidebar_nav').css("position", "fixed");
+                $('.sidebar_nav').css("margin-top", "-200px");
+                $('.sidebar_nav').css("width", "236px");
+
+
+             
+
+            }
+
+            else {
+                $('#menubar').css("position", "");
+                $('#menubar').css("width", "");
+                $('#menubar').css("margin-top", "");
+                $('.content_area').css("margin-left", "");
+
+                $('.sidebar_nav').css("position", "");
+                $('.sidebar_nav').css("margin-top", "");
+                $('.sidebar_nav').css("width", "");
+
+
+
+         
+            }
+
+        }
+
+        else if ($(window).scrollTop() >= 185) {
+            $('#menubar').css("position", "fixed");
+            $('#menubar').css("width", "240px");
+            $('#menubar').css("margin-top", "-200px");
+            $('.content_area').css("margin-left", "252px");
+
+            $('.sidebar_nav').css("position", "fixed");
+            $('.sidebar_nav').css("margin-top", "-200px");
+            $('.sidebar_nav').css("width", "236px");
+
+
+          
+		var treeheight=0;
+		if($('#treeYear').height()>0){treeheight=$('#treeYear').height();}
+	    	if($(window).scrollTop() >= $('#example-min').height()-treeheight)
+		{			 
+			$('#menubar').css("position", "absolute");
+            		
+			$('#menubar').css("margin-top", "");
+			$('#menubar').css("top", $('#example-min').height()+100-treeheight +"px");
+		}
+		else{$('#menubar').css("position", "fixed"); $('#menubar').css("top", "");}
+		
+        }
+
+        else {
+            $('#menubar').css("position", "");
+            $('#menubar').css("width", "");
+            $('#menubar').css("margin-top", "");
+            $('.content_area').css("margin-left", "");
+
+            $('.sidebar_nav').css("position", "");
+            $('.sidebar_nav').css("margin-top", "");
+            $('.sidebar_nav').css("width", "");
+
+
+       
+        }
+     
+
+       
+    });
+	
+      
+    $(document).ready(function () {
+	
+	
+		  $('.window .close').click(function (e) {
+            //Cancel the link behavior
+            e.preventDefault();
+            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+            $('#maskWN').hide();
+            $('.window').hide();
+            var scroll = $(window).scrollTop();
+            $("html").scrollTop(scroll);
+        });
+		
+		 $('#maskWN').click(function () {
+            $(this).hide();
+            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+            $('.window').hide();
+
+        });
+
+        
+
+        //if close button is clicked
+        $('.window .close').click(function (e) {
+            //Cancel the link behavior
+            e.preventDefault();
+            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+            $('#mask').hide();
+            $('.window').hide();
+            var scroll = $(window).scrollTop();
+            $("html").scrollTop(scroll);
+        });
+
+        //if mask is clicked
+        $('#mask').click(function () {
+            $(this).hide();
+            $('.window').hide();
+        });
+        $('#feedbackbtn').click(function () {
+            var id = '#dialog';
+
+            //Get the screen height and width
+            var maskHeight = $(document).height();
+            var maskWidth = $(window).width();
+
+            //Set heigth and width to mask to fill up the whole screen
+            
+            $('#mask').css({ 'width': '100%', 'height': '100%', 'position': 'fixed' });
+
+            //transition effect
+            $('#mask').fadeIn(500);
+            $('#mask').fadeTo("slow", 0.9);
+
+            //Get the window height and width
+            var winH = $(window).height();
+            var winW = $(window).width();
+
+            //Set the popup window to center
+            $(id).css('top', winH / 2 - $(id).height() / 2);
+            $(id).css('left', winW / 2 - $(id).width() / 2);
+
+            //transition effect
+            $(id).fadeIn(2000);
+        });
+
+        $('.submit').click(function () {
+            var Name = $("[id*=txtFeedbackName]").val();
+            var Email = $("[id*=txtFeedbackEmail]").val();
+            var Comments = $("[id*=txtFeedbackComments]").val();
+            if (Name == "") {
+
+                alert("Please enter your name");
+                $("[id*=txtFeedbackName]").focus();
+                return false;
+            }
+            else if (Email == "") {
+                alert("Please enter your email");
+                $("[id*=txtFeedbackEmail]").focus();
+                return false;
+            }
+            else if (Email != "" && !ValidateEmail(Email)) {
+                alert("Please enter a valid email address");
+                $("[id*=txtFeedbackEmail]").focus();
+                return false;
+            }
+
+            else if (Comments == "") {
+
+                alert("Please enter some comments");
+                $("[id*=txtFeedbackComments]").focus();
+                return false;
+            }
+
+            else {
+                $('[id*=Button1]').attr('disabled', 'disabled');
+
+                var param = { Name: Name, EmailID: Email, Comments: Comments };
+                $.ajax({
+                    type: "POST",
+                    url: "../Home.aspx/SaveFeedback",
+                    data: JSON.stringify(param),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                    success: function (response) {
+
+                        if (response.d == "0") {
+                            alert("Thank you for your feedback");
+                            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+                            $('#mask').hide();
+                            $('.window').hide();
+                            $('[id*=Button1]').removeAttr('disabled');
+                            $("[id*=txtFeedbackName]").val("");
+                            $("[id*=txtFeedbackEmail]").val("");
+                            $("[id*=txtFeedbackComments]").val("");
+                        }
+                        else {
+                            alert("Please try again");
+                            $('[id*=Button1]').removeAttr('disabled');
+
+
+                        }
+
+                    }
+                });
+            }
+
+        });
+
+        function ValidateEmail(email) {
+            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
+
+       
+
+        $('a.style1').each(function () {
+
+            var $this = $(this);
+            var aHref = $this.attr('class');
+            $this.attr('class', aHref.replace('style1', 'links'));
+        });
+
+		
+   });
+
+  function isExternal(url) {
+	if(url){url=url.toLowerCase();
+       if(url=='#' || url=='javascript:void(0);' || url.includes('javascript')||url=='' )
+	{ return false;} 
+	else{//return (url.indexOf("rbi.org.in")==-1)
+	
+	if(url.indexOf("www.rbi.org.in")==-1 || url.indexOf("https://rbi.org.in")==-1)
+		{	
+			if(url.indexOf("rbi.org.in")==-1)		
+    				return "external";
+			else if(url.indexOf("www.rbi.org.in")==-1 && url.indexOf(".rbi.org.in")>0 && url.indexOf("rbidocs.rbi.org.in")==-1)
+				{return "subdomain";}
+			else if(url.indexOf("financialeducation")>0 || url.indexOf("commonperson")>0 || url.indexOf("/rekyc/")>0 || url.indexOf("rbi90years")>0 ){
+				return "subsite";}
+			
+		}
+	
+	}}
+    }
+    document.addEventListener("click", function () {
+	linkMessage();
+        
+    });
+function linkMessage(){
+	if (event.target.tagName.toLowerCase() === "a") {
+            if (isExternal(event.target.href)=="external") {
+
+                if (confirm("You are being redirected to an external website that opens in a new tab. Please note that Reserve Bank of India will not be held responsible for external websites content in any manner.")) {
+
+                    return;
+                }
+                else {
+                   
+                    event.preventDefault();
+                    return;
+                }
+            }
+	    if (isExternal(event.target.href)=="subdomain") {
+	    	 if (confirm("You are being redirected to a subdomain that will open in a new browser tab. The subdomain may have a different header, footer, and navigation structure from the main website. Continue?")) {
+                    return;
+                }
+                else {
+                   
+                    event.preventDefault();
+                    return;
+                }
+	    }
+		if (isExternal(event.target.href)=="subsite") {
+	    	 if (confirm("You are being redirected to a subsite that will open in a new browser tab. The subsite may have a different header, footer, and navigation structure from the main website. Some design elements and links may vary from the primary site experience. Continue?")) {
+                    return;
+                }
+                else {
+                   
+                    event.preventDefault();
+                    return;
+                }
+	    }
+        }
+	else if (event.target.tagName.toLowerCase() === "img") {
+		$(event.target).preventDefault;		
+		if($(event.target).parent('a').length){
+			 if (isExternal($(event.target).parent('a').prop('href'))==="external") {
+                		if (confirm("You are being redirected to an external website that opens in a new tab. Please note that Reserve Bank of India will not be held responsible for external websites content in any manner.")) {
+                    		return;
+               		 }
+
+                	else {                   
+                    		event.preventDefault();
+                    		return;
+                	}}
+			if (isExternal($(event.target).parent('a').prop('href'))==="subdomain") {
+                		if (confirm("You are being redirected to a subdomain that will open in a new browser tab. The subdomain may have a different header, footer, and navigation structure from the main website. Continue?")) {
+                    		return;
+               		 	}
+
+                		else {                   
+                    		event.preventDefault();
+                    		return;
+                		}
+			}
+			if (isExternal(event.target.href)=="subsite") {
+	    	 	if (confirm("You are being redirected to a subsite that will open in a new browser tab. The subsite may have a different header, footer, and navigation structure from the main website. Some design elements and links may vary from the primary site experience. Continue?")) {
+                    	return;
+                	}
+                	else {
+                   
+                    		event.preventDefault();
+                    	return;
+                	}
+	    		}
+	}}
+	const link = event.target.closest('a[target="_blank"]');
+	if(link){ 
+		event.preventDefault();
+		const docRegx = /\.(pdf|docx?|xlsx?|zip?|xls|doc)$/i;
+		if(docRegx.test(link)){
+			if(/\.pdf$/i.test(link))
+			{	
+				if(confirm("This PDF will open in a new browser tab. Do you want to continue?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.docx$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.doc$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.xlsx$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.xls$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.zip$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this file?")){
+				window.open(link.href,"_blank");}
+			}
+		}
+
+		else 
+		if(confirm("This link will open in a new browser tab. Do you want to continue?")){
+			window.open(link.href,"_blank");
+		}
+	}
+		if (event.target.tagName.toLowerCase() === "button") {
+		if($(event.target).parent('a').length>0){
+			const link1 = event.target.closest('a[target="_blank"]');
+		if(link1){
+			event.preventDefault();
+			if(confirm("This link will open in a new browser tab. Do you want to continue?")){
+				window.open(link.href,"_blank");
+			}
+		}
+		}
+	}
+}
+
+</script>
+<script >
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61369961-1', 'auto');
+  ga('send', 'pageview');
+
+document.querySelectorAll('table.tablebg').forEach(table => {
+    const anchors = table.querySelectorAll('a[href^="#"]:not([href="#"])');
+
+    const hasInPageAnchorsInThisTableOnly = Array.from(anchors).some(a => {
+        // Find the closest table ancestor of this anchor
+        const closestTable = a.closest('table');
+    
+        // Only count it if it belongs to the current table (not a nested one)
+        return closestTable === table;
+    });
+
+    if (!hasInPageAnchorsInThisTableOnly) {
+       // table.setAttribute('role', 'presentation');
+       //} else {
+       //    table.removeAttribute('role'); 
+	if(table.closest('td')){
+	if(table.querySelector('th'))
+	{	
+		table.removeAttribute('role');
+	}
+	else{
+        table.setAttribute('role', 'presentation');
+		}
+	}
+	else{
+        table.setAttribute('role', 'presentation');
+		}
+    }
+});
+$('.brd-ptable1').attr('role','presentation');
+$('html').attr('lang', 'en');
+document.querySelectorAll('br').forEach(br => {br.setAttribute('aria-hidden','true');});
+$('#doublescroll').children('table').filter(':first').attr("role", "presentation");
+$('.page_title').nextAll('table').first().attr("role", "presentation");
+
+
+
+document.addEventListener('DOMContentLoaded', function(){
+$('.tableheader b').each(function () {
+		var curEle= $(this);
+           $(curEle).replaceWith("<h2 class='dop_header'>"+$(curEle).html()+"</h2>")
+        });
+ });
+
+//  tooltip 
+var TooltipManager = {
+    _tip: null, // Create the tooltip element once 
+init: function() {
+    if (!this._tip) {
+    
+        this._tip = $('<div id="js-custom-tooltip"></div>').css({
+            "position": "absolute", "background": '#ffffca', "color":"#000", "padding": "2px 5px", "border-radius": "0px", "font-size": "11px","font-family":"Sans-serif", "z-index": "10000", "pointer-events": "none","border":"1px solid #767676", "box-shadow":"2px 2px 3px rgba(0,0,0,0.2)","white-space":"nowrap"
+        }).appendTo('body');
+        
+    }
+}, 
+show: function(element, text) {
+    this.init(); 
+var $el = $(element); // Update text and position 
+    
+this._tip.text(text).show();
+var pos = $el.offset(); 
+this._tip.css({
+    top: pos.top + this._tip.outerHeight()  + "px", // Show above 
+    left: pos.left + ($el.outerWidth() / 2) - (this._tip.outerWidth() / 2) + "px"
+});
+    }, hide: function() { if (this._tip) this._tip.hide(); }
+}; // Apply to all elements that have a ToolTip (ToolTip renders as 'title') 
+$(document).ready(function() {
+   
+    $('body').on('focusin', 'input, button, a, select, textarea, img', function() {
+        var title = $(this).attr('title'); if (title) {
+    
+            
+      
+            TooltipManager.show(this, title);
+        }
+    }).on('focusout', 'input, button, a, select, textarea, img', function() { 
+       
+            TooltipManager.hide();
+       
+    }); // Dismiss on Escape key
+    $(document).keyup(function(e) { if (e.key === "Escape") TooltipManager.hide(); });
+});
+
+//breadcrumb current page announce
+$(document).ready(function(){
+
+const breadcrumbList = document.querySelector('.breadcrumbs');
+
+    if (breadcrumbList) {
+        const listItems = breadcrumbList.querySelectorAll('li');
+    
+        if (listItems.length > 0) {
+            
+            const lastItem = $('.breadcrumbs li').filter(function(){ return $.trim($(this).text())!=="";}).last().attr('aria-current', 'page').css('background','none'); //remove extra icons from empty breadcrumbs
+            $('.breadcrumbs li').filter(function(){ return $.trim($(this).text())==="" && $(this).children().length===0;}).attr('role','presentation');
+	    
+       		$('.breadcrumbs li').filter(function(){
+			if($(this).children().length!==0)
+			{
+				if($(this).children().text() ===""){}
+			}
+		});
+            const lastLink =lastItem.find('a');
+            if (lastLink) {
+                lastLink.attr('aria-current', 'page');               
+                
+            }
+		if($('.breadcrumbs li').last().find('a').length>0)
+		{			
+			const $a = $('.breadcrumbs li').last().find('a');
+			$('<span>',{class: $a.attr('class'), text: $a.text()}).replaceAll($a).attr('aria-current', 'page').css('background','none');
+		}
+		
+		if($('.breadcrumbs li').last().find('span').length>0)
+		{
+			
+			if($('.breadcrumbs li').last().find('span')[0].innerText==='')
+			{
+				$('.breadcrumbs li').last().find('span').removeAttr('aria-current');				
+			}
+			else{
+				$('.breadcrumbs li').last().find('span').filter(function(){ return $(this).attr('role')!=='presentation';}).last().attr('aria-current', 'page').css('background','none');					
+			}		
+		}
+		$('.breadcrumbs li').filter(function(){ return $.trim($(this).text())!=="";}).removeAttr('role','presentation'); 
+		$('.breadcrumbs li').filter(function(){ return $.trim($(this).text())==="" }).css('background','none');//remove extra icons from empty breadcrumbs
+        }
+    }
+});
+
+//document.addEventListener("DOMContentLoaded", () => {
+//    document.querySelectorAll('img').forEach(img => {
+//      try {
+//        const url = new URL(img.src);
+//        img.crossOrigin = "anonymous";
+//        img.src = window.location.origin + url.pathname + url.search + url.hash;
+//      } catch (e) {}
+//    });
+//  });
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+setLetterSpace(false);//]]>
+</script>
+</form>
+</body>
+</html>
+<script type="text/javascript" src="/js/plugins.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/Scroll.js"></script>
+<script type="text/javascript" language="javascript">
+    
+    DoubleScrollWithoutTree(document.getElementById('doublescroll'));
+
+    
+
+</script>
+<script id="f5_cspm">(function(){var f5_cspm={f5_p:'JCBJOKELICPMODKGLCANFCGKKPBNHPFPAFPBIAICJMPECDDJNKFJCMJEGHLNDHBLBKMBGBMDEKMHJKJLADAAEODPAIIJCIMKKHBGFPGINDDEBCJHGIHNBOGDACCGIIPL',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,40,(latency>>8));str=f5_cspm.set_byte(str,41,(latency&0xff));str=f5_cspm.set_byte(str,35,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='f5avr0455741970aaaaaaaaaaaaaaaa_cspm_='+encodeURIComponent(cookie_val)+';path=/;'+'';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'&&pair[1]=='1234')
+{var d=new Date();d.setTime(d.getTime()-1000);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;'+';';setTimeout(f5_cspm.wait_perf_data,100);}}}}
+f5_cspm.go();}());</script>

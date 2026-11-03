@@ -1,0 +1,1526 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+     <title>Publications | Official Website of Reserve Bank of India </title>
+    <meta name="description" content="Publications  - Reserve Bank of India" />
+    <meta name="keyword" content="RBI Publications" />
+
+    <meta name="author " content="Reserve Bank of India" />
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript" src="/js/libs/modernizr-2.5.3.min.js"></script>
+    <style type="text/css">
+        table.tablebg tbody tr td center table tbody tr td
+        {
+            border: 0 !important;
+        }
+    </style>
+    
+</head>
+<body>
+    <form method="post" action="./PublicationsView.aspx?id=23587" id="Form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE4NTY4NTgxMTBkZP0vDnvtfsRCn5XUJo+bCd4QLNtQc23FpaFdub4aKT3o" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D0871D1A" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAqWtD3Lc+SkD1nbei8dGsdM1M3Bty/y91Zj0Fc5ws4PAQfbocKy7aJ/BuDsjZynoxFcKzMGywzkCgUBMK8qIblscKRVxySSqPBbjWEgYFq6oN4CXOm5gLqnVNDMOumlx4N3yDx+viEz0KA+zpTnDJMcIOHTnF3JyjiqMf5GzERVpbuDvVd/sZ5fGHPMuqYK+c3EJaSB9mi4BETX1/sTVM06WoEsmWwtw2w/xExT/zLcUW4zM+9g7fS0sMsz9+ALHRs=" />
+    
+<link href="/JQuery/css/jquery-ui-1.8.18.custom2.css" rel="stylesheet" type="text/css" />
+<link href="/includes/print.css" rel="stylesheet" media="print" type="text/css" />
+
+<link href="/Styles/960.css?v=1.0" rel="stylesheet" type="text/css" />
+<link href="/Includes1/rbi.css?v=5.0" rel="Stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/JQuery/ui/jquery.ui.revampRBI.js"></script>
+<script type="text/javascript" src="/js/ImgSaveDisable.js"></script>
+
+<script type="text/javascript">
+  
+//Redirect to mobile site start
+    function detectmob() {
+        if (screen.width <= 599 || screen.Height <= 975) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    if (detectmob()) {
+       window.location.href = "https://m.rbi.org.in" + window.location.pathname;
+		
+       
+    }
+
+	//Redirect to mobile site End
+    $(document).ready(function () {
+        Search();
+	SearchLastUpdateDate(); //Fetch Last Date Page
+    });
+
+
+
+  // Fetch Last Date Page
+
+    function SearchLastUpdateDate() {
+        var strFilterComments = new RegExp("^[a-zA-Z0-9 =_:.&?'%,()-–]+$");
+	var url=window.location.href;
+	if(url.indexOf("WSSViewDetail.aspx")>0 || url.indexOf("PublicationReportDetails.aspx")>0)
+	{
+		url=url.substring(url,url.indexOf("?"));
+	}
+        var param = { keyWord1: url.slice(url.lastIndexOf('/') + 1) };
+	param.keyWord1=param.keyWord1.replaceAll("%20"," ");
+	if(param.keyWord1.indexOf("#")>0)
+	{
+		param.keyWord1=param.keyWord1.substring(param.keyWord1,param.keyWord1.indexOf("#"));
+	}
+        if (!strFilterComments.test(param.keyWord1)) {            
+            return false;
+        }
+        else {
+            $.ajax({
+                url: "/Home.aspx/GetLastUpdateDate_new",
+                data: JSON.stringify(param),
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataFilter: function (data) { return data; },
+                success: function (data) {
+                    if (data.d.length > 0) {
+                        $('#lblGetLastUpdateDate').text(data.d);
+                    }
+                    else {
+                        response([{ label: "No results found", value: ""}]);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        }
+    }
+    // Fetch Last Date Page
+
+
+
+    function Search() {
+        highlightTextAutocomplete();
+        $(".autoSuggest").autocomplete({
+
+
+            source: function (request, response) {
+                var param = { keyWord: document.getElementById('txtSearch').value };
+
+                $.ajax({
+                    url: "/Home.aspx/GetKeywords",
+                    data: JSON.stringify(param),
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataFilter: function (data) { return data; },
+                    success: function (data) {
+
+                        if (data.d.length > 0) {
+                            response($.map(data.d, function (item) {
+                                return {
+                                    value: RemoveSpecialChars(item)
+
+                                }
+                            }))
+                        }
+                        else {
+                            response([{ label: "No results found", value: ""}]);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus);
+                    }
+                });
+            },
+
+            
+            minLength: 3
+
+        });
+    }
+
+    function highlightTextAutocomplete() {
+
+        var oldFn = $.ui.autocomplete.prototype._renderItem;
+
+        $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+
+            var t = String(item.value).replace(
+                new RegExp(this.term, "gi"),
+                "<span class='ui-state-highlight'>$&</span>");
+            if (item.value != "") {
+                return $("<li class='borderAutocomplete'></li>")
+                  .data("item.autocomplete", item)
+                  .append("<a role='link'>" + t + "</a>")
+                  .appendTo(ul);
+            }
+
+            else {
+                return $("<li></li>")
+                  .data("item.autocomplete", item)
+                  .append("")
+                  .appendTo(ul);
+            }
+        };
+    }
+
+
+    function RemoveSpecialChars(inputText) {
+        var filteredString = inputText.replace(/[\*\^\'\!\@\$\.\#\(\)\-\?\<\>\;\"\&\+\{\}\:]/g, '');
+        
+        return filteredString;
+    }
+    
+
+    function LoadSearchData(id, key) {
+        if (id == "txtSearch") {
+            if (key == 13) {
+                validateSearchText();
+                return false;
+            }
+        }
+        else validateSearchText();
+        return true;
+    }
+    function validateSearchText() {
+        if (validation()) {
+            var strloc = new String(document.location.href.toString());
+            if (strloc.indexOf("SearchResults.aspx") == -1) {//             
+                window.open("/scripts/SearchResults.aspx?search=" + document.getElementById("txtSearch").value,"_self");
+            }
+            else window.open("/scripts/SearchResults.aspx?search=" + document.getElementById("txtSearch").value,"_self");
+        }
+    }
+    function validation() {
+        strSearch = trim(document.getElementById('txtSearch').value);
+        if (strSearch == "") { alert('Please enter the search text'); return false; }
+        else {
+           
+            var strFilterChars = new RegExp("^[0-9a-zA-Z ]*$");
+            if (!strFilterChars.test(strSearch)) { alert("Please remove special characters from search text"); return false; }
+        }
+        return true;
+    }
+    function trim(value) {
+        value = value.replace(/^\s+/, '');
+        value = value.replace(/\s+$/, '');
+        return value;
+    }
+
+</script>
+
+    <style type="text/css">
+    .blink_msm1 
+{
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+.blink_NewWebsite {
+        animation:blinker 1.5s linear 3;
+        color:blue;
+        font-size:1.5em;
+        margin-bottom:0px;
+        }
+    @keyframes blinker
+    {
+        50%{
+            opacity:0;
+        }
+    }
+
+.sr-only {
+position: absolute;
+left: -9999px;
+}
+</style>
+<div class="top_setting">
+    <div class="container_12">
+        <div class="grid_5 top_settings">
+            <a href="#mainsection">Skip to main content </a>
+        </div>
+        <div id="Setting1_tblThemes" style="float: right" class="grid_4 prefix_3 top_settings">
+            <ul style="margin:0px; padding:0px;">
+               <li class="fonts"> 
+                <a id="Setting1_LinkBtnSpace" role="button" title="Increase Letter Spacing" href="javascript:__doPostBack(&#39;Setting1$LinkBtnSpace&#39;,&#39;&#39;)"><img src="/images/letspace.png" alt="Increase Letter Spacing" />
+                                <span id="Setting1_spanBtnSpace" class="sr-only">Not Pressed</span></a>                                
+            </li>
+
+            <li class="fonts">
+                <a id="Setting1_LinkBtnFontIncrease" role="button" title="Increase Font Size" href="javascript:__doPostBack(&#39;Setting1$LinkBtnFontIncrease&#39;,&#39;&#39;)"><img src="/images/font-increase.gif" alt="Increase Font Size" />
+                    
+                </a>
+            </li>
+            <li class="fonts">
+                <a id="Setting1_LinkBtnFontRegular" role="button" title="Regular Font Size" href="javascript:__doPostBack(&#39;Setting1$LinkBtnFontRegular&#39;,&#39;&#39;)"><img src="/images/font-reset.gif" alt="Regular Font Size" />
+                    
+                </a>
+            </li>
+            <li class="fonts">
+                <a id="Setting1_LinkBtnFontDecrease" role="button" title="Decrease Font Size" href="javascript:__doPostBack(&#39;Setting1$LinkBtnFontDecrease&#39;,&#39;&#39;)"><img src="/images/font-decrease.gif" alt="Decrease Font Size" />
+                    
+                </a>
+            </li></ul>
+		<ul style="margin:0px;padding:0px;">
+            <li class="black">
+                <a id="Setting1_LinkBtnAccessibilty" role="button" title="Apply Dark Theme" href="javascript:__doPostBack(&#39;Setting1$LinkBtnAccessibilty&#39;,&#39;&#39;)"><img src="/images/dark-theme.gif" alt="Apply Dark Theme" />
+                    
+                </a>
+            </li>
+            <li class="white">
+                <a id="Setting1_LinkBtnUndoAccessibilty" role="button" title="Apply Normal Theme" href="javascript:__doPostBack(&#39;Setting1$LinkBtnUndoAccessibilty&#39;,&#39;&#39;)"><img src="/images/bright-theme.gif" alt="Apply Normal Theme" />
+                     
+                </a>
+            </li>
+            <li class="white">
+            <a id="Setting1_LinkBtnGreyScale" role="button" title="Apply Grey Theme" href="javascript:__doPostBack(&#39;Setting1$LinkBtnGreyScale&#39;,&#39;&#39;)"><img src="/images/graytheme.gif" alt="Apply Grey Theme" />
+                                
+                                </a></li>
+
+            </ul>
+		<div>
+		     <a href="#" onclick="javascript:window.print();" id="A1" title="Print This Page" style="text-decoration:none;" >
+                <img src="/images/print-icon.png" alt="Print this page" class="print" />
+		</a></div>
+            <div style="float: right">
+                <label style="margin-right: 6px;">
+                    Change Language</label>
+			
+			<a href="#" onclick="SetLink();" class="link1" title="Change language to Hindi">हिंदी</a>
+			</div>
+                   
+        </div>
+        <div class="clearfix">
+        </div>
+    </div>
+   
+</div>
+<div class="container_12">
+    <div class="grid_4" role="banner">
+        <div class="logo">
+            <a href="/home.aspx" >
+                <img src="/images/rbi-company-logo.jpg" alt="Logo of Official website of Reserve Bank of India" /></a></div>
+    </div>
+    <div class="grid_5" align="right" role="search" style="float: right">
+        <label for="searchbox" class="search_label">
+            Search the Website</label>
+        <input name="Setting1$txtSearch" type="text" maxlength="103" id="txtSearch" class="search_box autoSuggest" title="Search the Website" aria-label="Search the Website" onkeydown="return LoadSearchData(&#39;txtSearch&#39;,event.keyCode);" placeHolder="Search" />
+        <button id="btnSearch" onclick="return LoadSearchData('btnSearch',event.keyCode);"
+            type="button" class="search_button">
+            Search</button>
+    </div>
+	<div class="grid_2" align="CENTER" role="" style="float: right">
+        <div class="logo" >
+           
+            <img src="../images/BBBP_Logo_4.png" alt="Beti Bachao Beti Padhao Logo" style="width:47%;">
+        </div>
+    	</div>
+    <div class="clearfix">
+    </div>
+</div>
+<!--  NAVIGATION START-->
+<nav role="navigation" aria-label="Main">
+       <div class="menu"><div class="centermenu">
+<ul class="menu">
+  <li><a href="https://rbi.org.in/home.aspx">Home</a></li>
+<li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-Sub1">About Us ▼</a>
+ <ul class="submenu1" id="Ab-Sub1" >
+	 <li><a href="/scripts/AboutUsDisplay.aspx">About Us</a></li>
+     <li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-org">Organisation & Functions <span aria-hidden="true">▶</span></a>
+		 <ul class="submenu1" id="Ab-org">             
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=OrganizationStructure.htm">Organisation Structure</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=Depts.htm">Departments</a></li>
+            <li><a href="Regionaloffices.aspx">Offices</a></li>
+			<li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-tra">Training Establishment <span aria-hidden="true">▶</span></a>                
+				<ul class="submenu1" id="Ab-tra">
+                    <li ><a href="https://cab.rbi.org.in" target="_blank" id="CBOverview">College of Agricultural Banking</a></li>
+                    <li ><a href="/scripts/rbsc.aspx" id="CBNotifications">Reserve Bank Staff College</a></li>
+					<li ><a href="https://cos.rbi.org.in/" id="CBSupervisors">College of Supervisors</a></li>
+                </ul>
+            </li>
+            <li><a href="/scripts/OccasionalPublications.aspx?head=RBI%27s%20Functions%20and%20Working">RBI's Functions and Working</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=PastGovernors.htm">Governors</a></li>
+			<li><a href="/scripts/AboutUsDisplay.aspx?pg=deputygovernors.htm">Deputy Governors</a></li>
+			<li><a href="/scripts/AboutUsDisplay.aspx?pg=ExecutiveDirectors.htm">Executive Directors</a></li>
+        </ul>		
+	 </li>
+<li><a href="AboutUsDisplay.aspx?pg=MediaKit.htm">Media Kit</a></li>
+	 <li><a href="CommunicationPolicy.aspx">Communication Policy of RBI</a></li>
+	
+     <li>
+        <a href="#" aria-expanded="false" role="button" aria-controls="Ab-soi">Sources of Information <span aria-hidden="true">▶</span></a>
+        <ul class="submenu1" id="Ab-soi">
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#AP">Annual Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#HP">Half-yearly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#QP">Quarterly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#MP">Monthly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#WP">Weekly Publications</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#OP">Occasional Publications</a></li>
+            <li><a href="/scripts/SDDSview.aspx">SDDS</a></li>
+            <li><a href="/scripts/BS_NSDPDisplay.aspx">NSDP</a></li>
+            <li><a href="/scripts/Statistics.aspx">Data Releases</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#PS">Publications available on Subscription</a></li>
+            <li><a href="/scripts/AboutUsDisplay.aspx?pg=AllPublications.htm#GI">General Information</a></li>	  
+        </ul>
+     </li>  
+	 <li><a href="/scripts/Project1.aspx">RBI History</a></li>
+	 <li><a href="#" aria-expanded="false" role="button" aria-controls="Ab-mus">Museum <span aria-hidden="true">▶</span></a>
+		<ul class="submenu1" id="Ab-mus">
+			<li><a href="https://therbimuseum.rbi.org.in/">The RBI Museum</a></li>
+			<li><a href="/scripts/ic_museum.aspx">RBI Monetary Museum</a></li>
+         </ul>
+	 </li>
+</ul>
+</li>
+  <li>
+    <a href="#" aria-expanded="false" role="button" aria-controls="No-Sub1">Notifications ▼</a>
+    <ul class="submenu1" id="No-Sub1">
+      <li><a href="/scripts/NotificationUser.aspx">Notifications </a></li>
+             <li><a href="/scripts/BS_ViewMasterDirections.aspx">Master Directions </a></li>
+             <li><a href="/scripts/BS_ViewMasterCirculardetails.aspx">Master Circulars </a></li> 
+	     <li><a href="/scripts/Fs_AmendmentDirections.aspx">Amendment Directions </a></li> 
+	     <li><a href="#" aria-expanded="false" role="button" aria-controls="No-draft">Draft Notifications/Guidelines <span aria-hidden="true">▶</span></a>
+		<ul class="submenu1" id="No-draft">
+			<li><a href="/scripts/DraftNotificationsGuildelines.aspx">Draft Notifications/Guidelines</a></li>
+			<li><a href="/scripts/BS_ViewREwiseDraftDirections.aspx">Draft Directions (RE-wise)</a></li> 
+         	</ul>
+	     </li>
+
+            
+             <li><a href="/scripts/BS_CircularIndexDisplay.aspx">Index To RBI Circulars </a></li> 
+             <li><a href="/scripts/BS_ViewListofstandalonecirculars.aspx">Standalone Circulars </a></li>
+             <li><a href="/scripts/NotificationUserWithdrawnCircular.aspx">Circulars Withdrawn </a></li>
+
+      
+    </ul>
+  </li>
+
+  <li><a href="/scripts/BS_PressReleaseDisplay.aspx">Press Releases</a></li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="Sp-Sub1">Speeches & Media Interactions ▼</a>
+	<ul class="submenu1" id="Sp-Sub1">
+	  <li><a href="/scripts/BS_ViewSpeeches.aspx">Speeches</a></li>
+      <li><a href="/scripts/BS_ViewInterviews.aspx">Media Interactions</a></li>
+      <li><a href="/scripts/Lectures.aspx">Memorial Lectures</a></li>
+      <li><a href="/scripts/BS_ViewPodcast.aspx">Podcasts</a></li>
+	</ul>
+  </li>
+  <li><a href="#"  aria-expanded="false" role="button" aria-controls="Pu-Sub1">Publications ▼</a>
+		<ul class="submenu1" id="Pu-Sub1">
+			<li><a href="/scripts/Publications.aspx?publication=Biennial">Biennial</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Annual">Annual</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=HalfYearly">Half-Yearly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Quarterly">Quarterly</a></li>
+		    <li><a href="/scripts/Publications.aspx?publication=Bimonthly">Bi-monthly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Monthly">Monthly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Weekly">Weekly</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Occasional">Occasional</a></li>
+            <li><a href="/scripts/Publications.aspx?publication=Reports">Reports</a></li>
+		    <li><a href="/scripts/OccasionalPublications.aspx?head=Working Papers">Working Papers</a></li>
+		</ul>
+	</li>				  
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="Le-Sub1">Legal Framework ▼</a>
+	<ul class="submenu1" id="Le-Sub1">
+	   <li><a href="/scripts/Act.aspx">Act </a></li>
+       <li><a href="/scripts/Rules.aspx">Rules </a></li>
+       <li><a href="/scripts/Regulations.aspx">Regulations </a></li> 
+       <li class="last"><a href="/scripts/Schemes.aspx">Schemes </a></li>
+	   </ul>
+  </li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="Re-Sub1">Research ▼</a>
+		<ul class="submenu1" id="Re-Sub1">
+			<li><a href="/Scripts/ExternalResearchSchemes.aspx">External Research Schemes</a></li>
+			<li><a href="/Scripts/OccasionalPapers.aspx">RBI Occasional Papers</a></li>
+			<li><a href="/Scripts/OccasionalPublications.aspx?head=Working%20Papers">Working Papers</a></li>
+			<li><a href="/Scripts/BS_ViewBulletin.aspx">RBI Bulletin</a></li>
+			<li><a href="/Scripts/Project1.aspx">History</a></li>
+			<li><a href="/Scripts/Occas_DRG_Studies.aspx">DRG Studies</a></li>
+			<li><a href="/Scripts/KLEMS.aspx">KLEMS</a></li>
+			<li class="last"><a href="/Scripts/StateStatisticsFinances.aspx">State Statistics and Finances</a></li>
+        </ul>
+  </li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="St-Sub1">Statistics ▼</a>
+		<ul class="submenu1" id="St-Sub1">
+		  <li><a href="/scripts/Statistics.aspx">Data Releases</a></li>
+          <li><a href="https://data.rbi.org.in" target="_blank">Database on Indian Economy</a></li>
+          <li><a href="/scripts/FS_PDS.aspx">Public Debt Statistics</a></li>
+		</ul> 
+  </li>
+  <li><a href="#" aria-expanded="false" role="button" aria-controls="St-Sub1">Regulatory Reporting ▼</a>
+		<ul class="submenu1">
+			<li><a href="/scripts/BS_Listofallreturns.aspx">List of Returns</a></li>
+			<li><a href="/scripts/DataDefinition.aspx">Data Definition</a></li>
+			<li><a href="/scripts/ValidationRules.aspx">Validation rules/ Taxonomy</a></li>
+			<li><a href="/scripts/ReportingPlaform.aspx">List of RBI Reporting Portals</a></li>
+			<li class="last"><a href="/scripts/ReportingFAQ.aspx">FAQs of RBI Reporting Portals</a></li>
+		</ul>
+   </li>
+</ul>
+</div></div>
+</nav>
+<div class="container_12" >
+    <section>
+        <div class="grid_12" >
+            <div id="dialogAlert" title="" tabindex="-1"  style="text-align: center; display: none;">
+                <p id="AM_Message" tabindex="-1" style="color: #444; font-size: 15px; margin: 20px 0; min-height: 40px;"></p>
+            </div>
+        </div>
+    </section>
+</div>
+<!--  NAVIGATION END-->
+<!--HEADER END-->
+<input type="submit" name="Setting1$btn" value="" id="btn" style="visibility: hidden; height: 0px; width: 0px;" />
+
+<script type="text/javascript">
+    function SetLink() {
+        //a.href = "https://www.rbi.org.in/hindi/Home.aspx";
+        var txt="This will lead you to Hindi (हिन्दी) language website. Are you sure you want to switch to this language?"
+        if(window.confirm(txt)==true){
+            //document.cookie = 'preferLang' + '=;secure; expires=Thu, 01-Jan-70 00:00:01 GMT;path=/;';
+            window.location.replace("https://www.rbi.org.in/hindi/");
+        }
+        else return false;
+        
+    }
+
+
+
+
+	const allMenuItems = document.querySelectorAll("nav ul li");
+	
+	allMenuItems.forEach(item => {
+		item.addEventListener("focusin", (event) => {	
+			const MenuText =event.target.textContent;
+			const allMenuItems1 = document.querySelectorAll(".hasSubmenu");
+			allMenuItems1.forEach(item1 => {
+				if (MenuText === 'Press Releases')
+				{	
+					
+					item1.classList.remove('focused');
+					rollback(item1)
+					item1.classList.remove('open');
+				}
+			});
+			
+		});
+	});
+
+
+const menuItems = document.querySelectorAll(".hasSubmenu");
+menuItems.forEach(item => {
+	item.addEventListener("mouseenter", (event) => {
+		item.className="hasSubmenu open focused"
+		expandThis(item);
+	});
+	item.addEventListener("mouseleave", (event) => {		
+		rollback(item)
+		item.className="hasSubmenu"
+	});
+	item.addEventListener("focusin", (event) => {		
+		const allMenuItems = document.querySelectorAll("nav ul li");
+		allMenuItems.forEach(item1 => {
+			item1.classList.remove('focused');
+			if(item!==item1)
+			rollback(item1)
+			item1.classList.remove('open');	
+		});							
+		item.classList.add('focused');
+	});
+	item.addEventListener("focusout", (event) => {
+		
+		if(!item.className.includes('focused')){
+		
+		rollback(item)
+		item.className="hasSubmenu"
+		}
+		item.classList.remove('focused');
+		item.classList.remove('open');
+	});
+
+    item.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+		if(item.className.includes("hasSubmenu open")){
+			rollback(item)
+			item.className="hasSubmenu"
+		}
+		else{
+          	item.className="hasSubmenu open focused"
+		var ele=item.querySelectorAll("a")[0];
+		
+		expandThis(item);	
+		}
+				
+        }
+	
+    });
+	
+});
+function expandThis(menu){
+ var $targetul = $(menu).children("ul:eq(0)")
+				    if ($targetul.queue().length <= 1) 
+				        if (this.istopheader)
+					$targetul.css({ left: $(this).children('a').eq(0).position().left, top: $mainmenu.position().top + this._dimensions.h - 2 })
+				            
+				    if (document.all && !window.XMLHttpRequest) 
+				        $mainmenu.find('ul').css({ overflow: (this.istopheader) ? 'hidden' : 'visible' })
+					
+					
+				    $targetul.dequeue().stop(true, true).slideDown(droplinemenu.animateduration.over)
+}
+const menuItemsf = document.querySelectorAll("nav .midmenu ul li");
+
+menuItemsf.forEach(item => {
+    item.addEventListener("keydown", (event) => {
+	
+	if(item.className.includes("last") ){
+		 if (pressedKeys['shift'] && event.key === "Tab"){}else{
+		var lastItem = document.getElementsByClassName('hasSubmenu open');
+		rollback(lastItem[0])
+		lastItem[0].className="hasSubmenu";
+		}
+	}
+	
+	});
+	
+	});
+	
+
+function rollback(menu){
+ var $targetul = $(menu).children("ul:eq(0)")
+$targetul.dequeue().stop(true, true).slideUp(droplinemenu.animateduration.out);
+}
+ 
+
+function setLetterSpace(val) {
+    
+	
+    if (false) {
+                    document.body.setAttribute("style", "letter-spacing:1px; line-height:20px; word-spacing:2px;");
+       
+    }
+    else {
+                    document.body.removeAttribute("style");
+    }
+    return false;
+
+    
+    }
+   
+
+// Toggle submenu
+    document.querySelectorAll('.menu li > a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const submenu = this.nextElementSibling;
+
+            if (submenu && submenu.classList.contains('submenu1')) {linkMessage();
+                e.preventDefault();
+                e.stopPropagation();
+
+                const parentLi = this.parentElement;
+
+                // Close sibling menus ONLY (not entire menu)
+                closeSiblings(parentLi);   
+ 
+
+               
+ 
+                const isExpanded=link.getAttribute('aria-expanded') ==='true';
+                link.setAttribute('aria-expanded',!isExpanded);
+                submenu.hidden=isExpanded;
+                
+                submenu.setAttribute('aria-hidden', isExpanded);
+                setTimeout(()=>{
+                    // Toggle current submenu
+                    submenu.classList.toggle('show', !isExpanded);
+            },50);
+
+        }
+        });
+    });
+
+    //  Close only sibling menus (important fix)
+    function closeSiblings(currentLi) {
+        const siblings = currentLi.parentElement.children;
+
+        Array.from(siblings).forEach(li => {
+            if (li !== currentLi) {
+            const submenus = li.querySelectorAll('.submenu1');
+        submenus.forEach(menu => menu.classList.remove('show'));
+    }
+    });
+    }
+
+    //  Click outside → close all
+    document.addEventListener('click', function () {
+		
+        document.querySelectorAll('.menu li > a').forEach(menu => {
+		if(menu.hasAttribute('aria-expanded')){
+            menu.setAttribute('aria-expanded','false');
+	}
+	
+    });
+
+    document.querySelectorAll('.submenu1').forEach(menu => {
+        menu.setAttribute('aria-hidden','true');
+    menu.classList.remove('show');
+	
+
+    });
+    });
+
+    //  Prevent closing when clicking inside menu
+    document.querySelector('.menu').addEventListener('click', function (e) {linkMessage();
+        e.stopPropagation();
+    });
+
+
+    //  Keyboard support
+    document.querySelectorAll('.menu li > a').forEach(link => {
+        link.addEventListener('keydown', function (e) {
+            const submenu = this.nextElementSibling;
+
+            if ((e.key === 'Enter' || e.key === ' ') && submenu) {
+                e.preventDefault();
+
+                const parentLi = this.parentElement;
+                closeSiblings(parentLi);
+
+
+                const isExpanded=link.getAttribute('aria-expanded') ==='true';
+                link.setAttribute('aria-expanded',!isExpanded);
+                submenu.hidden=isExpanded;
+                submenu.setAttribute('aria-hidden', isExpanded);
+                setTimeout(()=>{
+                    // Toggle current submenu
+                    submenu.classList.toggle('show', !isExpanded);
+            },50);
+
+
+           
+        }
+
+          if (e.key === 'Escape') {
+        document.querySelectorAll('.submenu').forEach(menu => {
+            menu.classList.remove('show');
+    });
+    this.blur();
+    }
+    });
+    });
+    // When focusing main menu items → close other submenus
+    document.querySelectorAll('.menu > li > a').forEach(item => {
+        item.addEventListener('focus', function() {
+
+            document.querySelectorAll('.submenu1').forEach(menu => {
+                
+                if (menu !== this.nextElementSibling) {
+              
+
+            document.querySelectorAll('.menu li > a').forEach(menu => {
+                if(menu.hasAttribute('aria-expanded'))
+                menu.setAttribute('aria-expanded','false');
+		
+            document.querySelectorAll('.submenu1').forEach(menu => {
+                menu.setAttribute('aria-hidden','true');
+            
+            menu.classList.remove('show');
+            
+
+
+        });
+
+	
+    });
+
+    }
+    });
+
+    });
+    });
+
+    //  Close submenu when focus leaves it (TAB navigation)
+    document.querySelectorAll('.menu li').forEach(li => {
+        li.addEventListener('focusout', function (e) {
+            // Check if focus is still inside this <li>
+            if (!li.contains(e.relatedTarget)) {
+                const submenu = li.querySelector('.submenu1');
+                if (submenu) {
+                    submenu.classList.remove('show');
+                    if(li.querySelector('a').hasAttribute('aria-expanded'))
+                        li.querySelector('a').setAttribute('aria-expanded','false');
+	
+
+                    submenu.setAttribute('aria-hidden','true');
+                }
+            }
+        });
+    });
+</script>
+    <div role="main" class="container_12">
+        <!-- InstanceBeginEditable name="Editable Area" -->
+        <a id="mainsection" name="mainsection"></a>
+
+        
+<nav aria-label="Breadcrumb" class="grid_12 breadcrumbs">
+  <ul>
+                <li><a href="../Home.aspx">Home</a></li>
+		
+                <li><a href="Publications.aspx">Publications</a></li>
+                <li><a href="Publications.aspx?Publication=Annual">
+                    Annual</a></li>
+                
+                <li><a href="AnnualPublications.aspx?head=Handbook of Statistics on Indian States">
+                    Handbook of Statistics on Indian States</a></li>
+                
+            </ul>
+ </nav>
+        <div class="clear">
+        </div>
+
+        <div class="grid_12">
+
+            <h1 class="page_title">Publications</h1>
+            <div id="doublescroll">
+                <table align="center" cellpadding="0" cellspacing="0" width="100%">
+
+                    <table class="tablebg" width="100%"><tr><td class="tableheader"><a id='ADOC_138T_111220252D21BC51E5A842E4B25E954391C10A41' target='_blank' href='https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/138T_111220252D21BC51E5A842E4B25E954391C10A41.XLSX' aria-labelledby='ADOC_138T_111220252D21BC51E5A842E4B25E954391C10A41 SDOC_138T_111220252D21BC51E5A842E4B25E954391C10A41'>
+		<img alt='Document - Table 138: State-wise Per Capita Availability of Power' style='padding: 8px;' src='../Images/xlsx.gif' width='16' alt="download file" height='16' border=0 align='absmiddle'></a> (<span id='SDOC_138T_111220252D21BC51E5A842E4B25E954391C10A41' aria-hidden="true">16 kb</span>) or <a id='APDF_138T_111220252D21BC51E5A842E4B25E954391C10A41' target='_blank' href='https://rbidocs.rbi.org.in/rdocs/Publications/PDFs/138T_111220252D21BC51E5A842E4B25E954391C10A41.PDF' aria-labelledby='APDF_138T_111220252D21BC51E5A842E4B25E954391C10A41 SPDF_138T_111220252D21BC51E5A842E4B25E954391C10A41'>
+			<img alt='PDF - Table 138: State-wise Per Capita Availability of Power' style='padding: 8px;' src='../Images/pdf.gif' width='16' height='16' alt='PDF document' border=0 align='absmiddle'></a> (<span id='SPDF_138T_111220252D21BC51E5A842E4B25E954391C10A41' aria-hidden="true">119 kb</span>)</td></tr><tr><td align="right" class="tableheader"><b> Date : Dec 11, 2025</b></td></tr><tr><td align="center" class="tableheader"><b>Table 138: State-wise Per Capita Availability of Power</b></td></tr><tr><td><table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class="tablebg">  <tr>    <td colspan="11" align="right">(Kilowatt-Hour)</td>  </tr>  <tr class="head">    <td width="30%" align="center">State/Union Territory</td>    <td width="7%" align="center">2004-05</td>    <td width="7%" align="center">2005-06</td>    <td width="7%" align="center">2006-07</td>    <td width="7%" align="center">2007-08</td>    <td width="7%" align="center">2008-09</td>    <td width="7%" align="center">2009-10</td>    <td width="7%" align="center">2010-11</td>    <td width="7%" align="center">2011-12</td>    <td width="7%" align="center">2012-13</td>    <td width="7%" align="center">2013-14</td>  </tr>  <tr>    <td>Andaman & Nicobar Islands</td>    <td align="right">-</td>    <td align="right">466.1</td>    <td align="right">533.5</td>    <td align="right">505.4</td>    <td align="right">516.6</td>    <td align="right">505.4</td>    <td align="right">505.4</td>    <td align="right">524.9</td>    <td align="right">496.1</td>    <td align="right">467.5</td>  </tr>  <tr>    <td>Andhra Pradesh</td>    <td align="right">656.9</td>    <td align="right">686.7</td>    <td align="right">764.7</td>    <td align="right">807.1</td>    <td align="right">874.9</td>    <td align="right">967.9</td>    <td align="right">1,003.1</td>    <td align="right">1,717.5</td>    <td align="right">1,645.5</td>    <td align="right">1,770.4</td>  </tr>  <tr>    <td>Arunachal Pradesh</td>    <td align="right">143.9</td>    <td align="right">187.6</td>    <td align="right">235.9</td>    <td align="right">275.1</td>    <td align="right">246.8</td>    <td align="right">296.0</td>    <td align="right">397.1</td>    <td align="right">397.4</td>    <td align="right">393.1</td>    <td align="right">367.8</td>  </tr>  <tr>    <td>Assam</td>    <td align="right">134.4</td>    <td align="right">141.7</td>    <td align="right">149.5</td>    <td align="right">165.5</td>    <td align="right">171.3</td>    <td align="right">175.9</td>    <td align="right">189.9</td>    <td align="right">182.7</td>    <td align="right">191.5</td>    <td align="right">220.7</td>  </tr>  <tr>    <td>Bihar</td>    <td align="right">78.0</td>    <td align="right">87.0</td>    <td align="right">93.3</td>    <td align="right">95.6</td>    <td align="right">106.0</td>    <td align="right">119.4</td>    <td align="right">129.8</td>    <td align="right">108.2</td>    <td align="right">121.0</td>    <td align="right">136.5</td>  </tr>  <tr>    <td>Chandigarh</td>    <td align="right">1,274.7</td>    <td align="right">1,396.8</td>    <td align="right">1,488.9</td>    <td align="right">1,272.4</td>    <td align="right">1,570.0</td>    <td align="right">1,696.6</td>    <td align="right">1,686.6</td>    <td align="right">1,478.7</td>    <td align="right">1,529.9</td>    <td align="right">1,443.0</td>  </tr>  <tr>    <td>Chhattisgarh</td>    <td align="right">554.5</td>    <td align="right">601.9</td>    <td align="right">632.1</td>    <td align="right">643.6</td>    <td align="right">694.8</td>    <td align="right">515.5</td>    <td align="right">487.9</td>    <td align="right">572.3</td>    <td align="right">655.1</td>    <td align="right">713.3</td>  </tr>  <tr>    <td>Dadra & Nagar Haveli</td>    <td align="right">8,299.7</td>    <td align="right">11,479.0</td>    <td align="right">13,057.3</td>    <td align="right">15,293.2</td>    <td align="right">15,678.7</td>    <td align="right">17,474.7</td>    <td align="right">20,064.4</td>    <td align="right">12,645.3</td>    <td align="right">12,054.8</td>    <td align="right">13,927.6</td>  </tr>  <tr>    <td>Daman & Diu</td>    <td align="right">7,073.1</td>    <td align="right">8,362.6</td>    <td align="right">8,899.9</td>    <td align="right">9,987.1</td>    <td align="right">9,961.8</td>    <td align="right">11,390.4</td>    <td align="right">12,622.9</td>    <td align="right">7,901.2</td>    <td align="right">7,153.8</td>    <td align="right">8,093.5</td>  </tr>  <tr>    <td>Delhi</td>    <td align="right">1,512.7</td>    <td align="right">1,536.5</td>    <td align="right">1,589.3</td>    <td align="right">1,610.1</td>    <td align="right">1,608.1</td>    <td align="right">1,739.6</td>    <td align="right">1,845.3</td>    <td align="right">1,588.6</td>    <td align="right">1,511.7</td>    <td align="right">1,527.0</td>  </tr>  <tr>    <td>Goa</td>    <td align="right">1,592.4</td>    <td align="right">1,734.8</td>    <td align="right">1,933.7</td>    <td align="right">2,008.7</td>    <td align="right">2,043.5</td>    <td align="right">2,245.4</td>    <td align="right">2,292.1</td>    <td align="right">2,042.5</td>    <td align="right">2,117.1</td>    <td align="right">2,614.9</td>  </tr>  <tr>    <td>Gujarat</td>    <td align="right">1,040.5</td>    <td align="right">1,034.8</td>    <td align="right">1,067.3</td>    <td align="right">1,137.0</td>    <td align="right">1,201.0</td>    <td align="right">1,326.6</td>    <td align="right">1,332.8</td>    <td align="right">1,231.5</td>    <td align="right">1,523.4</td>    <td align="right">1,419.8</td>  </tr>  <tr>    <td>Haryana</td>    <td align="right">972.4</td>    <td align="right">1,023.0</td>    <td align="right">1,094.0</td>    <td align="right">1,213.1</td>    <td align="right">1,259.2</td>    <td align="right">1,514.5</td>    <td align="right">1,543.0</td>    <td align="right">1,401.9</td>    <td align="right">1,482.6</td>    <td align="right">1,649.7</td>  </tr>  <tr>    <td>Himachal Pradesh</td>    <td align="right">644.5</td>    <td align="right">700.6</td>    <td align="right">822.0</td>    <td align="right">956.6</td>    <td align="right">1,026.8</td>    <td align="right">1,113.7</td>    <td align="right">1,211.6</td>    <td align="right">1,181.4</td>    <td align="right">1,262.5</td>    <td align="right">1,271.8</td>  </tr>  <tr>    <td>Jammu & Kashmir</td>    <td align="right">728.2</td>    <td align="right">756.3</td>    <td align="right">787.0</td>    <td align="right">824.4</td>    <td align="right">857.5</td>    <td align="right">979.2</td>    <td align="right">1,003.6</td>    <td align="right">887.7</td>    <td align="right">932.8</td>    <td align="right">973.7</td>  </tr>  <tr>    <td>Jharkhand</td>    <td align="right">131.7</td>    <td align="right">143.5</td>    <td align="right">154.2</td>    <td align="right">165.4</td>    <td align="right">189.6</td>    <td align="right">200.7</td>    <td align="right">222.1</td>    <td align="right">182.8</td>    <td align="right">201.8</td>    <td align="right">205.5</td>  </tr>  <tr>    <td>Karnataka</td>    <td align="right">637.4</td>    <td align="right">649.9</td>    <td align="right">755.9</td>    <td align="right">742.3</td>    <td align="right">767.8</td>    <td align="right">795.5</td>    <td align="right">882.2</td>    <td align="right">884.2</td>    <td align="right">924.1</td>    <td align="right">931.0</td>  </tr>  <tr>    <td>Kerala</td>    <td align="right">393.8</td>    <td align="right">426.4</td>    <td align="right">462.2</td>    <td align="right">480.0</td>    <td align="right">488.7</td>    <td align="right">540.1</td>    <td align="right">558.0</td>    <td align="right">582.8</td>    <td align="right">606.1</td>    <td align="right">621.4</td>  </tr>  <tr>    <td>Lakshadweep</td>    <td align="right">-</td>    <td align="right">395.7</td>    <td align="right">412.2</td>    <td align="right">395.7</td>    <td align="right">395.7</td>    <td align="right">395.7</td>    <td align="right">412.2</td>    <td align="right">625.0</td>    <td align="right">615.4</td>    <td align="right">769.2</td>  </tr>  <tr>    <td>Madhya Pradesh</td>    <td align="right">498.7</td>    <td align="right">523.9</td>    <td align="right">544.0</td>    <td align="right">591.6</td>    <td align="right">577.3</td>    <td align="right">579.5</td>    <td align="right">640.4</td>    <td align="right">569.9</td>    <td align="right">599.4</td>    <td align="right">657.7</td>  </tr>  <tr>    <td>Maharashtra</td>    <td align="right">841.7</td>    <td align="right">868.2</td>    <td align="right">920.1</td>    <td align="right">968.7</td>    <td align="right">988.5</td>    <td align="right">1,047.8</td>    <td align="right">1,104.7</td>    <td align="right">1,047.6</td>    <td align="right">1,055.7</td>    <td align="right">1,076.2</td>  </tr>  <tr>    <td>Manipur</td>    <td align="right">241.4</td>    <td align="right">225.7</td>    <td align="right">197.9</td>    <td align="right">231.2</td>    <td align="right">220.1</td>    <td align="right">198.5</td>    <td align="right">233.1</td>    <td align="right">175.1</td>    <td align="right">187.0</td>    <td align="right">188.5</td>  </tr>  <tr>    <td>Meghalaya</td>    <td align="right">529.6</td>    <td align="right">493.4</td>    <td align="right">458.4</td>    <td align="right">531.3</td>    <td align="right">597.7</td>    <td align="right">572.3</td>    <td align="right">583.1</td>    <td align="right">488.7</td>    <td align="right">536.8</td>    <td align="right">527.7</td>  </tr>  <tr>    <td>Mizoram</td>    <td align="right">249.8</td>    <td align="right">243.0</td>    <td align="right">248.7</td>    <td align="right">276.8</td>    <td align="right">302.7</td>    <td align="right">324.1</td>    <td align="right">354.5</td>    <td align="right">328.2</td>    <td align="right">342.7</td>    <td align="right">383.6</td>  </tr>  <tr>    <td>Nagaland</td>    <td align="right">162.8</td>    <td align="right">195.4</td>    <td align="right">164.8</td>    <td align="right">167.8</td>    <td align="right">219.1</td>    <td align="right">234.2</td>    <td align="right">261.3</td>    <td align="right">257.7</td>    <td align="right">270.0</td>    <td align="right">277.0</td>  </tr>  <tr>    <td>Odisha</td>    <td align="right">377.0</td>    <td align="right">407.8</td>    <td align="right">456.4</td>    <td align="right">502.7</td>    <td align="right">549.2</td>    <td align="right">569.4</td>    <td align="right">609.9</td>    <td align="right">540.6</td>    <td align="right">574.0</td>    <td align="right">574.0</td>  </tr>  <tr>    <td>Puducherry</td>    <td align="right">1,577.5</td>    <td align="right">1,722.2</td>    <td align="right">1,855.6</td>    <td align="right">1,889.5</td>    <td align="right">1,819.7</td>    <td align="right">2,027.0</td>    <td align="right">2,092.7</td>    <td align="right">1,714.7</td>    <td align="right">1,790.5</td>    <td align="right">1,771.0</td>  </tr>  <tr>    <td>Punjab</td>    <td align="right">1,247.3</td>    <td align="right">1,337.9</td>    <td align="right">1,430.2</td>    <td align="right">1,592.6</td>    <td align="right">1,528.7</td>    <td align="right">1,617.8</td>    <td align="right">1,716.0</td>    <td align="right">1,578.4</td>    <td align="right">1,645.8</td>    <td align="right">1,663.5</td>  </tr>  <tr>    <td>Rajasthan</td>    <td align="right">512.7</td>    <td align="right">546.5</td>    <td align="right">561.3</td>    <td align="right">630.0</td>    <td align="right">661.7</td>    <td align="right">762.1</td>    <td align="right">793.5</td>    <td align="right">722.0</td>    <td align="right">773.0</td>    <td align="right">819.5</td>  </tr>  <tr>    <td>Sikkim</td>    <td align="right">-</td>    <td align="right">388.3</td>    <td align="right">403.1</td>    <td align="right">493.7</td>    <td align="right">610.1</td>    <td align="right">637.9</td>    <td align="right">743.3</td>    <td align="right">621.9</td>    <td align="right">664.5</td>    <td align="right">657.1</td>  </tr>  <tr>    <td>Tamil Nadu</td>    <td align="right">762.3</td>    <td align="right">863.0</td>    <td align="right">968.6</td>    <td align="right">1,024.8</td>    <td align="right">1,028.9</td>    <td align="right">1,146.8</td>    <td align="right">1,203.4</td>    <td align="right">1,063.2</td>    <td align="right">1,048.4</td>    <td align="right">1,202.9</td>  </tr>  <tr>    <td>Telangana</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>  </tr>  <tr>    <td>Tripura</td>    <td align="right">200.4</td>    <td align="right">208.2</td>    <td align="right">227.6</td>    <td align="right">214.4</td>    <td align="right">227.6</td>    <td align="right">241.0</td>    <td align="right">250.4</td>    <td align="right">245.0</td>    <td align="right">282.7</td>    <td align="right">303.7</td>  </tr>  <tr>    <td>Uttar Pradesh</td>    <td align="right">250.1</td>    <td align="right">264.9</td>    <td align="right">291.0</td>    <td align="right">308.9</td>    <td align="right">326.8</td>    <td align="right">358.1</td>    <td align="right">390.2</td>    <td align="right">360.9</td>    <td align="right">376.5</td>    <td align="right">395.5</td>  </tr>  <tr>    <td>Uttarakhand</td>    <td align="right">526.5</td>    <td align="right">589.9</td>    <td align="right">659.5</td>    <td align="right">806.3</td>    <td align="right">914.7</td>    <td align="right">982.2</td>    <td align="right">1,090.2</td>    <td align="right">1,012.3</td>    <td align="right">1,047.9</td>    <td align="right">1,109.7</td>  </tr>  <tr>    <td>West Bengal</td>    <td align="right">284.2</td>    <td align="right">305.7</td>    <td align="right">323.9</td>    <td align="right">348.0</td>    <td align="right">377.8</td>    <td align="right">409.3</td>    <td align="right">447.1</td>    <td align="right">419.4</td>    <td align="right">454.6</td>    <td align="right">460.8</td>  </tr>  <tr>    <td>ALL INDIA</td>    <td align="right">532.9</td>    <td align="right">562.7</td>    <td align="right">607.1</td>    <td align="right">647.5</td>    <td align="right">671.8</td>    <td align="right">725.9</td>    <td align="right">766.4</td>    <td align="right">708.5</td>    <td align="right">740.6</td>    <td align="right">772.2</td>  </tr></table><br><table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class="tablebg">  <tr>    <td colspan="12" align="center" class="head">TABLE 138: STATE-WISE PER CAPITA AVAILABILITY OF POWER* (Concld.)</td>  </tr>  <tr>    <td colspan="12" align="right">(Kilowatt-Hour)</td>  </tr>  <tr class="head">    <td width="23%" align="center">State/Union Territory</td>    <td width="7%" align="center">2014-15</td>    <td width="7%" align="center">2015-16</td>    <td width="7%" align="center">2016-17</td>    <td width="7%" align="center">2017-18</td>    <td width="7%" align="center">2018-19</td>    <td width="7%" align="center">2019-20</td>    <td width="7%" align="center">2020-21</td>    <td width="7%" align="center">2021-22</td>    <td width="7%" align="center">2022-23</td>    <td width="7%" align="center">2023-24</td>    <td width="7%" align="center">2024-25</td>  </tr>  <tr>    <td>Andaman & Nicobar Islands</td>    <td align="right">465.1</td>    <td align="right">461.5</td>    <td align="right">459.2</td>    <td align="right">761.4</td>    <td align="right">810.1</td>    <td align="right">806.0</td>    <td align="right">802.0</td>    <td align="right">825.0</td>    <td align="right">870.6</td>    <td align="right">918.1</td>    <td align="right">1,014.9</td>  </tr>  <tr>    <td>Andhra Pradesh</td>    <td align="right">1,111.7</td>    <td align="right">987.4</td>    <td align="right">1,056.2</td>    <td align="right">1,128.4</td>    <td align="right">1,228.4</td>    <td align="right">1,252.6</td>    <td align="right">1,182.4</td>    <td align="right">1,292.4</td>    <td align="right">1,357.1</td>    <td align="right">1,507.8</td>    <td align="right">1,481.6</td>  </tr>  <tr>    <td>Arunachal Pradesh</td>    <td align="right">426.9</td>    <td align="right">408.6</td>    <td align="right">486.6</td>    <td align="right">536.0</td>    <td align="right">577.6</td>    <td align="right">498.7</td>    <td align="right">467.4</td>    <td align="right">567.5</td>    <td align="right">574.9</td>    <td align="right">646.6</td>    <td align="right">666.2</td>  </tr>  <tr>    <td>Assam</td>    <td align="right">244.9</td>    <td align="right">252.3</td>    <td align="right">262.0</td>    <td align="right">261.8</td>    <td align="right">272.4</td>    <td align="right">270.9</td>    <td align="right">283.3</td>    <td align="right">309.0</td>    <td align="right">324.2</td>    <td align="right">345.5</td>    <td align="right">356.2</td>  </tr>  <tr>    <td>Bihar</td>    <td align="right">170.3</td>    <td align="right">210.9</td>    <td align="right">220.1</td>    <td align="right">229.4</td>    <td align="right">253.4</td>    <td align="right">263.8</td>    <td align="right">280.5</td>    <td align="right">290.5</td>    <td align="right">310.3</td>    <td align="right">322.8</td>    <td align="right">343.9</td>  </tr>  <tr>    <td>Chandigarh</td>    <td align="right">1,467.4</td>    <td align="right">1,437.5</td>    <td align="right">1,452.5</td>    <td align="right">1,390.1</td>    <td align="right">1,347.6</td>    <td align="right">1,467.3</td>    <td align="right">1,274.1</td>    <td align="right">1,332.8</td>    <td align="right">1,468.4</td>    <td align="right">1,454.1</td>    <td align="right">1,568.8</td>  </tr>  <tr>    <td>Chhattisgarh</td>    <td align="right">793.3</td>    <td align="right">931.7</td>    <td align="right">859.6</td>    <td align="right">924.0</td>    <td align="right">932.3</td>    <td align="right">1,048.3</td>    <td align="right">1,046.1</td>    <td align="right">1,080.6</td>    <td align="right">1,252.5</td>    <td align="right">1,321.1</td>    <td align="right">1,414.6</td>  </tr>  <tr>    <td>Dadra & Nagar Haveli</td>    <td align="right">12,958.4</td>    <td align="right">13,758.7</td>    <td align="right">13,318.6</td>    <td align="right">12,774.3</td>    <td align="right">12,233.0</td>    <td align="right">11,959.7</td>    <td align="right">9,532.1</td>    <td align="right">11,250.0</td>    <td align="right">15,321.1</td>    <td align="right">14,535.1</td>    <td align="right">14,563.8</td>  </tr>  <tr>    <td>Daman & Diu</td>    <td align="right">7,084.7</td>    <td align="right">7,500.0</td>    <td align="right">7,294.8</td>    <td align="right">7,086.8</td>    <td align="right">6,649.4</td>    <td align="right">6,222.8</td>    <td align="right">5,034.0</td>    <td align="right">5,522.4</td>    <td align="right">.</td>    <td align="right">.</td>    <td align="right">.</td>  </tr>  <tr>    <td>Delhi</td>    <td align="right">1,624.4</td>    <td align="right">1,616.5</td>    <td align="right">1,649.1</td>    <td align="right">1,669.3</td>    <td align="right">1,660.9</td>    <td align="right">1,669.5</td>    <td align="right">1,463.9</td>    <td align="right">1,512.8</td>    <td align="right">1,675.6</td>    <td align="right">1,662.1</td>    <td align="right">1,758.0</td>  </tr>  <tr>    <td>Goa</td>    <td align="right">2,635.8</td>    <td align="right">3,411.1</td>    <td align="right">2,857.1</td>    <td align="right">2,708.7</td>    <td align="right">2,802.1</td>    <td align="right">2,824.7</td>    <td align="right">2,634.0</td>    <td align="right">2,854.4</td>    <td align="right">2,980.2</td>    <td align="right">3,244.4</td>    <td align="right">3,417.6</td>  </tr>  <tr>    <td>Gujarat</td>    <td align="right">1,520.6</td>    <td align="right">1,612.4</td>    <td align="right">1,591.7</td>    <td align="right">1,664.1</td>    <td align="right">1,736.5</td>    <td align="right">1,677.2</td>    <td align="right">1,620.9</td>    <td align="right">1,772.1</td>    <td align="right">1,967.5</td>    <td align="right">2,038.1</td>    <td align="right">2,098.7</td>  </tr>  <tr>    <td>Haryana</td>    <td align="right">1,744.6</td>    <td align="right">1,754.8</td>    <td align="right">1,781.1</td>    <td align="right">1,822.6</td>    <td align="right">1,898.7</td>    <td align="right">1,900.5</td>    <td align="right">1,826.5</td>    <td align="right">1,872.6</td>    <td align="right">2,042.1</td>    <td align="right">2,106.7</td>    <td align="right">2,293.5</td>  </tr>  <tr>    <td>Himachal Pradesh</td>    <td align="right">1,239.9</td>    <td align="right">1,233.8</td>    <td align="right">1,226.6</td>    <td align="right">1,297.5</td>    <td align="right">1,326.3</td>    <td align="right">1,417.8</td>    <td align="right">1,378.8</td>    <td align="right">1,635.1</td>    <td align="right">1,687.5</td>    <td align="right">1,710.0</td>    <td align="right">1,802.8</td>  </tr>  <tr>    <td>Jammu & Kashmir</td>    <td align="right">1,037.6</td>    <td align="right">1,099.4</td>    <td align="right">1,100.3</td>    <td align="right">1,157.8</td>    <td align="right">1,192.3</td>    <td align="right">1,231.5</td>    <td align="right">1,294.3</td>    <td align="right">1,374.6</td>    <td align="right">1,430.6</td>    <td align="right">1,452.6</td>    <td align="right">1,480.2</td>  </tr>  <tr>    <td>Jharkhand</td>    <td align="right">213.1</td>    <td align="right">214.5</td>    <td align="right">220.9</td>    <td align="right">213.3</td>    <td align="right">230.3</td>    <td align="right">237.1</td>    <td align="right">255.2</td>    <td align="right">275.3</td>    <td align="right">315.4</td>    <td align="right">351.2</td>    <td align="right">378.6</td>  </tr>  <tr>    <td>Karnataka</td>    <td align="right">951.6</td>    <td align="right">958.6</td>    <td align="right">1,036.0</td>    <td align="right">1,045.5</td>    <td align="right">1,098.4</td>    <td align="right">1,106.4</td>    <td align="right">1,037.8</td>    <td align="right">1,083.4</td>    <td align="right">1,124.8</td>    <td align="right">1,387.6</td>    <td align="right">1,357.3</td>  </tr>  <tr>    <td>Kerala</td>    <td align="right">648.8</td>    <td align="right">675.2</td>    <td align="right">701.6</td>    <td align="right">716.9</td>    <td align="right">712.6</td>    <td align="right">747.9</td>    <td align="right">710.9</td>    <td align="right">748.7</td>    <td align="right">778.2</td>    <td align="right">864.8</td>    <td align="right">880.3</td>  </tr>  <tr>    <td>Lakshadweep</td>    <td align="right">757.6</td>    <td align="right">757.6</td>    <td align="right">746.3</td>    <td align="right">746.3</td>    <td align="right">746.3</td>    <td align="right">735.3</td>    <td align="right">882.4</td>    <td align="right">882.4</td>    <td align="right">882.4</td>    <td align="right">869.6</td>    <td align="right">1,014.5</td>  </tr>  <tr>    <td>Madhya Pradesh</td>    <td align="right">695.4</td>    <td align="right">804.0</td>    <td align="right">834.5</td>    <td align="right">874.7</td>    <td align="right">937.8</td>    <td align="right">926.3</td>    <td align="right">1,000.8</td>    <td align="right">1,023.0</td>    <td align="right">1,079.3</td>    <td align="right">1,145.2</td>    <td align="right">1,190.6</td>  </tr>  <tr>    <td>Maharashtra</td>    <td align="right">1,145.4</td>    <td align="right">1,203.5</td>    <td align="right">1,172.7</td>    <td align="right">1,247.4</td>    <td align="right">1,307.0</td>    <td align="right">1,270.3</td>    <td align="right">1,221.9</td>    <td align="right">1,388.7</td>    <td align="right">1,492.7</td>    <td align="right">1,637.3</td>    <td align="right">1,584.2</td>  </tr>  <tr>    <td>Manipur</td>    <td align="right">230.6</td>    <td align="right">271.8</td>    <td align="right">245.7</td>    <td align="right">272.8</td>    <td align="right">292.9</td>    <td align="right">296.5</td>    <td align="right">309.5</td>    <td align="right">322.3</td>    <td align="right">316.2</td>    <td align="right">313.4</td>    <td align="right">328.9</td>  </tr>  <tr>    <td>Meghalaya</td>    <td align="right">532.0</td>    <td align="right">558.8</td>    <td align="right">549.7</td>    <td align="right">490.4</td>    <td align="right">614.0</td>    <td align="right">639.0</td>    <td align="right">617.3</td>    <td align="right">681.3</td>    <td align="right">675.1</td>    <td align="right">618.1</td>    <td align="right">606.7</td>  </tr>  <tr>    <td>Mizoram</td>    <td align="right">379.5</td>    <td align="right">401.7</td>    <td align="right">432.2</td>    <td align="right">419.2</td>    <td align="right">541.9</td>    <td align="right">536.9</td>    <td align="right">598.0</td>    <td align="right">526.3</td>    <td align="right">529.7</td>    <td align="right">549.3</td>    <td align="right">568.0</td>  </tr>  <tr>    <td>Nagaland</td>    <td align="right">323.1</td>    <td align="right">358.4</td>    <td align="right">359.5</td>    <td align="right">365.3</td>    <td align="right">375.8</td>    <td align="right">376.7</td>    <td align="right">377.7</td>    <td align="right">387.8</td>    <td align="right">393.1</td>    <td align="right">412.0</td>    <td align="right">417.2</td>  </tr>  <tr>    <td>Odisha</td>    <td align="right">603.4</td>    <td align="right">610.5</td>    <td align="right">608.7</td>    <td align="right">647.9</td>    <td align="right">719.2</td>    <td align="right">659.7</td>    <td align="right">658.2</td>    <td align="right">838.8</td>    <td align="right">925.9</td>    <td align="right">893.1</td>    <td align="right">920.4</td>  </tr>  <tr>    <td>Puducherry</td>    <td align="right">1,776.1</td>    <td align="right">1,772.4</td>    <td align="right">1,818.8</td>    <td align="right">1,852.4</td>    <td align="right">1,877.6</td>    <td align="right">1,894.9</td>    <td align="right">1,717.6</td>    <td align="right">1,839.6</td>    <td align="right">1,896.8</td>    <td align="right">2,102.1</td>    <td align="right">2,109.3</td>  </tr>  <tr>    <td>Punjab</td>    <td align="right">1,684.3</td>    <td align="right">1,721.4</td>    <td align="right">1,822.2</td>    <td align="right">1,865.6</td>    <td align="right">1,867.7</td>    <td align="right">1,901.3</td>    <td align="right">1,939.6</td>    <td align="right">2,057.1</td>    <td align="right">2,266.9</td>    <td align="right">2,262.6</td>    <td align="right">2,503.4</td>  </tr>  <tr>    <td>Rajasthan</td>    <td align="right">907.5</td>    <td align="right">919.4</td>    <td align="right">908.1</td>    <td align="right">938.2</td>    <td align="right">1,044.2</td>    <td align="right">1,051.2</td>    <td align="right">1,088.6</td>    <td align="right">1,126.5</td>    <td align="right">1,248.4</td>    <td align="right">1,318.2</td>    <td align="right">1,386.3</td>  </tr>  <tr>    <td>Sikkim</td>    <td align="right">633.9</td>    <td align="right">627.9</td>    <td align="right">745.3</td>    <td align="right">738.5</td>    <td align="right">806.7</td>    <td align="right">828.3</td>    <td align="right">820.9</td>    <td align="right">901.0</td>    <td align="right">863.8</td>    <td align="right">783.7</td>    <td align="right">820.1</td>  </tr>  <tr>    <td>Tamil Nadu</td>    <td align="right">1,259.5</td>    <td align="right">1,302.9</td>    <td align="right">1,400.0</td>    <td align="right">1,411.4</td>    <td align="right">1,451.8</td>    <td align="right">1,437.5</td>    <td align="right">1,330.6</td>    <td align="right">1,437.1</td>    <td align="right">1,497.0</td>    <td align="right">1,641.3</td>    <td align="right">1,691.7</td>  </tr>  <tr>    <td>Telangana</td>    <td align="right">1,132.7</td>    <td align="right">1,381.0</td>    <td align="right">1,454.1</td>    <td align="right">1,640.8</td>    <td align="right">1,797.0</td>    <td align="right">1,835.0</td>    <td align="right">1,787.7</td>    <td align="right">1,869.3</td>    <td align="right">2,052.4</td>    <td align="right">2,221.3</td>    <td align="right">2,306.1</td>  </tr>  <tr>    <td>Tripura</td>    <td align="right">276.8</td>    <td align="right">299.9</td>    <td align="right">418.2</td>    <td align="right">651.5</td>    <td align="right">465.5</td>    <td align="right">380.8</td>    <td align="right">367.1</td>    <td align="right">388.1</td>    <td align="right">377.2</td>    <td align="right">407.5</td>    <td align="right">463.7</td>  </tr>  <tr>    <td>Uttar Pradesh</td>    <td align="right">415.4</td>    <td align="right">437.1</td>    <td align="right">489.2</td>    <td align="right">540.1</td>    <td align="right">523.2</td>    <td align="right">537.8</td>    <td align="right">541.3</td>    <td align="right">555.7</td>    <td align="right">613.2</td>    <td align="right">629.2</td>    <td align="right">692.2</td>  </tr>  <tr>    <td>Uttarakhand</td>    <td align="right">1,150.9</td>    <td align="right">1,193.9</td>    <td align="right">1,207.8</td>    <td align="right">1,233.9</td>    <td align="right">1,248.5</td>    <td align="right">1,290.7</td>    <td align="right">1,226.3</td>    <td align="right">1,353.6</td>    <td align="right">1,336.2</td>    <td align="right">1,334.5</td>    <td align="right">1,423.2</td>  </tr>  <tr>    <td>West Bengal</td>    <td align="right">500.5</td>    <td align="right">500.3</td>    <td align="right">502.8</td>    <td align="right">528.5</td>    <td align="right">532.6</td>    <td align="right">545.1</td>    <td align="right">528.5</td>    <td align="right">549.8</td>    <td align="right">611.2</td>    <td align="right">681.1</td>    <td align="right">714.0</td>  </tr>  <tr>    <td>ALL INDIA</td>    <td align="right">818.7</td>    <td align="right">855.5</td>    <td align="right">879.4</td>    <td align="right">922.8</td>    <td align="right">960.4</td>    <td align="right">962.7</td>    <td align="right">942.2</td>    <td align="right">1,008.1</td>    <td align="right">1,094.7</td>    <td align="right">1,168.5</td>    <td align="right">1,208.2</td>  </tr>  <tr>    <td colspan="12" align="justify">.: Not Applicable. -: Not Available.<br>      *: Per Capita Availability of Power is worked out based on Census Population and the population for Andhra Pradesh and Telangana drawn from both Governments&rsquo; portals for the years 2014-15 and 2018-19, respectively. Per capita availability for 2011-12 to 2024-25 was calculated based on the Report of the Technical group of Population Projection, released by the Ministry of Health & Family Welfare.<br>      ** : Combined figures for Dadra & Nagar Haveli and Daman & Diu from 2022-23 onwards.<br>    Source: Central Electricity Authority, Ministry of Power, Government of India.</td>  </tr></table></td></tr></table>
+                </table>
+                <br />
+                <div align="right">
+</div>
+            </div>
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+    <div class="clearfix">
+    </div>
+    <a href="#top" class="scrollToTop" id="backToTop">Top</a>
+<div id="backDiv" style=" text-align:center;" >
+<a href="javascript:history.back()" class="paraheader">Back to previous page</a><br/>
+<span id="lblGetLastUpdateDate" class="paraheader"></span>
+</div>
+<footer class="footer">
+
+<div class="footer">
+  <div class="container_12">    
+      <div class="grid_9" style="width: 833px !important; ">
+          
+          <h2><span class="blue">More</span> Links :</h2>
+          
+		<ul class="footerlist" style="column-count:4">
+                  <li ><a href="/Scripts/HolidayMatrixDisplay.aspx">Bank Holidays</a></li>
+                  <li ><a href="https://shabdavali.rbi.org.in/">Banking Glossary</a></li>
+                  <li ><a href="/Scripts/CitiChart.aspx">Citizen's Charter</a></li>
+                  <li ><a href="/Scripts/Complaints.aspx">Complaints</a></li>
+                  <li ><a href="/Scripts/contactus.aspx">Contact Us</a></li>
+  		<li ><a href="https://www.rbi.org.in/scripts/bs_viewcontent.aspx?Id=3894">COVID-19 Measures</a></li>
+                  <li ><a target="_blank" href="https://ncfe.org.in/e-lms">E-LMS</a></li>
+                  <li ><a href="/Scripts/EventsDisplay.aspx">Events</a></li>
+                  <li ><a href="/Scripts/FAQDisplay.aspx">FAQs</a></li>
+                  <li ><a target="_blank" href="https://www.rbi.org.in/FinancialEducation/">Financial Education</a></li>
+		<li ><a href="/Scripts/BS_ViewForms.aspx">Forms</a></li>
+                  <li ><a href="/Scripts/IFSCMICRDetails.aspx">IFSC/MICR Codes</a></li>
+                  <li><a href="/Scripts/OtherLinks.aspx">Important Websites</a></li>
+                  <li><a target="_blank" href="https://opportunities.rbi.org.in/scripts/index.aspx">Opportunities<span>@</span>RBI</a></li>
+                  <li><a href="/Scripts/rbi_clarification.aspx">RBI Clarifications</a></li>
+ 		<li><a target="_blank" href="https://rbikehtahai.rbi.org.in/">RBI Kehta Hai</a></li>
+                  <li><a href="https://rbidocs.rbi.org.in/rdocs/content/pdfs/Utkarsh202910042026.pdf" target="_blank">RBI’s Vision and Values <img src="../Images/pdf.gif" alt="PDF document" style="padding-bottom: 4px; width:12px; border:0; vertical-align:middle;"> (652 KB)</a></li>
+                  <li><a href="/Scripts/Righttoinfoact.aspx">Right to Information Act</a></li>
+                  <li><a href="/Scripts/BS_ViewTenders.aspx">Tenders</a></li>
+                  
+              </ul>
+      </div>
+
+    <div class="grid_3" style="width:197px !important">
+      
+        <h2><span class="blue">Follow</span> RBI</h2>
+      <ul class="footerlist">
+        
+
+          <li style="float: left;background: url(/images/footer_list_arrow.gif) left 8px no-repeat;"><a href="/Scripts/rss.aspx"><img src="/images/rss-icon.png" alt="RSS Icon" class="rss">RSS</a></li>
+
+        
+          <li>
+              <a href="https://twitter.com/RBI" target="_blank" class="twitter">
+                  <img src="/images/Twitter_New.png" alt="Twitter Icon" class="videos" style="padding-left: 18%; width:14px;">Twitter
+              </a>
+          </li>
+
+        
+
+          <li style="float: left;"><a href="https://www.youtube.com/channel/UCIfCOl43tunZVNYafeC4RQA" class="videos" target="_blank"><img src="/images/youtube.png" alt="YouTube Icon" class="videos">YouTube</a></li>
+
+          <li>
+              <a href="https://instagram.com/reservebankofindia" class="videos" target="_blank">
+                  <img src="/images/Instagram.jpg" alt="Instagram Icon" class="videos" style="padding-left: 5%; width:14px;">Instagram
+              </a>
+          </li>
+          <li style="float: left;"><a href="https://www.facebook.com/RBIsays" class="videos" target="_blank"><img src="/images/Facebook.jpg" style="width:14px;" alt="Facebook Icon" class="videos">Facebook</a></li>
+          <li>
+              <a href="https://www.linkedin.com/company/reservebankofindia" class="videos" target="_blank">
+                  <img src="/images/LinkedinIcon1.png" alt="LinkedIn Icon" class="" style="padding-left: 4%;width: 17px;background: bottom no-repeat;display: block;float: left;margin: 2px 3px 0 1px;">LinkedIn
+              </a>
+          </li>
+      </ul>
+	<a href="https://www.india.gov.in" class="videos" target="_blank">
+                  <img src="/images/indiaGov.png" alt="National Portal of India logo" class="">
+              </a>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="copyright">
+    <div class="container_12">
+     <div class="grid_6 pull_left">&copy; Reserve Bank of India. All Rights Reserved. </div>
+        <div class="grid_5 pull_right"><a href="/Scripts/sitemap.aspx">Sitemap</a> <span aria-hidden="true">|</span> <a href="/Scripts/Disclaimer.aspx">Disclaimer</a></div>
+        <div class="clearfix"></div>
+
+        <div class="grid_6 pull_left">Website owned and managed by Reserve Bank of India. Contact us on helpdoc[at]rbi[dot]org[dot]in</div>
+        <div class="grid_5 pull_right">Website last updated date: Nov 03, 2026</div>
+        <div class="clearfix"></div>
+	<div class="grid_6 pull_left"><a href="https://www.rbi.org.in/scripts/wim.aspx">Web Information Manager</a></div>
+	<div class="grid_5 pull_right"><a href="https://rbidocs.rbi.org.in/rdocs/content/pdfs/Accessibility20012026.pdf" target="_blank">Accessibility Statement
+	<img alt="PDF - Accessibility Statement" style="padding: 1px; width:16px; border:0; vertical-align:middle;" src="../Images/pdf.gif" > (133 KB)
+	</a><span aria-hidden="true"> |</span><a href="/scripts/ScreenReader.aspx" title="Information related to screen reader">Screen Reader and Accessibility Help</a></div>
+	<div class="clearfix"></div>
+        <div class="grid_12 pull_left">Supports: Google Chrome 147+ | Firefox 150+ | Microsoft Edge Version 147+ | Safari 17+</div>
+        
+        <div class="clearfix"></div>
+    </div>
+  </div>
+  
+
+
+
+</div>
+
+</footer>
+
+<script src="/js/ReplaceURL.js" ></script>
+<script >
+
+
+    //this is for floating TOP link
+    
+    $(document).ready(function () {
+
+        var offset = 230;
+        var duration = 500;
+
+
+        jQuery(window).scroll(function () {
+            if (jQuery(this).scrollTop() > offset) {
+                jQuery('.scrollToTop').fadeIn(duration);
+                
+            } else {
+                jQuery('.scrollToTop').fadeOut(duration);
+                
+            }
+        });
+
+        
+	$('.page_title').attr('tabindex','-1');
+        $('.scrollToTop').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 800);
+		$('.page_title').focus(); 
+            return false;
+        });
+	
+
+
+	if(!window.location.href.includes("Home.aspx") && !window.location.href.includes("home.aspx"))
+{ 
+if( window.location.href.includes(".aspx")){
+var div= document.getElementById('backDiv');
+	div.removeAttribute("hidden");}
+else{
+var div1= document.getElementById('backDiv');
+	div1.setAttribute("hidden","true");}
+}
+else{
+
+
+	var div1= document.getElementById('backDiv');
+	div1.setAttribute("hidden","true");}
+    });
+
+
+  
+    $(window).scroll(function () {
+
+        if ($('div.banner2').length) {
+
+            if ($(window).scrollTop() >= 265) {
+                $('#menubar').css("position", "fixed");
+                $('#menubar').css("width", "240px");
+                $('#menubar').css("margin-top", "-281px");
+                $('.content_area').css("margin-left", "252px");
+
+                $('.sidebar_nav').css("position", "fixed");
+                $('.sidebar_nav').css("margin-top", "-200px");
+                $('.sidebar_nav').css("width", "236px");
+
+
+             
+
+            }
+
+            else {
+                $('#menubar').css("position", "");
+                $('#menubar').css("width", "");
+                $('#menubar').css("margin-top", "");
+                $('.content_area').css("margin-left", "");
+
+                $('.sidebar_nav').css("position", "");
+                $('.sidebar_nav').css("margin-top", "");
+                $('.sidebar_nav').css("width", "");
+
+
+
+         
+            }
+
+        }
+
+        else if ($(window).scrollTop() >= 185) {
+            $('#menubar').css("position", "fixed");
+            $('#menubar').css("width", "240px");
+            $('#menubar').css("margin-top", "-200px");
+            $('.content_area').css("margin-left", "252px");
+
+            $('.sidebar_nav').css("position", "fixed");
+            $('.sidebar_nav').css("margin-top", "-200px");
+            $('.sidebar_nav').css("width", "236px");
+
+
+          
+		var treeheight=0;
+		if($('#treeYear').height()>0){treeheight=$('#treeYear').height();}
+	    	if($(window).scrollTop() >= $('#example-min').height()-treeheight)
+		{			 
+			$('#menubar').css("position", "absolute");
+            		
+			$('#menubar').css("margin-top", "");
+			$('#menubar').css("top", $('#example-min').height()+100-treeheight +"px");
+		}
+		else{$('#menubar').css("position", "fixed"); $('#menubar').css("top", "");}
+		
+        }
+
+        else {
+            $('#menubar').css("position", "");
+            $('#menubar').css("width", "");
+            $('#menubar').css("margin-top", "");
+            $('.content_area').css("margin-left", "");
+
+            $('.sidebar_nav').css("position", "");
+            $('.sidebar_nav').css("margin-top", "");
+            $('.sidebar_nav').css("width", "");
+
+
+       
+        }
+     
+
+       
+    });
+	
+      
+    $(document).ready(function () {
+	
+	
+		  $('.window .close').click(function (e) {
+            //Cancel the link behavior
+            e.preventDefault();
+            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+            $('#maskWN').hide();
+            $('.window').hide();
+            var scroll = $(window).scrollTop();
+            $("html").scrollTop(scroll);
+        });
+		
+		 $('#maskWN').click(function () {
+            $(this).hide();
+            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+            $('.window').hide();
+
+        });
+
+        
+
+        //if close button is clicked
+        $('.window .close').click(function (e) {
+            //Cancel the link behavior
+            e.preventDefault();
+            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+            $('#mask').hide();
+            $('.window').hide();
+            var scroll = $(window).scrollTop();
+            $("html").scrollTop(scroll);
+        });
+
+        //if mask is clicked
+        $('#mask').click(function () {
+            $(this).hide();
+            $('.window').hide();
+        });
+        $('#feedbackbtn').click(function () {
+            var id = '#dialog';
+
+            //Get the screen height and width
+            var maskHeight = $(document).height();
+            var maskWidth = $(window).width();
+
+            //Set heigth and width to mask to fill up the whole screen
+            
+            $('#mask').css({ 'width': '100%', 'height': '100%', 'position': 'fixed' });
+
+            //transition effect
+            $('#mask').fadeIn(500);
+            $('#mask').fadeTo("slow", 0.9);
+
+            //Get the window height and width
+            var winH = $(window).height();
+            var winW = $(window).width();
+
+            //Set the popup window to center
+            $(id).css('top', winH / 2 - $(id).height() / 2);
+            $(id).css('left', winW / 2 - $(id).width() / 2);
+
+            //transition effect
+            $(id).fadeIn(2000);
+        });
+
+        $('.submit').click(function () {
+            var Name = $("[id*=txtFeedbackName]").val();
+            var Email = $("[id*=txtFeedbackEmail]").val();
+            var Comments = $("[id*=txtFeedbackComments]").val();
+            if (Name == "") {
+
+                alert("Please enter your name");
+                $("[id*=txtFeedbackName]").focus();
+                return false;
+            }
+            else if (Email == "") {
+                alert("Please enter your email");
+                $("[id*=txtFeedbackEmail]").focus();
+                return false;
+            }
+            else if (Email != "" && !ValidateEmail(Email)) {
+                alert("Please enter a valid email address");
+                $("[id*=txtFeedbackEmail]").focus();
+                return false;
+            }
+
+            else if (Comments == "") {
+
+                alert("Please enter some comments");
+                $("[id*=txtFeedbackComments]").focus();
+                return false;
+            }
+
+            else {
+                $('[id*=Button1]').attr('disabled', 'disabled');
+
+                var param = { Name: Name, EmailID: Email, Comments: Comments };
+                $.ajax({
+                    type: "POST",
+                    url: "../Home.aspx/SaveFeedback",
+                    data: JSON.stringify(param),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                    success: function (response) {
+
+                        if (response.d == "0") {
+                            alert("Thank you for your feedback");
+                            $.cookie('feedback_Cookie', 'Yes', { expires: 365, path: '/' });
+                            $('#mask').hide();
+                            $('.window').hide();
+                            $('[id*=Button1]').removeAttr('disabled');
+                            $("[id*=txtFeedbackName]").val("");
+                            $("[id*=txtFeedbackEmail]").val("");
+                            $("[id*=txtFeedbackComments]").val("");
+                        }
+                        else {
+                            alert("Please try again");
+                            $('[id*=Button1]').removeAttr('disabled');
+
+
+                        }
+
+                    }
+                });
+            }
+
+        });
+
+        function ValidateEmail(email) {
+            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
+
+       
+
+        $('a.style1').each(function () {
+
+            var $this = $(this);
+            var aHref = $this.attr('class');
+            $this.attr('class', aHref.replace('style1', 'links'));
+        });
+
+		
+   });
+
+  function isExternal(url) {
+	if(url){url=url.toLowerCase();
+       if(url=='#' || url=='javascript:void(0);' || url.includes('javascript')||url=='' )
+	{ return false;} 
+	else{//return (url.indexOf("rbi.org.in")==-1)
+	
+	if(url.indexOf("www.rbi.org.in")==-1 || url.indexOf("https://rbi.org.in")==-1)
+		{	
+			if(url.indexOf("rbi.org.in")==-1)		
+    				return "external";
+			else if(url.indexOf("www.rbi.org.in")==-1 && url.indexOf(".rbi.org.in")>0 && url.indexOf("rbidocs.rbi.org.in")==-1)
+				{return "subdomain";}
+			else if(url.indexOf("financialeducation")>0 || url.indexOf("commonperson")>0 || url.indexOf("/rekyc/")>0 || url.indexOf("rbi90years")>0 ){
+				return "subsite";}
+			
+		}
+	
+	}}
+    }
+    document.addEventListener("click", function () {
+	linkMessage();
+        
+    });
+function linkMessage(){
+	if (event.target.tagName.toLowerCase() === "a") {
+            if (isExternal(event.target.href)=="external") {
+
+                if (confirm("You are being redirected to an external website that opens in a new tab. Please note that Reserve Bank of India will not be held responsible for external websites content in any manner.")) {
+
+                    return;
+                }
+                else {
+                   
+                    event.preventDefault();
+                    return;
+                }
+            }
+	    if (isExternal(event.target.href)=="subdomain") {
+	    	 if (confirm("You are being redirected to a subdomain that will open in a new browser tab. The subdomain may have a different header, footer, and navigation structure from the main website. Continue?")) {
+                    return;
+                }
+                else {
+                   
+                    event.preventDefault();
+                    return;
+                }
+	    }
+		if (isExternal(event.target.href)=="subsite") {
+	    	 if (confirm("You are being redirected to a subsite that will open in a new browser tab. The subsite may have a different header, footer, and navigation structure from the main website. Some design elements and links may vary from the primary site experience. Continue?")) {
+                    return;
+                }
+                else {
+                   
+                    event.preventDefault();
+                    return;
+                }
+	    }
+        }
+	else if (event.target.tagName.toLowerCase() === "img") {
+		$(event.target).preventDefault;		
+		if($(event.target).parent('a').length){
+			 if (isExternal($(event.target).parent('a').prop('href'))==="external") {
+                		if (confirm("You are being redirected to an external website that opens in a new tab. Please note that Reserve Bank of India will not be held responsible for external websites content in any manner.")) {
+                    		return;
+               		 }
+
+                	else {                   
+                    		event.preventDefault();
+                    		return;
+                	}}
+			if (isExternal($(event.target).parent('a').prop('href'))==="subdomain") {
+                		if (confirm("You are being redirected to a subdomain that will open in a new browser tab. The subdomain may have a different header, footer, and navigation structure from the main website. Continue?")) {
+                    		return;
+               		 	}
+
+                		else {                   
+                    		event.preventDefault();
+                    		return;
+                		}
+			}
+			if (isExternal(event.target.href)=="subsite") {
+	    	 	if (confirm("You are being redirected to a subsite that will open in a new browser tab. The subsite may have a different header, footer, and navigation structure from the main website. Some design elements and links may vary from the primary site experience. Continue?")) {
+                    	return;
+                	}
+                	else {
+                   
+                    		event.preventDefault();
+                    	return;
+                	}
+	    		}
+	}}
+	const link = event.target.closest('a[target="_blank"]');
+	if(link){ 
+		event.preventDefault();
+		const docRegx = /\.(pdf|docx?|xlsx?|zip?|xls|doc)$/i;
+		if(docRegx.test(link)){
+			if(/\.pdf$/i.test(link))
+			{	
+				if(confirm("This PDF will open in a new browser tab. Do you want to continue?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.docx$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.doc$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.xlsx$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.xls$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this document?")){
+				window.open(link.href,"_blank");}
+			}
+			else if(/\.zip$/i.test(link))
+			{	
+				if(confirm("Are you sure you want to download this file?")){
+				window.open(link.href,"_blank");}
+			}
+		}
+
+		else 
+		if(confirm("This link will open in a new browser tab. Do you want to continue?")){
+			window.open(link.href,"_blank");
+		}
+	}
+		if (event.target.tagName.toLowerCase() === "button") {
+		if($(event.target).parent('a').length>0){
+			const link1 = event.target.closest('a[target="_blank"]');
+		if(link1){
+			event.preventDefault();
+			if(confirm("This link will open in a new browser tab. Do you want to continue?")){
+				window.open(link.href,"_blank");
+			}
+		}
+		}
+	}
+}
+
+</script>
+<script >
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61369961-1', 'auto');
+  ga('send', 'pageview');
+
+document.querySelectorAll('table.tablebg').forEach(table => {
+    const anchors = table.querySelectorAll('a[href^="#"]:not([href="#"])');
+
+    const hasInPageAnchorsInThisTableOnly = Array.from(anchors).some(a => {
+        // Find the closest table ancestor of this anchor
+        const closestTable = a.closest('table');
+    
+        // Only count it if it belongs to the current table (not a nested one)
+        return closestTable === table;
+    });
+
+    if (!hasInPageAnchorsInThisTableOnly) {
+       // table.setAttribute('role', 'presentation');
+       //} else {
+       //    table.removeAttribute('role'); 
+	if(table.closest('td')){
+	if(table.querySelector('th'))
+	{	
+		table.removeAttribute('role');
+	}
+	else{
+        table.setAttribute('role', 'presentation');
+		}
+	}
+	else{
+        table.setAttribute('role', 'presentation');
+		}
+    }
+});
+$('.brd-ptable1').attr('role','presentation');
+$('html').attr('lang', 'en');
+document.querySelectorAll('br').forEach(br => {br.setAttribute('aria-hidden','true');});
+$('#doublescroll').children('table').filter(':first').attr("role", "presentation");
+$('.page_title').nextAll('table').first().attr("role", "presentation");
+
+
+
+document.addEventListener('DOMContentLoaded', function(){
+$('.tableheader b').each(function () {
+		var curEle= $(this);
+           $(curEle).replaceWith("<h2 class='dop_header'>"+$(curEle).html()+"</h2>")
+        });
+ });
+
+//  tooltip 
+var TooltipManager = {
+    _tip: null, // Create the tooltip element once 
+init: function() {
+    if (!this._tip) {
+    
+        this._tip = $('<div id="js-custom-tooltip"></div>').css({
+            "position": "absolute", "background": '#ffffca', "color":"#000", "padding": "2px 5px", "border-radius": "0px", "font-size": "11px","font-family":"Sans-serif", "z-index": "10000", "pointer-events": "none","border":"1px solid #767676", "box-shadow":"2px 2px 3px rgba(0,0,0,0.2)","white-space":"nowrap"
+        }).appendTo('body');
+        
+    }
+}, 
+show: function(element, text) {
+    this.init(); 
+var $el = $(element); // Update text and position 
+    
+this._tip.text(text).show();
+var pos = $el.offset(); 
+this._tip.css({
+    top: pos.top + this._tip.outerHeight()  + "px", // Show above 
+    left: pos.left + ($el.outerWidth() / 2) - (this._tip.outerWidth() / 2) + "px"
+});
+    }, hide: function() { if (this._tip) this._tip.hide(); }
+}; // Apply to all elements that have a ToolTip (ToolTip renders as 'title') 
+$(document).ready(function() {
+   
+    $('body').on('focusin', 'input, button, a, select, textarea, img', function() {
+        var title = $(this).attr('title'); if (title) {
+    
+            
+      
+            TooltipManager.show(this, title);
+        }
+    }).on('focusout', 'input, button, a, select, textarea, img', function() { 
+       
+            TooltipManager.hide();
+       
+    }); // Dismiss on Escape key
+    $(document).keyup(function(e) { if (e.key === "Escape") TooltipManager.hide(); });
+});
+
+//breadcrumb current page announce
+$(document).ready(function(){
+
+const breadcrumbList = document.querySelector('.breadcrumbs');
+
+    if (breadcrumbList) {
+        const listItems = breadcrumbList.querySelectorAll('li');
+    
+        if (listItems.length > 0) {
+            
+            const lastItem = $('.breadcrumbs li').filter(function(){ return $.trim($(this).text())!=="";}).last().attr('aria-current', 'page').css('background','none'); //remove extra icons from empty breadcrumbs
+            $('.breadcrumbs li').filter(function(){ return $.trim($(this).text())==="" && $(this).children().length===0;}).attr('role','presentation');
+	    
+       		$('.breadcrumbs li').filter(function(){
+			if($(this).children().length!==0)
+			{
+				if($(this).children().text() ===""){}
+			}
+		});
+            const lastLink =lastItem.find('a');
+            if (lastLink) {
+                lastLink.attr('aria-current', 'page');               
+                
+            }
+		if($('.breadcrumbs li').last().find('a').length>0)
+		{			
+			const $a = $('.breadcrumbs li').last().find('a');
+			$('<span>',{class: $a.attr('class'), text: $a.text()}).replaceAll($a).attr('aria-current', 'page').css('background','none');
+		}
+		
+		if($('.breadcrumbs li').last().find('span').length>0)
+		{
+			
+			if($('.breadcrumbs li').last().find('span')[0].innerText==='')
+			{
+				$('.breadcrumbs li').last().find('span').removeAttr('aria-current');				
+			}
+			else{
+				$('.breadcrumbs li').last().find('span').filter(function(){ return $(this).attr('role')!=='presentation';}).last().attr('aria-current', 'page').css('background','none');					
+			}		
+		}
+		$('.breadcrumbs li').filter(function(){ return $.trim($(this).text())!=="";}).removeAttr('role','presentation'); 
+		$('.breadcrumbs li').filter(function(){ return $.trim($(this).text())==="" }).css('background','none');//remove extra icons from empty breadcrumbs
+        }
+    }
+});
+
+//document.addEventListener("DOMContentLoaded", () => {
+//    document.querySelectorAll('img').forEach(img => {
+//      try {
+//        const url = new URL(img.src);
+//        img.crossOrigin = "anonymous";
+//        img.src = window.location.origin + url.pathname + url.search + url.hash;
+//      } catch (e) {}
+//    });
+//  });
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+setLetterSpace(false);//]]>
+</script>
+</form>
+</body>
+</html>
+<script type="text/javascript" src="/js/plugins.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/Scroll.js"></script>
+<script type="text/javascript" language="javascript">
+    
+    DoubleScrollWithoutTree(document.getElementById('doublescroll'));
+
+    
+
+</script>

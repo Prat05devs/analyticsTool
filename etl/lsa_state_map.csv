@@ -1,0 +1,23 @@
+lsa,state_ids,note
+Andhra Pradesh,AP;TG,TRAI LSA 'Andhra Pradesh' covers residual AP and Telangana (PIR Table 1.42 note 2)
+Assam,AS,
+Bihar,BR;JH,Bihar LSA includes Jharkhand
+Delhi,DL,Delhi LSA also covers NCR towns in Haryana/UP (Gurugram/Faridabad/Noida/Ghaziabad) for some operators
+Gujarat,GJ;DNHDD,
+Haryana,HR,
+Himachal Pradesh,HP,
+Jammu & Kashmir,JK;LA,
+Karnataka,KA,
+Kerala,KL;LD,
+Madhya Pradesh,MP;CT,Madhya Pradesh LSA includes Chhattisgarh
+Maharashtra,MH;GA,Maharashtra LSA includes Goa and EXCLUDES Mumbai
+Mumbai,MH,Mumbai metro LSA (Mumbai/Navi Mumbai/Thane/Kalyan) is part of Maharashtra state
+North East,AR;MN;ML;MZ;NL;TR,
+Orissa,OR,
+Punjab,PB;CH,
+Rajasthan,RJ,
+Tamil Nadu,TN;PY,Tamil Nadu LSA includes Chennai (and Puducherry)
+UP (East),UP,UP East LSA
+UP (West),UP;UK,UP West LSA includes Uttarakhand
+Kolkata,WB,Kolkata metro LSA is part of West Bengal
+West Bengal,WB;SK;AN,West Bengal LSA includes Sikkim and A&N Islands

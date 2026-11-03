@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.streamlit/secrets.toml
+data/raw/ookla_open_data/
+*.part
+data/curated/warehouse.duckdb
+data/curated/warehouse.duckdb.wal
+.pytest_cache/
+.DS_Store

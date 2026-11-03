@@ -1,0 +1,169 @@
+# Scoring specification v1 — DESIGN DEFAULTS, NOT LEARNED OPTIMA.
+# Weights come from blueprint section 7 (demand 25, infrastructure 20, outlook 20, labour 15,
+# competition/ecosystem 10, cost/policy 10) tilted per industry using the rationale in section 7.1.
+# They must be validated by expert review and the sensitivity analysis the app shows.
+# A suitability index is a relative 0-100 screening score. It is NOT a probability of success.
+
+version: v1
+frozen: 2026-11-03
+normalisation:
+  method: percentile rank against a frozen national reference (scoring/reference_v1.parquet)
+  reference_set: all 28 states plus Delhi and Jammu & Kashmir, latest observation per state
+  direction: "+1 = higher is better; -1 = cost or risk, scored as 100 - percentile"
+  missing: "never filled. Indicator dropped and weights renormalised within the dimension; a dimension with no
+    observed indicator is dropped and dimension weights are renormalised. Both are disclosed per state."
+  quality_admitted: [official, derived]   # secondary / private values are displayed, never scored
+
+dimensions:
+  demand: {label: "Market demand", default_weight: 25}
+  infrastructure: {label: "Infrastructure", default_weight: 20}
+  outlook: {label: "Economic outlook", default_weight: 20}
+  labour: {label: "Labour availability", default_weight: 15}
+  ecosystem: {label: "Business ecosystem / competition", default_weight: 10,
+              note: "High density can mean a valuable cluster OR a saturated market; scored as cluster depth."}
+  cost: {label: "Operating cost & policy", default_weight: 10,
+         note: "No auditable numeric policy indicator exists; DPIIT ranking is ordinal and informational only."}
+
+# Indicator catalogue. feature = code in fact_indicator (see etl/build_indicators.py for derived ones).
+indicators:
+  gsdp_rs_crore:            {label: "Economy size (real GSDP)", unit: "Rs crore, 2011-12 prices", direction: 1, transform: log}
+  per_capita_nsdp_real:     {label: "Per-capita income (real NSDP)", unit: "Rs, 2011-12 prices", direction: 1}
+  mpce_urban:               {label: "Urban household spending (MPCE)", unit: "Rs/person/month", direction: 1, proxy: "survey snapshot 2023-24"}
+  mpce_rural:               {label: "Rural household spending (MPCE)", unit: "Rs/person/month", direction: 1, proxy: "survey snapshot 2023-24"}
+  personal_loans_per_capita: {label: "Personal bank loans per person", unit: "Rs", direction: 1}
+  exports_usd_mn:           {label: "Merchandise exports", unit: "USD million", direction: 1, transform: log}
+  domestic_tourist_visits:  {label: "Domestic tourist visits", unit: "million", direction: 1, transform: log,
+                             proxy: "visits, not unique people or room nights"}
+  foreign_tourist_visits:   {label: "Foreign tourist visits", unit: "million", direction: 1, transform: log}
+  power_shortage_pct:       {label: "Energy shortage", unit: "% of requirement not supplied", direction: -1,
+                             proxy: "state-level shortage, not plant-level outages or tariff"}
+  peak_unmet_pct:           {label: "Peak demand not met", unit: "%", direction: -1}
+  per_capita_power_availability: {label: "Power availability per person", unit: "kWh", direction: 1}
+  internet_subs_per_100:    {label: "Internet subscriptions per 100", unit: "per 100 population", direction: 1,
+                             proxy: "subscriptions, not measured speed"}
+  internet_subs_per_100_urban: {label: "Urban internet subscriptions per 100", unit: "per 100 population", direction: 1}
+  nh_km_per_lakh_pop:       {label: "National highways per lakh people", unit: "km", direction: 1, proxy: "length, not transit time"}
+  rail_km_per_lakh_pop:     {label: "Railway route per lakh people", unit: "km", direction: 1}
+  momentum_manufacturing:   {label: "Manufacturing real growth, 3-yr mean", unit: "% a year", direction: 1}
+  momentum_services:        {label: "Services real growth, 3-yr mean", unit: "% a year", direction: 1,
+                             proxy: "broad services aggregate, not sector-specific"}
+  momentum_financial_services: {label: "Financial services real growth, 3-yr mean", unit: "% a year", direction: 1}
+  momentum_gsva_total:      {label: "Whole-economy real growth, 3-yr mean", unit: "% a year", direction: 1}
+  forecast_manufacturing:   {label: "Forecast: manufacturing real GSVA growth next FY", unit: "% a year", direction: 1,
+                             requires_model: manufacturing}
+  ur_urban_us_adj:          {label: "Urban unemployment rate (labour pool)", unit: "%", direction: 1,
+                             proxy: "higher = larger available pool; shown as supply, not as a negative"}
+  ur_rural_us_adj:          {label: "Rural unemployment rate (labour pool)", unit: "%", direction: 1}
+  asi_workers:              {label: "Factory workers (ASI)", unit: "persons", direction: 1, transform: log}
+  specialists_per_lakh_pop: {label: "Public-sector specialists in position per lakh", unit: "per lakh", direction: 1,
+                             proxy: "public CHC specialists only"}
+  asi_factories:            {label: "Registered factories (ASI)", unit: "number", direction: 1, transform: log}
+  share_manufacturing:      {label: "Manufacturing share of GSVA", unit: "%", direction: 1}
+  share_services:           {label: "Services share of GSVA", unit: "%", direction: 1}
+  share_financial_services: {label: "Financial services share of GSVA", unit: "%", direction: 1}
+  credit_industry_share:    {label: "Bank credit going to industry", unit: "% of SCB credit", direction: 1}
+  bank_offices_per_lakh_pop: {label: "Bank offices per lakh people", unit: "per lakh", direction: 1}
+  govt_beds_per_lakh_pop:   {label: "Government hospital beds per lakh", unit: "per lakh", direction: 1,
+                             proxy: "public supply; context for referral networks, not private demand"}
+  rural_wage_nonagri:       {label: "Rural non-farm wage (men)", unit: "Rs/day", direction: -1}
+  rural_wage_construction:  {label: "Rural construction wage (men)", unit: "Rs/day", direction: -1}
+  cpi_inflation_general:    {label: "Consumer price inflation", unit: "%", direction: -1}
+  cpi_inflation_housing_urban: {label: "Urban housing inflation (rent pressure)", unit: "%", direction: -1}
+  td_losses_pct:            {label: "Power T&D losses", unit: "%", direction: -1, proxy: "utility efficiency, tariff pressure"}
+
+# Industry profiles: dimension weights (sum 100) and indicator weights within each dimension.
+# mandatory_dimensions: a state with no observed indicator in one of these is EXCLUDED for the industry.
+industries:
+  manufacturing:
+    label: Manufacturing
+    model_target: manufacturing            # RBI T34 real manufacturing GSVA
+    mandatory_dimensions: [infrastructure, outlook, labour, cost]
+    weights: {demand: 15, infrastructure: 25, outlook: 20, labour: 15, ecosystem: 15, cost: 10}
+    indicators:
+      demand: {gsdp_rs_crore: 2, per_capita_nsdp_real: 1, exports_usd_mn: 1}
+      infrastructure: {power_shortage_pct: 2, peak_unmet_pct: 1, per_capita_power_availability: 1, nh_km_per_lakh_pop: 1, rail_km_per_lakh_pop: 1}
+      outlook: {forecast_manufacturing: 2, momentum_manufacturing: 2}
+      labour: {asi_workers: 2, ur_urban_us_adj: 1, ur_rural_us_adj: 1}
+      ecosystem: {asi_factories: 1, share_manufacturing: 1, credit_industry_share: 1}
+      cost: {rural_wage_nonagri: 2, td_losses_pct: 1, cpi_inflation_general: 1}
+  retail:
+    label: Retail
+    model_target: null
+    target_note: "Trade & repair GSVA is not published by state in the RBI handbook; services aggregate is a broad proxy only."
+    mandatory_dimensions: [demand, outlook, cost]
+    weights: {demand: 30, infrastructure: 15, outlook: 20, labour: 15, ecosystem: 10, cost: 10}
+    indicators:
+      demand: {mpce_urban: 2, per_capita_nsdp_real: 1, personal_loans_per_capita: 1, gsdp_rs_crore: 1}
+      infrastructure: {internet_subs_per_100: 1, power_shortage_pct: 1, nh_km_per_lakh_pop: 1}
+      outlook: {momentum_services: 1}
+      labour: {ur_urban_us_adj: 1}
+      ecosystem: {share_services: 1, bank_offices_per_lakh_pop: 1}
+      cost: {cpi_inflation_housing_urban: 1, cpi_inflation_general: 1}
+  it_services:
+    label: IT / professional services
+    model_target: null
+    target_note: "No state IT/professional-services GSVA; services and financial-services aggregates are broad proxies."
+    mandatory_dimensions: [infrastructure, labour, outlook]
+    weights: {demand: 20, infrastructure: 25, outlook: 20, labour: 20, ecosystem: 10, cost: 5}
+    indicators:
+      demand: {per_capita_nsdp_real: 1, mpce_urban: 1}
+      infrastructure: {internet_subs_per_100_urban: 1, internet_subs_per_100: 1, power_shortage_pct: 1}
+      outlook: {momentum_services: 1, momentum_financial_services: 1}
+      labour: {ur_urban_us_adj: 1}
+      ecosystem: {share_services: 1, share_financial_services: 1}
+      cost: {cpi_inflation_housing_urban: 1}
+  logistics:
+    label: Logistics
+    model_target: null
+    target_note: "Transport & storage GSVA is not in the handbook; whole-economy growth is used as momentum context."
+    mandatory_dimensions: [infrastructure, demand]
+    weights: {demand: 20, infrastructure: 30, outlook: 20, labour: 10, ecosystem: 10, cost: 10}
+    indicators:
+      demand: {gsdp_rs_crore: 2, exports_usd_mn: 1}
+      infrastructure: {nh_km_per_lakh_pop: 2, rail_km_per_lakh_pop: 1, internet_subs_per_100: 1, power_shortage_pct: 1}
+      outlook: {momentum_gsva_total: 1}
+      labour: {ur_urban_us_adj: 1, ur_rural_us_adj: 1}
+      ecosystem: {asi_factories: 1, credit_industry_share: 1}
+      cost: {rural_wage_nonagri: 1, cpi_inflation_general: 1}
+  healthcare:
+    label: Healthcare
+    model_target: null
+    target_note: "Health GVA is not separable by state in the handbook; ranking only."
+    mandatory_dimensions: [demand, labour]
+    weights: {demand: 30, infrastructure: 20, outlook: 15, labour: 15, ecosystem: 10, cost: 10}
+    indicators:
+      demand: {per_capita_nsdp_real: 1, mpce_urban: 1, mpce_rural: 1}
+      infrastructure: {govt_beds_per_lakh_pop: 1, internet_subs_per_100: 1, power_shortage_pct: 1}
+      outlook: {momentum_services: 1}
+      labour: {specialists_per_lakh_pop: 1, ur_urban_us_adj: 1}
+      ecosystem: {share_services: 1}
+      cost: {cpi_inflation_housing_urban: 1}
+  hospitality:
+    label: Hospitality
+    model_target: null
+    target_note: "Hotels & restaurants GVA is bundled with trade; tourism visits give demand context only."
+    mandatory_dimensions: [demand]
+    weights: {demand: 35, infrastructure: 20, outlook: 15, labour: 10, ecosystem: 10, cost: 10}
+    indicators:
+      demand: {domestic_tourist_visits: 2, foreign_tourist_visits: 1, mpce_urban: 1}
+      infrastructure: {nh_km_per_lakh_pop: 1, rail_km_per_lakh_pop: 1, internet_subs_per_100: 1}
+      outlook: {momentum_services: 1}
+      labour: {ur_urban_us_adj: 1}
+      ecosystem: {share_services: 1}
+      cost: {cpi_inflation_housing_urban: 1, cpi_inflation_general: 1}
+
+# User controls (blueprint 8.2). Multipliers are applied to dimension weights, then renormalised.
+priorities:
+  max_selected: 3
+  multiplier: 1.6
+  map: {demand: demand, infrastructure: infrastructure, labour: labour, cost: cost, growth: outlook, policy: null}
+  policy_note: "No auditable numeric policy indicator is available, so the 'policy' priority does not change scores."
+operational_needs:
+  power_intensive: {dimension: infrastructure, dim_multiplier: 1.25, boost: [power_shortage_pct, peak_unmet_pct, per_capita_power_availability], indicator_multiplier: 2}
+  digital_first: {dimension: infrastructure, dim_multiplier: 1.15, boost: [internet_subs_per_100, internet_subs_per_100_urban], indicator_multiplier: 2}
+  logistics_heavy: {dimension: infrastructure, dim_multiplier: 1.25, boost: [nh_km_per_lakh_pop, rail_km_per_lakh_pop], indicator_multiplier: 2}
+  skilled_labour: {dimension: labour, dim_multiplier: 1.25, boost: [ur_urban_us_adj, specialists_per_lakh_pop], indicator_multiplier: 1.5}
+stability:
+  perturbation: [0.8, 1.2]   # each dimension weight independently scaled within +-20%, then renormalised
+  draws: 500
+  seed: 2026

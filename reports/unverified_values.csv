@@ -1,0 +1,79 @@
+file,geo,indicator,period,value,source_url,reason
+indicators_2025_2026_long.csv,All India,ur_cws_15plus,2026-07,5.1,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2300447&reg=48&lang=1,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,All India,ur_cws_15plus,2026-06,5.5,https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jul/doc2026715921501.pdf,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,All India (rural),ur_cws_15plus,2026Q2(Apr-Jun),4.8,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2297093&reg=3&lang=1,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,All India,ur_cws_15_29,2026Q2(Apr-Jun),15.9,https://www.policyedge.in/p/q1-2026-plfs-shows-youth-unemployment-rising-as-labour-participation-softens,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,All India,ur_us_15_29,2025,9.9,https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,All India,neet_share_15_29,2025,25.0,https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,All India,internet_penetration_per_100,2026-03,76.59,https://www.civilsdaily.com/news/indian-telecom-services-performance-indicator-report-jan-mar-2026/,value not found next to the name in snapshot
+indicators_2025_2026_long.csv,Uttar Pradesh,domestic_tourist_visits,2024,646.81,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,no raw snapshot
+indicators_2025_2026_long.csv,Tamil Nadu,domestic_tourist_visits,2024,306.84,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,no raw snapshot
+indicators_2025_2026_long.csv,Karnataka,domestic_tourist_visits,2024,304.56,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,no raw snapshot
+indicators_2025_2026_long.csv,Rajasthan,domestic_tourist_visits,2024,230.08,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,no raw snapshot
+indicators_2025_2026_long.csv,Uttar Pradesh,domestic_tourist_visits,2025,1557.4,https://www.policyedge.in/p/domestic-tourism-surges-in-2025-but-foreign-arrivals-and-earnings-fall,value not found next to the name in snapshot
+wages_and_salaries_2026.csv,Ahmedabad,market_salary 0-2 yrs,2025,27300.0,https://www.peoplematters.in/news/employment-landscape/not-delhi-or-mumbai-these-cities-are-driving-indias-fastest-salary-growth-46215,value not found next to the name in snapshot
+wages_and_salaries_2026.csv,Bengaluru,market_salary 0-2 yrs,2025,28400.0,https://www.peoplematters.in/news/employment-landscape/not-delhi-or-mumbai-these-cities-are-driving-indias-fastest-salary-growth-46215,value not found next to the name in snapshot
+wages_and_salaries_2026.csv,Hyderabad,market_salary 0-2 yrs,2025,28500.0,https://www.peoplematters.in/news/employment-landscape/not-delhi-or-mumbai-these-cities-are-driving-indias-fastest-salary-growth-46215,value not found next to the name in snapshot
+wages_and_salaries_2026.csv,Mumbai,market_salary 0-2 yrs,2025,28500.0,https://www.peoplematters.in/news/employment-landscape/not-delhi-or-mumbai-these-cities-are-driving-indias-fastest-salary-growth-46215,value not found next to the name in snapshot
+wages_and_salaries_2026.csv,Pune,market_salary 0-2 yrs,2025,27200.0,https://www.peoplematters.in/news/employment-landscape/not-delhi-or-mumbai-these-cities-are-driving-indias-fastest-salary-growth-46215,value not found next to the name in snapshot
+wages_and_salaries_2026.csv,Tier-2 cities (avg),market_ctc senior,2025-26,2838000.0,https://www.storyboard18.com/how-it-works/tier-2-cities-senior-salaries-climb-to-%e2%82%b928-38-lakh-narrowing-gap-with-metros-report-88296.htm,not a pilot-state city
+plfs_youth_ur_usual_status_by_state.csv,Andhra Pradesh,ur_15_29_2022_23,2022-23,15.7,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Andhra Pradesh,ur_15_29_2023_24,2023-24,17.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Arunachal Pradesh,ur_15_29_2022_23,2022-23,17.6,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Arunachal Pradesh,ur_15_29_2023_24,2023-24,20.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Assam,ur_15_29_2022_23,2022-23,4.3,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Assam,ur_15_29_2023_24,2023-24,14.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Bihar,ur_15_29_2022_23,2022-23,13.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Bihar,ur_15_29_2023_24,2023-24,9.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Chhattisgarh,ur_15_29_2022_23,2022-23,7.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Chhattisgarh,ur_15_29_2023_24,2023-24,6.3,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Delhi,ur_15_29_2022_23,2022-23,6.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Delhi,ur_15_29_2023_24,2023-24,4.6,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Goa,ur_15_29_2022_23,2022-23,27.4,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Goa,ur_15_29_2023_24,2023-24,19.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Gujarat,ur_15_29_2022_23,2022-23,5.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Gujarat,ur_15_29_2023_24,2023-24,3.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Haryana,ur_15_29_2022_23,2022-23,17.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Haryana,ur_15_29_2023_24,2023-24,10.7,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Himachal Pradesh,ur_15_29_2022_23,2022-23,12.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Himachal Pradesh,ur_15_29_2023_24,2023-24,16.3,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Jharkhand,ur_15_29_2022_23,2022-23,4.7,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Jharkhand,ur_15_29_2023_24,2023-24,3.6,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Karnataka,ur_15_29_2022_23,2022-23,8.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Karnataka,ur_15_29_2023_24,2023-24,10.2,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Kerala,ur_15_29_2022_23,2022-23,28.7,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Kerala,ur_15_29_2023_24,2023-24,29.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Madhya Pradesh,ur_15_29_2022_23,2022-23,4.4,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Madhya Pradesh,ur_15_29_2023_24,2023-24,2.6,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Maharashtra,ur_15_29_2022_23,2022-23,10.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Maharashtra,ur_15_29_2023_24,2023-24,10.8,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Manipur,ur_15_29_2022_23,2022-23,19.7,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Manipur,ur_15_29_2023_24,2023-24,22.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Meghalaya,ur_15_29_2022_23,2022-23,18.0,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Meghalaya,ur_15_29_2023_24,2023-24,14.0,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Mizoram,ur_15_29_2022_23,2022-23,11.9,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Mizoram,ur_15_29_2023_24,2023-24,13.3,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Nagaland,ur_15_29_2022_23,2022-23,18.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Nagaland,ur_15_29_2023_24,2023-24,27.4,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Odisha,ur_15_29_2022_23,2022-23,13.8,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Odisha,ur_15_29_2023_24,2023-24,11.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Punjab,ur_15_29_2022_23,2022-23,17.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Punjab,ur_15_29_2023_24,2023-24,18.8,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Rajasthan,ur_15_29_2022_23,2022-23,12.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Rajasthan,ur_15_29_2023_24,2023-24,12.4,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Sikkim,ur_15_29_2022_23,2022-23,10.2,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Sikkim,ur_15_29_2023_24,2023-24,7.7,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Tamil Nadu,ur_15_29_2022_23,2022-23,17.5,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Tamil Nadu,ur_15_29_2023_24,2023-24,15.3,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Telangana,ur_15_29_2022_23,2022-23,15.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Telangana,ur_15_29_2023_24,2023-24,16.6,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Tripura,ur_15_29_2022_23,2022-23,6.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Tripura,ur_15_29_2023_24,2023-24,6.8,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Uttarakhand,ur_15_29_2022_23,2022-23,14.2,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Uttarakhand,ur_15_29_2023_24,2023-24,9.8,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Uttar Pradesh,ur_15_29_2022_23,2022-23,7.0,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,Uttar Pradesh,ur_15_29_2023_24,2023-24,9.1,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,West Bengal,ur_15_29_2022_23,2022-23,,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,West Bengal,ur_15_29_2023_24,2023-24,9.0,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,All India,ur_15_29_2022_23,2022-23,10.0,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed
+plfs_youth_ur_usual_status_by_state.csv,All India,ur_15_29_2023_24,2023-24,10.2,dge.gov.in 3232_e.pdf / eparlib AU430.pdf,source PDF not downloadable (404 / DNS) - manual download needed

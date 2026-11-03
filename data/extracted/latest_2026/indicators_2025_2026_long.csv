@@ -1,0 +1,34 @@
+geo,geo_level,indicator,period,value,unit,source_type,source_name,source_url,notes
+All India,country,ur_cws_15plus,2026-07,5.1,%,official,PLFS Monthly Bulletin Jul 2026,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2300447&reg=48&lang=1,CWS
+All India,country,lfpr_cws_15plus,2026-07,55.4,%,official,PLFS Monthly Bulletin Jul 2026,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2300447&reg=48&lang=1,CWS
+All India,country,ur_cws_15plus,2026-06,5.5,%,official,PLFS Monthly Bulletin Jun 2026,https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jul/doc2026715921501.pdf,CWS
+All India,country,lfpr_cws_15plus,2026Q2(Apr-Jun),54.6,%,official,PLFS Quarterly Bulletin Apr-Jun 2026,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2297093&reg=3&lang=1,CWS
+All India (urban),country,ur_cws_15plus,2026Q2(Apr-Jun),6.7,%,official,PLFS Quarterly Bulletin Apr-Jun 2026,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2297093&reg=3&lang=1,CWS
+All India (rural),country,ur_cws_15plus,2026Q2(Apr-Jun),4.8,%,official,PLFS Quarterly Bulletin Apr-Jun 2026,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2297093&reg=3&lang=1,CWS
+All India,country,ur_cws_15_29,2026Q2(Apr-Jun),15.9,%,secondary(press report of official bulletin),The Policy Edge on PLFS QB Apr-Jun 2026,https://www.policyedge.in/p/q1-2026-plfs-shows-youth-unemployment-rising-as-labour-participation-softens,verify in bulletin; Jan-Mar 2026 = 15.0
+All India,country,ur_us_15_29,2025,9.9,%,official,PLFS Annual Report 2025,https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf,usual status; rural 8.3 urban 13.6
+All India,country,neet_share_15_29,2025,25.0,%,official,PLFS Annual Report 2025,https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf,not in employment education or training
+All India,country,avg_monthly_earnings_regular_salaried_male,2025,24217,INR/month,official,PLFS Annual Report 2025,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2246009&lang=1&reg=3,
+All India,country,avg_monthly_earnings_regular_salaried_female,2025,18353,INR/month,official,PLFS Annual Report 2025,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2246009&lang=1&reg=3,
+All India,country,avg_daily_wage_casual_male,2025,455,INR/day,official,PLFS Annual Report 2025,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2246009&lang=1&reg=3,other than public works
+All India,country,avg_daily_wage_casual_female,2025,315,INR/day,official,PLFS Annual Report 2025,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2246009&lang=1&reg=3,other than public works
+All India,country,internet_subscribers,2026-06,1114.17,million,official,TRAI PIR Apr-Jun 2026,https://www.trai.gov.in/sites/default/files/2026-10/QPIR_12102026.pdf,state/LSA split in annexures
+All India,country,internet_subscribers,2026-03,1092.79,million,official,TRAI PIR Jan-Mar 2026,https://trai.gov.in/sites/default/files/2026-06/QPIR_22062026.pdf,
+All India,country,internet_penetration_per_100,2026-03,76.59,per 100 pop,secondary(report of TRAI PIR),Civilsdaily summary of TRAI PIR Jan-Mar 2026,https://www.civilsdaily.com/news/indian-telecom-services-performance-indicator-report-jan-mar-2026/,verify in PIR
+Maharashtra,state,gst_collection,FY2025-26,361777.65,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/indias-top-10-states-by-gst-collections-in-fy26-and-who-lagged-behind/,replace with GSTN official state-wise file
+Karnataka,state,gst_collection,FY2025-26,158217.30,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/indias-top-10-states-by-gst-collections-in-fy26-and-who-lagged-behind/,replace with GSTN official file
+Gujarat,state,gst_collection,FY2025-26,135415.19,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/indias-top-10-states-by-gst-collections-in-fy26-and-who-lagged-behind/,replace with GSTN official file
+Tamil Nadu,state,gst_collection,FY2025-26,130248.08,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/indias-top-10-states-by-gst-collections-in-fy26-and-who-lagged-behind/,replace with GSTN official file
+Uttar Pradesh,state,gst_collection,FY2025-26,99916.69,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/?p=34208,replace with GSTN official file
+Telangana,state,gst_collection,FY2025-26,60839.67,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/?p=34208,replace with GSTN official file
+Rajasthan,state,gst_collection,FY2025-26,53880.56,INR crore,secondary(GST Council data compiled),a2ztaxcorp,https://a2ztaxcorp.net/?p=34208,replace with GSTN official file
+Maharashtra,state,domestic_gst_growth_yoy,2026-09,15,%,secondary(press),DeshGujarat,https://deshgujarat.com/2026/10/01/gujarat-gst-revenue-grows-17-year-on-year-in-september-2026/,
+Karnataka,state,domestic_gst_growth_yoy,2026-09,16,%,secondary(press),DeshGujarat,https://deshgujarat.com/2026/10/01/gujarat-gst-revenue-grows-17-year-on-year-in-september-2026/,
+Gujarat,state,domestic_gst_growth_yoy,2026-09,17,%,secondary(press),DeshGujarat,https://deshgujarat.com/2026/10/01/gujarat-gst-revenue-grows-17-year-on-year-in-september-2026/,
+Uttar Pradesh,state,domestic_gst_growth_yoy,2026-09,18,%,secondary(press),DeshGujarat,https://deshgujarat.com/2026/10/01/gujarat-gst-revenue-grows-17-year-on-year-in-september-2026/,
+Telangana,state,domestic_gst_growth_yoy,2026-09,18,%,secondary(press),DeshGujarat,https://deshgujarat.com/2026/10/01/gujarat-gst-revenue-grows-17-year-on-year-in-september-2026/,
+Uttar Pradesh,state,domestic_tourist_visits,2024,646.81,million,official(compendium),India Tourism Data Compendium 2025,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,via vikaspedia summary
+Tamil Nadu,state,domestic_tourist_visits,2024,306.84,million,official(compendium),India Tourism Data Compendium 2025,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,
+Karnataka,state,domestic_tourist_visits,2024,304.56,million,official(compendium),India Tourism Data Compendium 2025,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,
+Rajasthan,state,domestic_tourist_visits,2024,230.08,million,official(compendium),India Tourism Data Compendium 2025,https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf,
+Uttar Pradesh,state,domestic_tourist_visits,2025,1557.4,million,secondary(report of compendium 2026),The Policy Edge,https://www.policyedge.in/p/domestic-tourism-surges-in-2025-but-foreign-arrivals-and-earnings-fall,155.74 crore; Kumbh Mela one-off

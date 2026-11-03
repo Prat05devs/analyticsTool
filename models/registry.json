@@ -1,0 +1,49 @@
+{
+  "manufacturing": {
+    "status": "validated",
+    "target": "real manufacturing GSVA growth, % (RBI HSIS T34, 2011-12 prices)",
+    "selected_spec": "ridge(a=100)|macro",
+    "best_baseline": "mean3",
+    "validation_mae": {
+      "model": 9.558581201039294,
+      "persistence": 13.369601400663516,
+      "mean3": 10.871869476984358
+    },
+    "holdout_mae": {
+      "model": 3.3128046288732764,
+      "persistence": 3.8826292625479355,
+      "mean3": 4.536367233083426
+    },
+    "improvement_vs_best_baseline": 0.12079691342186205,
+    "share_of_years_won": 0.8,
+    "acceptance_rule": {
+      "mae_improvement_vs_best_baseline": 0.05,
+      "min_share_of_years_won": 0.6,
+      "holdout_not_worse": true
+    },
+    "latest_feature_fy": "2024-25",
+    "forecast_fy": "2025-26",
+    "trained_on": "2012-13..2023-24 origins, 30 states",
+    "reason": "passed the pre-specified acceptance rule"
+  },
+  "retail": {
+    "status": "ranking_only",
+    "reason": "Trade & repair GSVA by state is not in the RBI handbook; MoSPI/DES state-wise detailed-activity statements were not obtainable as a consistent panel. Ranking only."
+  },
+  "it_services": {
+    "status": "ranking_only",
+    "reason": "Real estate & professional services GSVA by state not available as a consistent panel; would mix real estate with IT anyway. Ranking only."
+  },
+  "logistics": {
+    "status": "ranking_only",
+    "reason": "Transport & storage GSVA by state not available as a consistent panel. Ranking only."
+  },
+  "healthcare": {
+    "status": "ranking_only",
+    "reason": "Health GVA not separable by state. Ranking only."
+  },
+  "hospitality": {
+    "status": "ranking_only",
+    "reason": "Hotels & restaurants GVA bundled with trade and not available by state. Ranking only."
+  }
+}

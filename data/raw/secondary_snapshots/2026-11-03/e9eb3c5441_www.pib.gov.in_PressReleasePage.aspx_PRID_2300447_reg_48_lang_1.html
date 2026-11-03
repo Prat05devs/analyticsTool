@@ -1,0 +1,1558 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css?v=1" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css?v=1" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css?v=1" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" /><link id="pibA11yCss" rel="stylesheet" href="/css/accessibility.css?v=7" type="text/css" />
+    <script type="text/javascript">
+        (function (d) {
+            var t = "";
+            try {
+                t = window.localStorage.getItem("pibStyle") || "";
+            } catch (e) {
+                t = "";
+            }
+            if (t === "orange") {
+                t = "yellow";
+            }
+            var c = t === "change" ? " pib-hc"
+                : t === "green" ? " pib-theme-green"
+                : t === "yellow" ? " pib-theme-yellow" : "";
+            d.documentElement.className += c + " pib-a11y-content";
+        }(document));
+    </script>
+
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/accessibility.js?v=7"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+            });
+    </script>
+    <style type="text/css">
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+        }
+
+        full-width {
+            width: 100%;
+        }
+
+        .logo-left, .logo-center, .countdown {
+            display: flex;
+            align-items: center;
+        }
+
+            .logo-left img, .logo-center img {
+                height: 70px;
+            }
+
+        .countdown {
+            text-align: center;
+            background-color: var(--dbim-text, #150202);
+            border-radius: 10px;
+            padding: 10px;
+            border: 2px solid grey;
+        }
+
+        .firstnumber {
+            color: #000000;
+            position: absolute;
+            top: 50px;
+            right: 90px;
+            font-size: 30px;
+        }
+
+        .secondnumber {
+            position: absolute;
+            color: #000000;
+            right: 45px;
+            top: 50px;
+            font-size: 30px;
+        }
+
+        .countdown .days {
+            font-size: 35px;
+            color: gold;
+        }
+
+        .countdown p {
+            margin: 0;
+        }
+
+        .countdown .text {
+            font-size: 16px;
+        }
+
+        a {
+            word-break: break-all;
+        }
+
+        iframe, img {
+            max-width: 100%;
+        }
+
+        /* === DBIM 3.0 Option 4 Separator Line & Reading Meta Styling === */
+        .pr-share--footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-top: 1px solid var(--dbim-border, #d1d5db);
+            padding-top: 16px;
+            margin-top: 24px;
+        }
+
+        .pr-share__left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pr-reading-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--dbim-text-secondary, #475569);
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
+        .pr-reading-meta__item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pr-reading-meta__divider {
+            color: var(--dbim-border, #cbd5e1);
+            font-weight: 300;
+        }
+
+        .pib-hc .pr-reading-meta,
+        .pib-hc .pr-reading-meta svg {
+            color: currentColor !important;
+        }
+
+        @media (max-width: 680px) {
+            .pr-share--footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .pr-reading-meta {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media(max-width:1199px) {
+            .firstnumber {
+                top: 40px;
+                right: 72px;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 35px;
+                top: 40px;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:990px) {
+            .firstnumber {
+                top: 25px;
+                right: 54px;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 25px;
+                top: 25px;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:768px) {
+            .countdown, .days {
+                font-size: 12px !important;
+            }
+
+            .firstnumber {
+                top: 25%;
+                right: 8%;
+                font-size: 30px;
+            }
+
+            .secondnumber {
+                right: 4.5%;
+                top: 25%;
+                font-size: 30px;
+            }
+        }
+
+        @media(max-width:475px) {
+            .countdown, .days {
+                font-size: 10px !important;
+                top: 20%;
+            }
+
+            .bannerimgdiv {
+                padding: 0 !important;
+            }
+
+            .bannerimg {
+                width: 108% !important;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+    </script>
+
+    <link id="pibConsentCss" href="/css/consent.css?v=8" rel="stylesheet" type="text/css" /><link id="pibFontsCss" href="/css/fonts-noto.css?v=6" rel="stylesheet" type="text/css" /><link id="pibDbimCss" href="/css/dbim.css?v=1120" rel="stylesheet" type="text/css" /><meta property="og:title" content="PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2300447" /><meta property="og:description" content="
+
+	
+		
+			
+			Snapshot:
+
+			
+				Overall LFPR (15 years and above) increased to 55.4% in Jul" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="eqausaa4l3rnojqacqhs4aaaabvotsm4-f-ca927bfe0-clienttons-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":30,"ak.ipv":6,"ak.proto":"http/1.1","ak.rid":"5de1cd5b","ak.r":53516,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":53547,"ak.gh":"23.1.241.142","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1793706396","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==QUueQhiEAK+JkSfytiTZeweCBpGmn4P/HUAKQUzacv7PiU0nakTOvnx5aaCEXA8XBz6EgMVusvHtv1Rfn2wWxt2I4k04q2rhjmZgiX1onuzfEyXmNqqjtRrySmJtJQPNXUTBXa0v2LfBjGJVHUOQjuCTm6EmQFkeXJHQ63YauY5wrwjH5GIR9pqPdmcWZr3zeccwJXFcC3Cj1ZHvXLtuAwj1hW8EMKG7N2pTKBaerh9I7mahWIrXrJ5syTIbllouursQoBcFJieMiaxmbYbySsHTep6DwjA5DHd2u2bCD0K3Q4y8k02JSEzzbKkhEvjt2tpgKqSCsoRq2bPqsTDB7VjAviGRRyINPn2Gi0ywwEdsu52YYLfgulDfcnOnQWqabZtik9k2+MqWN/su0suTQjq8WTAZfGFDzkpkj97U8q4=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden" id="dbim-icon-sprite">
+    <defs>
+        <symbol id="icon-angle-double-left" viewBox="0 0 24 24"><path d="M11.6 4.6 4.2 12l7.4 7.4 2.2-2.2L8.6 12l5.2-5.2z"/><path d="M19 4.6 11.6 12 19 19.4l2.2-2.2L16 12l5.2-5.2z"/></symbol>
+        <symbol id="icon-angle-double-right" viewBox="0 0 24 24"><path d="M12.4 4.6 10.2 6.8 15.4 12l-5.2 5.2 2.2 2.2L19.8 12z"/><path d="M5 4.6 2.8 6.8 8 12l-5.2 5.2L5 19.4 12.4 12z"/></symbol>
+        <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M20.8 10.6H9.6v2.8h11.2z"/><path d="M10.8 5.6 3.2 12l7.6 6.4z"/></symbol>
+        <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M3.2 10.6h11.2v2.8H3.2z"/><path d="M13.2 5.6 20.8 12l-7.6 6.4z"/></symbol>
+        <symbol id="icon-blogger" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6.4 2.4h11.2a4 4 0 0 1 4 4v11.2a4 4 0 0 1-4 4H6.4a4 4 0 0 1-4-4V6.4a4 4 0 0 1 4-4zm2.8 5.2a2 2 0 0 0 0 4h2.4a2 2 0 0 0 0-4zm0 5.6a2 2 0 0 0 0 4h5.6a2 2 0 0 0 0-4z"/></symbol>
+        <symbol id="icon-calendar" viewBox="0 0 24 24"><path d="M7.6 2.4H10v2.4H7.6z"/><path d="M14 2.4h2.4v2.4H14z"/><path fill-rule="evenodd" d="M4 4.8h16a1.6 1.6 0 0 1 1.6 1.6v13.2a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6V6.4A1.6 1.6 0 0 1 4 4.8zm.4 5.6v8.4h15.2v-8.4z"/><path d="M6.4 12.4h3.2v3.2H6.4z"/></symbol>
+        <symbol id="icon-chevron-left" viewBox="0 0 24 24"><path d="M15.4 4.6 8 12l7.4 7.4 2.2-2.2L12.4 12l5.2-5.2z"/></symbol>
+        <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="M8.6 4.6 6.4 6.8 11.6 12l-5.2 5.2 2.2 2.2L16 12z"/></symbol>
+        <symbol id="icon-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24"><path d="M10.8 3h2.4v7.6h3.4L12 16.6l-4.6-6h3.4z"/><path d="M4 17.2h2.4v2.4h11.2v-2.4H20v3.2a1.4 1.4 0 0 1-1.4 1.4H5.4A1.4 1.4 0 0 1 4 20.4z"/></symbol>
+        <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M13.6 21.6v-8.4h2.8l.42-3.3h-3.22V7.8c0-.95.27-1.6 1.64-1.6h1.74V3.26a23 23 0 0 0-2.54-.13c-2.5 0-4.22 1.53-4.22 4.34v2.43H7.4v3.3h2.82v8.4z"/></symbol>
+        <symbol id="icon-fact-check" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4 3.6 5.6v6.2c0 4.6 3.4 8.6 8.4 9.8 5-1.2 8.4-5.2 8.4-9.8V5.6zm-1 13.2-3.6-3.6 1.7-1.7 1.9 1.9 4.5-4.5 1.7 1.7z"/></symbol>
+        <symbol id="icon-hashtag" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.8 3h2.4l-1 6h3.2l1-6h2.4l-1 6h3.4v2.4h-3.8l-.6 3.2h3.6V17h-4l-1 5h-2.4l1-5h-3.2l-1 5H5.4l1-5H3V14.6h3.8l.6-3.2H3.8V9h4zm.6 8.4-.6 3.2h3.2l.6-3.2z"/></symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24"><path d="M12 3.4 2.8 11.6h2.4v8.4a1 1 0 0 0 1 1h3.3v-5.4h5v5.4h3.3a1 1 0 0 0 1-1v-8.4h2.4z"/></symbol>
+        <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.6 2.4h8.8a5.2 5.2 0 0 1 5.2 5.2v8.8a5.2 5.2 0 0 1-5.2 5.2H7.6a5.2 5.2 0 0 1-5.2-5.2V7.6a5.2 5.2 0 0 1 5.2-5.2zm0 2.4a2.8 2.8 0 0 0-2.8 2.8v8.8a2.8 2.8 0 0 0 2.8 2.8h8.8a2.8 2.8 0 0 0 2.8-2.8V7.6a2.8 2.8 0 0 0-2.8-2.8z"/><path fill-rule="evenodd" d="M12 6.8a5.2 5.2 0 1 0 0 10.4 5.2 5.2 0 0 0 0-10.4zm0 2.4a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6z"/><circle cx="17.3" cy="6.7" r="1.3"/></symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 24 24"><path d="M4.8 8.8h3.6v12H4.8z"/><circle cx="6.6" cy="5.4" r="2.1"/><path d="M10.8 8.8h3.45v1.65h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.35 4.3 5.4v6.6h-3.6v-5.85c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1v5.95h-3.6z"/></symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24"><path d="M2.4 7.6v9.2a1.6 1.6 0 0 0 1.6 1.6h16a1.6 1.6 0 0 0 1.6-1.6V7.6L12 14z"/><path d="M21.2 5.4H2.8L12 11.8z"/></symbol>
+        <symbol id="icon-mail-open" viewBox="0 0 24 24"><path d="M2.4 9.8h19.2v9.6A1.6 1.6 0 0 1 20 21H4a1.6 1.6 0 0 1-1.6-1.6z"/><path d="M12 2.6 21.6 9.2h-3.8L12 5.3 6.2 9.2H2.4z"/><path d="m3.9 11.2 8.1 5.4 8.1-5.4 1.5 1.3-9.6 6.4-9.6-6.4z"/></symbol>
+        <symbol id="icon-map-marker" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4a7 7 0 0 0-7 7c0 5.2 7 12.2 7 12.2s7-7 7-12.2a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></symbol>
+        <symbol id="icon-newspaper" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2.8 4.4h14.8v15.2H2.8zm2 2v11.2h10.8V6.4z"/><path d="M6 7.6h8.4v1.6H6z"/><path d="M6 10.8h8.4v1.6H6z"/><path d="M6 14h5.2v1.6H6z"/><path d="M18.4 8.4h2.8v9.6a1.4 1.4 0 0 1-2.8 0z"/></symbol>
+        <symbol id="icon-pause" viewBox="0 0 24 24"><rect x="7.4" y="4" width="3.6" height="16" rx="0.9"/><rect x="13" y="4" width="3.6" height="16" rx="0.9"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8 4.5v15l12-7.5z"/></symbol>
+        <symbol id="icon-picture" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2.4 5.2h19.2v13.6H2.4zm2 2v9.6h15.2V7.2z"/><path d="M5.6 16.4 10 11l2.6 3 2-2.2 4 4.6z"/><circle cx="8" cy="10.4" r="1.5"/></symbol>
+        <symbol id="icon-press-conference" viewBox="0 0 24 24"><circle cx="12" cy="5.2" r="2.6"/><path d="M7.6 12.2a4.4 4.4 0 0 1 8.8 0z"/><circle cx="4.9" cy="9.6" r="2.2"/><path d="M1.8 15.2a3.1 3.1 0 0 1 6.2 0z"/><circle cx="19.1" cy="9.6" r="2.2"/><path d="M16 15.2a3.1 3.1 0 0 1 6.2 0z"/><path d="M6.6 13.6h10.8l2.2 7.8H4.4z"/></symbol>
+        <symbol id="icon-print" viewBox="0 0 24 24"><path d="M6.4 2.8h11.2v4.4H6.4z"/><path d="M4 8.4h16a1.6 1.6 0 0 1 1.6 1.6v5.6a1.6 1.6 0 0 1-1.6 1.6h-1.6v-2.8H6v2.8H4a1.6 1.6 0 0 1-1.6-1.6V10A1.6 1.6 0 0 1 4 8.4z"/><path d="M7.2 15.6h9.6v5.6H7.2z"/></symbol>
+        <symbol id="icon-rss" viewBox="0 0 24 24"><circle cx="4.8" cy="19.2" r="2.4"/><path d="M2.4 11.2v3.2a6.4 6.4 0 0 1 6.4 6.4H12A9.6 9.6 0 0 0 2.4 11.2z"/><path d="M2.4 4.8V8A13.6 13.6 0 0 1 16 21.6h3.2A16.8 16.8 0 0 0 2.4 4.8z"/></symbol>
+        <symbol id="icon-search-plus" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10 2.8a7.2 7.2 0 1 0 0 14.4 7.2 7.2 0 0 0 0-14.4zm0 2.4a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6z"/><path d="M15.3 14.6 21.2 20.5l-1.5 1.5-5.9-5.9z"/><path d="M9.2 6.8h1.6v2.4h2.4v1.6h-2.4v2.4H9.2v-2.4H6.8V9.2h2.4z"/></symbol>
+        <symbol id="icon-share" viewBox="0 0 24 24"><circle cx="18" cy="5.6" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="18.4" r="3"/><path d="M8.3 10.9 15.7 7.2l.9 1.8-7.4 3.7z"/><path d="M9.2 13.1 16.6 16.8l-.9 1.8-7.4-3.7z"/></symbol>
+        <symbol id="icon-twitter" viewBox="0 0 24 24"><path d="M4.2 3h4.3l11.3 18h-4.3z"/><path d="M19.3 3h-2.6L4.2 21h2.6z"/></symbol>
+        <symbol id="icon-university" viewBox="0 0 24 24"><path d="M12 2.4 21.6 7.2v1.6H2.4V7.2z"/><path d="M4.8 10.4h2.4v8H4.8z"/><path d="M9.2 10.4h2.4v8H9.2z"/><path d="M13.4 10.4h2.4v8h-2.4z"/><path d="M17.6 10.4H20v8h-2.4z"/><path d="M3.2 19.8h17.6v1.8H3.2z"/></symbol>
+        <symbol id="icon-volume-up" viewBox="0 0 24 24"><path d="M3.2 9.2h3.3l5-4.2v14l-5-4.2H3.2z"/><path d="M14.6 8.4a5 5 0 0 1 0 7.2l1.6 1.6a7.2 7.2 0 0 0 0-10.4z"/><path d="M17.4 5.6a8.8 8.8 0 0 1 0 12.8l1.5 1.5a10.9 10.9 0 0 0 0-15.8z"/></symbol>
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.4a9.5 9.5 0 0 0-8.1 14.5L2.4 21.6l4.8-1.4A9.5 9.5 0 1 0 12 2.4zm0 2.2a7.3 7.3 0 1 1-3.8 13.5l-.4-.2-2.6.7.7-2.5-.3-.4A7.3 7.3 0 0 1 12 4.6z"/><path d="M9.4 7.8c-.2-.5-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.6.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3-1.6-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6 6 0 0 1-1.8-1.1 6.6 6.6 0 0 1-1.2-1.6c-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.5z"/></symbol>
+        <symbol id="icon-youtube" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8zM10.2 15.1V8.9l5.1 3.1z"/></symbol>
+    </defs>
+</svg>
+
+    <form method="post" action="./PressReleasePage.aspx?PRID=2300447&amp;reg=48&amp;lang=1" id="form1">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+
+<script src="/ScriptResource.axd?d=x6wALODbMJK5e0eRC_p1LdIxBJXt0U_WW5GWfJqHAqo6frgCmGRfEywglicTersO2OKrFhK1gAIp0Wk2al2YrpdR3uWqH6f4nfjBsCyRUfTUUVmb0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a8613aea7%3af9cec9bc%3a3202a5a2%3aab09e3fe%3a87104b7c%3a720a52bf%3a589eaa30%3aa67c2700%3abe6fb298" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="IAfeRuBYYA0lQlBphCgX1KWxhuZ9VRPYavWkVUVOriuTotkEnGswnVTWh1/F7O9SgbHO4baFeMdgVybSba4Tfyp3vfQ9eG8y27Robn8lh0pHJecPrJIAHNh8imywB+v+nvJ/IykHKrtPeS/zeuJk6ciG5QrTiudwkNXB7sZtMabHfc8nqTnwS0F9FpGoyWpSn9TenlCFm29+KugxIPwrr8JmufirP70z9fWNfSKlDQyEPGDaSo4lFq3Hb3MFo4di1bVK6flPL1m/cR+8cLTwSKW0t18=" />
+        
+        <div id="templateCss"></div>
+        
+        <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+        <div class="container" style='margin-bottom: 50px;'>
+            <div id="accessories">
+                
+                <div class="pull-right" style="display: flex">
+                    <div id="voll"></div>
+                    <div id="vollDT"></div>
+                    
+
+<span class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</span>
+                </div>
+            </div>
+            <input type="hidden" name="hydpermid" id="hydpermid" value="2300447" />
+            
+
+            <div class="innner-page-main-about-us-content-right-part">
+                <div id="MinistryName" class="MinistryNameSubhead text-center">
+                    Ministry of Statistics & Programme Implementation
+                </div>
+                <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2026/sep/ph_9768_20260902_10000501.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+                <div class="text-center event-heading-background">
+                    
+                    <h1 id="Titleh2">
+                        PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026
+                    </h1>
+                    <h3 id="Subtitleh3">
+                        <span id="ltrSubtitle"><br/>LFPR improved in both rural and urban areas<br/><br/>WPR strengthened in both rural and urban areas<br/><br/>UR declined</span>
+                    </h3>
+                </div>
+
+                <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                    Posted On:
+                              17 AUG 2026 4:00PM by PIB Delhi
+                </div>
+                
+                <div class='pt20'>
+                </div>
+                <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                
+
+                <!-- Release content wrapper for client-side zero-reflow word count -->
+                <div id="pibReleaseBody">
+                    <div style="float:center">
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:464.3pt">
+			<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Snapshot:</span></strong></span></span></p>
+
+			<ul>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Overall LFPR (15 years and above) increased to 55.4% in July 2026, from 54.4% in June 2026.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Rural LFPR (15 years and above) increased by 1.4 percentage points over the previous month, reaching 58.0% in July 2026.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Female LFPR (15 years and above) rose to 34.4% in July 2026, registering an increase of 1.7 percentage points over the previous month.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Overall WPR (15 years and above) increased to 52.5% in July 2026, marking the first increase since February 2026.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Rural WPR (15 years and above) stood at 55.4% in July 2026, registering an increase of 1.6 percentage points over June 2026 and 1.0 percentage point over July 2025.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Overall UR (15 years and above) declined to 5.1% in July 2026, lower than both the previous month and the corresponding month of the previous year.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Both male and female UR (15 years and above) declined in July 2026 compared with the previous month, indicating an improvement in employment conditions across both genders.</span></strong></span></span></li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<h1><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>A.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong></span></span></h1>
+
+<p style="margin-left:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Periodic Labour Force Survey (PLFS) conducted by NSO, MoSPI, is the primary source of data on activity participation and employment and unemployment conditions of the population. The PLFS survey methodology has been modified from January, 2025 to provide monthly and quarterly estimates of labour force indicators for the country. </span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Monthly results of PLFS are released in the form of Monthly Bulletins. It presents estimates of key labour market indicators <em>viz.</em> Labour Force Participation Rate (LFPR), Worker Population Ratio (WPR) and Unemployment Rate (UR) at the all-India level following the Current Weekly Status&nbsp;(CWS) approach.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Monthly Bulletins for April, 2025 to June, 2026 have already been released. The present Monthly Bulletin for July, 2026 is the sixteenth in the series.</span></span></p>
+
+<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Key findings for persons of age 15 years and above following CWS:</u></strong></span></span></p>
+
+<ul style="margin-left:40px">
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Labour Force Participation Rate (LFPR) improved: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall Labour Force Participation Rate (LFPR) for persons aged 15 years and above increased to 55.4% in July, 2026, from 54.4% in June, 2026. After declining from March to May, 2026 and remaining unchanged in June, 2026, the overall LFPR increased in July, 2026. The same trend was also observed in rural areas, where the LFPR for persons aged 15 years and above increased to 58.0% in July, 2026, from 56.6% in June, 2026, registering an increase of 1.4 percentage points. In urban areas, LFPR increased marginally, from 50.1% in June, 2026 to 50.4% in July, 2026.</span></span></p>
+
+<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Compared to the same month of the previous year, the overall LFPR increased by 0.5 percentage point, from 54.9% in July, 2025 to 55.4% in July, 2026. During the same period, rural LFPR also increased by 1.1 percentage points, from 56.9% to 58.0%, while urban LFPR experienced a marginal decline by 0.3 percentage point, from 50.7% to 50.4%.&nbsp;&nbsp;&nbsp;</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/011184.jpg" /></span></span></p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Rise in female labour force participation:</em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall female LFPR experienced a noticeable increase from 32.7% in June, 2026 to 34.4% in July, 2026. During the same period, rural female LFPR increased from 36.6% to 38.8% and urban female LFPR increased from 24.8% to 25.3%.</span></span></p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Compared to July, 2025, the overall female LFPR increased by 1.1 percentage points, from 33.3% to 34.4% in July, 2026. In rural areas, female LFPR rose by 1.9 percentage points, from 36.9% to 38.8%, while urban female LFPR declined marginally by 0.5 percentage point, from 25.8% to 25.3%.</span></span></p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/02X30W.jpg" /></span></span></p>
+
+<p style="margin-left:17.85pt; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Workforce strengthens across sectors: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">The Worker Population Ratio (WPR) in the age group 15 years and above showed a broadly improving trend in July, 2026 across sectors. The overall WPR increased to 52.5% in July, 2026 from 51.4% in June, 2026. In rural areas, WPR increased to 55.4% in July, 2026 from 53.8% in June, 2026, indicating an increase of 1.6 percentage points. WPR in urban areas increased marginally to 47.0% from 46.8% during the same period. Notably, rural female WPR increased by 2.5 percentage points from 34.7% in June, 2026 to 37.2% in July, 2026 and urban female WPR increased from 22.7% to 23.1% during the same period. </span></span></span></p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">A year-on-year comparison shows that overall WPR is higher by 0.5 percentage point in July, 2026 (52.5%) against July, 2025 (52.0%). While the urban WPR was recorded at the same level (47.0%) during the period, the rural WPR witnessed an increase of 1.0 percentage point (55.4% vs 54.4%).</span></span></span><br />
+&nbsp;</p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image0055NFP.png" />&nbsp;</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image006QATB.png" />&nbsp;</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image007SGF7.png" />&nbsp;</span></span></p>
+
+<table align="center" border="1" cellspacing="0" class="MsoTableGrid" style="background:#c6d9f1; border-collapse:collapse; border:solid #4f81bd 2.25pt; margin-left:6.75pt; margin-right:6.75pt; width:473.75pt">
+	<tbody>
+		<tr>
+			<td style="background-color:transparent; width:473.75pt">
+			<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Female WPR in rural areas increased sharply to 37.2% in July, 2026 from 34.7% in the previous month</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Overall Unemployment Rate (UR) declined: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Overall UR among persons of <span style="color:black">age 15 years and above dropped to </span>5.1% in July, 2026 from 5.5% in June, 2026. In rural areas, the UR decreased sharply to 4.5% in July, 2026 from 5.0% in the pervious month. During the same period, the urban UR remained almost steady at 6.7% compared to 6.6%.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Compared with July, 2025, the overall UR and rural UR remained broadly stable in July, 2026, whereas the urban UR decreased by 0.5 percentage point from 7.2% in July, 2025 to 6.7% in July, 2026.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image008FOR6.png" /></span></span></p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td>
+			<div>
+			<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall UR decreased to 5.1% in July, 2026 from 5.5% in June, 2026</span></span></p>
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Rural UR across genders and urban male UR declined: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:14.4pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Among male of age 15 years and above, the overall UR declined from 5.3% in June, 2026 to 5.0% in July, 2026. This is also lower by 0.3 percentage point as compared to July, 2025 (5.3%). The rural male UR declined from 4.9% in June, 2026 to 4.6% in July, 2026 and was at the same level observed in July, 2025. While the urban male UR maintained broad stability in comparison with the previous month, it declined by 0.7 percentage point to 5.9% in July, 2026 against 6.6% in July, 2025.</span></span></p>
+
+<p style="margin-left:14.4pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">For female of age 15 years and above, the overall and rural UR in July, 2026 decreased in comparison to June, 2026. However, it remained above the level observed a year ago in July, 2025. The urban female UR increased by 0.4 percentage points to 8.8% in July, 2026 from 8.4% in June, 2026, while it remained broadly stable compared with the July, 2025 level (8.7%).</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image010OZWI.png" /></span></span></p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image011WM0I.png" /></span></span></p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td>
+			<div>
+			<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall male and female UR declined in July, 2026 compared to June, 2026</span></span></p>
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td colspan="2" style="background-color:#c6d9f1; width:100.0%">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">At the all-India level, the monthly estimates are based on information collected from a total number of 3,71,021 persons surveyed.</span></strong></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="background-color:#ffffcc; width:47.98%">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">persons surveyed in rural areas</span></strong></span></span></p>
+
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">2,11,411</span></strong></span></span></p>
+			</td>
+			<td style="background-color:#ffffcc; width:52.02%">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">persons surveyed in urban areas</span></strong></span></span></p>
+
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">1,59,610</span></strong></span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<table align="left" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="background-color:#dbe5f1; width:45.86%">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Monthly Bulletin for July, 2026 is available on the Ministry&#39;s website (<a href="https://www.mospi.gov.in">https://www.mospi.gov.in</a>).</span></span></p>
+			</td>
+			<td style="background-color:#dbe5f1; width:54.14%">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Scan QR code to access MoSPI Publications/ Reports</strong></span></span></p>
+
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image013T17A.png" /></span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:center">&nbsp;</p>
+
+<p><a href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026817960601.pdf" target="_blank"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Click here to see in PDF</span></span></a></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>&nbsp;***</strong></span></span></p>
+
+<p style="text-align:center">&nbsp;</p>
+
+<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Samrat</strong></span></span></p>
+
+                </div>
+
+                <div id="reel_pic">
+                </div>
+
+                <br />
+                <span id="ReleaseId">(Release ID: 2300447)</span>
+                <span id="lblViews">Visitor Counter : 3674</span>
+                <div>
+                    
+                </div>
+                
+
+                <span id="lblRefPhoto"></span>
+
+                <div class="BackgroundRelease">
+                    
+                </div>
+                <div>
+                    
+                </div>
+                <div class="ReleaseLang">Read this release in: 
+                
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2300664' target="_blank">
+                            Tamil </a>
+                    
+                        ,
+                    
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2300768' target="_blank">
+                            Urdu </a>
+                    
+                        ,
+                    
+                        <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2300555' target="_blank">
+                            हिन्दी </a>
+                    
+                </div>
+
+                <div class="RelTag">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="clear">
+                </div>
+
+                <!-- DBIM 3.0 Option 4: Separator Line with Left Share Rail & Right Reading Metrics -->
+                <div class="pr-share pr-share--footer" role="region" aria-label="Share and reading details">
+                    <div class="pr-share__left">
+                        <span class="pr-share__label" aria-hidden="true">Share</span>
+                        <ul class="pr-share__list">
+                            <li><a class="pr-share__btn pr-share__btn--facebook"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2300447"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on Facebook">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-facebook" xlink:href="#icon-facebook"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--twitter"
+                                href="https://twitter.com/intent/tweet?url=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2300447"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on X">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-twitter" xlink:href="#icon-twitter"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--whatsapp"
+                                href="https://api.whatsapp.com/send?text=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2300447"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on WhatsApp">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-whatsapp" xlink:href="#icon-whatsapp"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--linkedin"
+                                href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2300447"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Share on LinkedIn">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-linkedin" xlink:href="#icon-linkedin"></use>
+                                </svg>
+                            </a></li>
+                            <li><a class="pr-share__btn pr-share__btn--mail"
+                                href="mailto:?subject=Press+release+from+PIB&amp;body=https%3a%2f%2fpib.gov.in%2fPressReleasePage.aspx%3fPRID%3d2300447"
+                                aria-label="Share by email">
+                                <svg class="dbim-icon dbim-icon-24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <use href="#icon-mail" xlink:href="#icon-mail"></use>
+                                </svg>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="pr-reading-meta" id="prReadingMeta" aria-label="Reading statistics">
+                        <span class="pr-reading-meta__item">
+                            <!-- Modern Document / Word Count Icon -->
+                            <svg class="pr-reading-meta__icon" width="18" height="18" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                            </svg>
+                            <span id="prWordCount">-- words</span>
+                        </span>
+
+                        <span class="pr-reading-meta__divider" aria-hidden="true">|</span>
+
+                        <span class="pr-reading-meta__item">
+                            <!-- Modern Precision Clock / Read Time Icon -->
+                            <svg class="pr-reading-meta__icon" width="18" height="18" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+                            </svg>
+                            <span id="prReadTime">-- min read</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div id="RelLink" class="RelLink">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <center>
+                    
+                </center>
+            </div>
+
+            <div id="update12">
+	
+                    
+                    <input type="hidden" name="Hidden" id="Hidden" />
+                    <div id="P_CategoryManagement" class="ModalWindow" style="display: none">
+		
+                        <div>
+                            <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                        </div>
+                        <div id="description">
+                        </div>
+                        <div class="text-center">
+                            <h2>
+                                
+                                <br>
+                                
+                            </h2>
+                        </div>
+                        <br />
+                        <div class="clear">
+                        </div>
+                        
+                    
+	</div>
+                
+</div>
+        </div>
+
+        <div id="PdfDiv" style="display: none;">
+            <table width="100%">
+                <tr>
+                    <td style="font-weight: 200; text-align: center">
+                        Ministry of Statistics & Programme Implementation
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                            PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                            <div style='height:30px;width:100%;'></div>LFPR improved in both rural and urban areas<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>WPR strengthened in both rural and urban areas<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>UR declined
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="text-align: center; font-size: 14px;">
+                            Posted On:
+                                          17 AUG 2026 4:00PM by PIB Delhi
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                            <div style="float:center">
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:464.3pt">
+			<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Snapshot:</span></strong></span></span></p>
+
+			<ul>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Overall LFPR (15 years and above) increased to 55.4% in July 2026, from 54.4% in June 2026.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Rural LFPR (15 years and above) increased by 1.4 percentage points over the previous month, reaching 58.0% in July 2026.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Female LFPR (15 years and above) rose to 34.4% in July 2026, registering an increase of 1.7 percentage points over the previous month.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Overall WPR (15 years and above) increased to 52.5% in July 2026, marking the first increase since February 2026.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Rural WPR (15 years and above) stood at 55.4% in July 2026, registering an increase of 1.6 percentage points over June 2026 and 1.0 percentage point over July 2025.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Overall UR (15 years and above) declined to 5.1% in July 2026, lower than both the previous month and the corresponding month of the previous year.</span></strong></span></span></li>
+				<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:black">Both male and female UR (15 years and above) declined in July 2026 compared with the previous month, indicating an improvement in employment conditions across both genders.</span></strong></span></span></li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<h1><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>A.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong></span></span></h1>
+
+<p style="margin-left:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Periodic Labour Force Survey (PLFS) conducted by NSO, MoSPI, is the primary source of data on activity participation and employment and unemployment conditions of the population. The PLFS survey methodology has been modified from January, 2025 to provide monthly and quarterly estimates of labour force indicators for the country. </span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Monthly results of PLFS are released in the form of Monthly Bulletins. It presents estimates of key labour market indicators <em>viz.</em> Labour Force Participation Rate (LFPR), Worker Population Ratio (WPR) and Unemployment Rate (UR) at the all-India level following the Current Weekly Status&nbsp;(CWS) approach.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Monthly Bulletins for April, 2025 to June, 2026 have already been released. The present Monthly Bulletin for July, 2026 is the sixteenth in the series.</span></span></p>
+
+<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Key findings for persons of age 15 years and above following CWS:</u></strong></span></span></p>
+
+<ul style="margin-left:40px">
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Labour Force Participation Rate (LFPR) improved: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall Labour Force Participation Rate (LFPR) for persons aged 15 years and above increased to 55.4% in July, 2026, from 54.4% in June, 2026. After declining from March to May, 2026 and remaining unchanged in June, 2026, the overall LFPR increased in July, 2026. The same trend was also observed in rural areas, where the LFPR for persons aged 15 years and above increased to 58.0% in July, 2026, from 56.6% in June, 2026, registering an increase of 1.4 percentage points. In urban areas, LFPR increased marginally, from 50.1% in June, 2026 to 50.4% in July, 2026.</span></span></p>
+
+<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Compared to the same month of the previous year, the overall LFPR increased by 0.5 percentage point, from 54.9% in July, 2025 to 55.4% in July, 2026. During the same period, rural LFPR also increased by 1.1 percentage points, from 56.9% to 58.0%, while urban LFPR experienced a marginal decline by 0.3 percentage point, from 50.7% to 50.4%.&nbsp;&nbsp;&nbsp;</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/011184.jpg" /></span></span></p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Rise in female labour force participation:</em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:18.0pt; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall female LFPR experienced a noticeable increase from 32.7% in June, 2026 to 34.4% in July, 2026. During the same period, rural female LFPR increased from 36.6% to 38.8% and urban female LFPR increased from 24.8% to 25.3%.</span></span></p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Compared to July, 2025, the overall female LFPR increased by 1.1 percentage points, from 33.3% to 34.4% in July, 2026. In rural areas, female LFPR rose by 1.9 percentage points, from 36.9% to 38.8%, while urban female LFPR declined marginally by 0.5 percentage point, from 25.8% to 25.3%.</span></span></p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/02X30W.jpg" /></span></span></p>
+
+<p style="margin-left:17.85pt; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Workforce strengthens across sectors: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">The Worker Population Ratio (WPR) in the age group 15 years and above showed a broadly improving trend in July, 2026 across sectors. The overall WPR increased to 52.5% in July, 2026 from 51.4% in June, 2026. In rural areas, WPR increased to 55.4% in July, 2026 from 53.8% in June, 2026, indicating an increase of 1.6 percentage points. WPR in urban areas increased marginally to 47.0% from 46.8% during the same period. Notably, rural female WPR increased by 2.5 percentage points from 34.7% in June, 2026 to 37.2% in July, 2026 and urban female WPR increased from 22.7% to 23.1% during the same period. </span></span></span></p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">A year-on-year comparison shows that overall WPR is higher by 0.5 percentage point in July, 2026 (52.5%) against July, 2025 (52.0%). While the urban WPR was recorded at the same level (47.0%) during the period, the rural WPR witnessed an increase of 1.0 percentage point (55.4% vs 54.4%).</span></span></span><br />
+&nbsp;</p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image0055NFP.png" />&nbsp;</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image006QATB.png" />&nbsp;</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image007SGF7.png" />&nbsp;</span></span></p>
+
+<table align="center" border="1" cellspacing="0" class="MsoTableGrid" style="background:#c6d9f1; border-collapse:collapse; border:solid #4f81bd 2.25pt; margin-left:6.75pt; margin-right:6.75pt; width:473.75pt">
+	<tbody>
+		<tr>
+			<td style="background-color:transparent; width:473.75pt">
+			<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Female WPR in rural areas increased sharply to 37.2% in July, 2026 from 34.7% in the previous month</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Overall Unemployment Rate (UR) declined: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Overall UR among persons of <span style="color:black">age 15 years and above dropped to </span>5.1% in July, 2026 from 5.5% in June, 2026. In rural areas, the UR decreased sharply to 4.5% in July, 2026 from 5.0% in the pervious month. During the same period, the urban UR remained almost steady at 6.7% compared to 6.6%.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Compared with July, 2025, the overall UR and rural UR remained broadly stable in July, 2026, whereas the urban UR decreased by 0.5 percentage point from 7.2% in July, 2025 to 6.7% in July, 2026.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image008FOR6.png" /></span></span></p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td>
+			<div>
+			<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall UR decreased to 5.1% in July, 2026 from 5.5% in June, 2026</span></span></p>
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><em>Rural UR across genders and urban male UR declined: </em></strong></span></span></li>
+</ul>
+
+<p style="margin-left:14.4pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Among male of age 15 years and above, the overall UR declined from 5.3% in June, 2026 to 5.0% in July, 2026. This is also lower by 0.3 percentage point as compared to July, 2025 (5.3%). The rural male UR declined from 4.9% in June, 2026 to 4.6% in July, 2026 and was at the same level observed in July, 2025. While the urban male UR maintained broad stability in comparison with the previous month, it declined by 0.7 percentage point to 5.9% in July, 2026 against 6.6% in July, 2025.</span></span></p>
+
+<p style="margin-left:14.4pt; margin-right:0cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">For female of age 15 years and above, the overall and rural UR in July, 2026 decreased in comparison to June, 2026. However, it remained above the level observed a year ago in July, 2025. The urban female UR increased by 0.4 percentage points to 8.8% in July, 2026 from 8.4% in June, 2026, while it remained broadly stable compared with the July, 2025 level (8.7%).</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image010OZWI.png" /></span></span></p>
+
+<p style="margin-left:21.3pt; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image011WM0I.png" /></span></span></p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td>
+			<div>
+			<p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The overall male and female UR declined in July, 2026 compared to June, 2026</span></span></p>
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td colspan="2" style="background-color:#c6d9f1; width:100.0%">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">At the all-India level, the monthly estimates are based on information collected from a total number of 3,71,021 persons surveyed.</span></strong></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="background-color:#ffffcc; width:47.98%">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">persons surveyed in rural areas</span></strong></span></span></p>
+
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">2,11,411</span></strong></span></span></p>
+			</td>
+			<td style="background-color:#ffffcc; width:52.02%">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">persons surveyed in urban areas</span></strong></span></span></p>
+
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="color:#1f497d">1,59,610</span></strong></span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<table align="left" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="background-color:#dbe5f1; width:45.86%">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Monthly Bulletin for July, 2026 is available on the Ministry&#39;s website (<a href="https://www.mospi.gov.in">https://www.mospi.gov.in</a>).</span></span></p>
+			</td>
+			<td style="background-color:#dbe5f1; width:54.14%">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Scan QR code to access MoSPI Publications/ Reports</strong></span></span></p>
+
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><img alt="" src="https://static.pib.gov.in/WriteReadData/userfiles/image/image013T17A.png" /></span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:center">&nbsp;</p>
+
+<p><a href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026817960601.pdf" target="_blank"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Click here to see in PDF</span></span></a></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>&nbsp;***</strong></span></span></p>
+
+<p style="text-align:center">&nbsp;</p>
+
+<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Samrat</strong></span></span></p>
+
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                        <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                            (Release ID: 2300447)
+                        </div>
+                        <div style="height: 30px; width: 100%;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="clearfix">
+        </div>
+
+        <div class="section1">
+            <div id="frst_t">
+                <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447' target='_blank'><li class='fb_b'   ></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447&text=PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026' target='_blank'><li class='twitter_r'  > </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447' target='_blank'><li class='whatsapp_r'  ></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447&title=PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ></li></a></ul></div></div>
+            </div>
+            <div id="second_t">
+                <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447' target='_blank'><li class='fb_b'   ></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447&text=PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026' target='_blank'><li class='twitter_r'  > </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447' target='_blank'><li class='whatsapp_r'  ></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2300447&title=PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ></li></a></ul></div></div>
+            </div>
+        </div>
+        <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="PRESS NOTE ON PERIODIC LABOUR FORCE SURVEY (PLFS) MONTHLY BULLETIN July, 2026" />
+        <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" value="&lt;br/>LFPR improved in both rural and urban areas&lt;br/>&lt;br/>WPR strengthened in both rural and urban areas&lt;br/>&lt;br/>UR declined" />
+        <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;div style=&quot;float:center&quot;>
+&lt;table align=&quot;center&quot; border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;MsoTableGrid&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;width:464.3pt&quot;>
+			&lt;p style=&quot;margin-left:18.0pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Snapshot:&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+			&lt;ul>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Overall LFPR (15 years and above) increased to 55.4% in July 2026, from 54.4% in June 2026.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Rural LFPR (15 years and above) increased by 1.4 percentage points over the previous month, reaching 58.0% in July 2026.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Female LFPR (15 years and above) rose to 34.4% in July 2026, registering an increase of 1.7 percentage points over the previous month.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Overall WPR (15 years and above) increased to 52.5% in July 2026, marking the first increase since February 2026.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Rural WPR (15 years and above) stood at 55.4% in July 2026, registering an increase of 1.6 percentage points over June 2026 and 1.0 percentage point over July 2025.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Overall UR (15 years and above) declined to 5.1% in July 2026, lower than both the previous month and the corresponding month of the previous year.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+				&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:black&quot;>Both male and female UR (15 years and above) declined in July 2026 compared with the previous month, indicating an improvement in employment conditions across both genders.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+			&lt;/ul>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+&lt;/div>
+
+&lt;h1>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>A.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Introduction&lt;/strong>&lt;/span>&lt;/span>&lt;/h1>
+
+&lt;p style=&quot;margin-left:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Periodic Labour Force Survey (PLFS) conducted by NSO, MoSPI, is the primary source of data on activity participation and employment and unemployment conditions of the population. The PLFS survey methodology has been modified from January, 2025 to provide monthly and quarterly estimates of labour force indicators for the country. &lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Monthly results of PLFS are released in the form of Monthly Bulletins. It presents estimates of key labour market indicators &lt;em>viz.&lt;/em> Labour Force Participation Rate (LFPR), Worker Population Ratio (WPR) and Unemployment Rate (UR) at the all-India level following the Current Weekly Status&amp;nbsp;(CWS) approach.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Monthly Bulletins for April, 2025 to June, 2026 have already been released. The present Monthly Bulletin for July, 2026 is the sixteenth in the series.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;u>Key findings for persons of age 15 years and above following CWS:&lt;/u>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;ul style=&quot;margin-left:40px&quot;>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;em>Labour Force Participation Rate (LFPR) improved: &lt;/em>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:18.0pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The overall Labour Force Participation Rate (LFPR) for persons aged 15 years and above increased to 55.4% in July, 2026, from 54.4% in June, 2026. After declining from March to May, 2026 and remaining unchanged in June, 2026, the overall LFPR increased in July, 2026. The same trend was also observed in rural areas, where the LFPR for persons aged 15 years and above increased to 58.0% in July, 2026, from 56.6% in June, 2026, registering an increase of 1.4 percentage points. In urban areas, LFPR increased marginally, from 50.1% in June, 2026 to 50.4% in July, 2026.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:18.0pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Compared to the same month of the previous year, the overall LFPR increased by 0.5 percentage point, from 54.9% in July, 2025 to 55.4% in July, 2026. During the same period, rural LFPR also increased by 1.1 percentage points, from 56.9% to 58.0%, while urban LFPR experienced a marginal decline by 0.3 percentage point, from 50.7% to 50.4%.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/011184.jpg&quot; />&lt;/span>&lt;/span>&lt;/p>
+
+&lt;ul>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;em>Rise in female labour force participation:&lt;/em>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:18.0pt; margin-right:0cm; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;margin-left:21.3pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The overall female LFPR experienced a noticeable increase from 32.7% in June, 2026 to 34.4% in July, 2026. During the same period, rural female LFPR increased from 36.6% to 38.8% and urban female LFPR increased from 24.8% to 25.3%.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:21.3pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Compared to July, 2025, the overall female LFPR increased by 1.1 percentage points, from 33.3% to 34.4% in July, 2026. In rural areas, female LFPR rose by 1.9 percentage points, from 36.9% to 38.8%, while urban female LFPR declined marginally by 0.5 percentage point, from 25.8% to 25.3%.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:0cm; margin-right:0cm; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/02X30W.jpg&quot; />&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:17.85pt; margin-right:0cm; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;ul>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;em>Workforce strengthens across sectors: &lt;/em>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:21.3pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>The Worker Population Ratio (WPR) in the age group 15 years and above showed a broadly improving trend in July, 2026 across sectors. The overall WPR increased to 52.5% in July, 2026 from 51.4% in June, 2026. In rural areas, WPR increased to 55.4% in July, 2026 from 53.8% in June, 2026, indicating an increase of 1.6 percentage points. WPR in urban areas increased marginally to 47.0% from 46.8% during the same period. Notably, rural female WPR increased by 2.5 percentage points from 34.7% in June, 2026 to 37.2% in July, 2026 and urban female WPR increased from 22.7% to 23.1% during the same period. &lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:21.3pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>A year-on-year comparison shows that overall WPR is higher by 0.5 percentage point in July, 2026 (52.5%) against July, 2025 (52.0%). While the urban WPR was recorded at the same level (47.0%) during the period, the rural WPR witnessed an increase of 1.0 percentage point (55.4% vs 54.4%).&lt;/span>&lt;/span>&lt;/span>&lt;br />
+&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image0055NFP.png&quot; />&amp;nbsp;&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image006QATB.png&quot; />&amp;nbsp;&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image007SGF7.png&quot; />&amp;nbsp;&lt;/span>&lt;/span>&lt;/p>
+
+&lt;table align=&quot;center&quot; border=&quot;1&quot; cellspacing=&quot;0&quot; class=&quot;MsoTableGrid&quot; style=&quot;background:#c6d9f1; border-collapse:collapse; border:solid #4f81bd 2.25pt; margin-left:6.75pt; margin-right:6.75pt; width:473.75pt&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;background-color:transparent; width:473.75pt&quot;>
+			&lt;p style=&quot;margin-left:0cm; margin-right:0cm; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Female WPR in rural areas increased sharply to 37.2% in July, 2026 from 34.7% in the previous month&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;ul>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;em>Overall Unemployment Rate (UR) declined: &lt;/em>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:21.3pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Overall UR among persons of &lt;span style=&quot;color:black&quot;>age 15 years and above dropped to &lt;/span>5.1% in July, 2026 from 5.5% in June, 2026. In rural areas, the UR decreased sharply to 4.5% in July, 2026 from 5.0% in the pervious month. During the same period, the urban UR remained almost steady at 6.7% compared to 6.6%.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Compared with July, 2025, the overall UR and rural UR remained broadly stable in July, 2026, whereas the urban UR decreased by 0.5 percentage point from 7.2% in July, 2025 to 6.7% in July, 2026.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image008FOR6.png&quot; />&lt;/span>&lt;/span>&lt;/p>
+
+&lt;table align=&quot;center&quot; border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td>
+			&lt;div>
+			&lt;p style=&quot;margin-left:0cm; margin-right:0cm; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The overall UR decreased to 5.1% in July, 2026 from 5.5% in June, 2026&lt;/span>&lt;/span>&lt;/p>
+			&lt;/div>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;ul>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;em>Rural UR across genders and urban male UR declined: &lt;/em>&lt;/strong>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:14.4pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Among male of age 15 years and above, the overall UR declined from 5.3% in June, 2026 to 5.0% in July, 2026. This is also lower by 0.3 percentage point as compared to July, 2025 (5.3%). The rural male UR declined from 4.9% in June, 2026 to 4.6% in July, 2026 and was at the same level observed in July, 2025. While the urban male UR maintained broad stability in comparison with the previous month, it declined by 0.7 percentage point to 5.9% in July, 2026 against 6.6% in July, 2025.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:14.4pt; margin-right:0cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>For female of age 15 years and above, the overall and rural UR in July, 2026 decreased in comparison to June, 2026. However, it remained above the level observed a year ago in July, 2025. The urban female UR increased by 0.4 percentage points to 8.8% in July, 2026 from 8.4% in June, 2026, while it remained broadly stable compared with the July, 2025 level (8.7%).&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image010OZWI.png&quot; />&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:21.3pt; margin-right:0cm; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image011WM0I.png&quot; />&lt;/span>&lt;/span>&lt;/p>
+
+&lt;table align=&quot;center&quot; border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td>
+			&lt;div>
+			&lt;p style=&quot;margin-left:0cm; margin-right:0cm; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The overall male and female UR declined in July, 2026 compared to June, 2026&lt;/span>&lt;/span>&lt;/p>
+			&lt;/div>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p>&amp;nbsp;&lt;/p>
+
+&lt;table align=&quot;center&quot; border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;MsoTableGrid&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td colspan=&quot;2&quot; style=&quot;background-color:#c6d9f1; width:100.0%&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:#1f497d&quot;>At the all-India level, the monthly estimates are based on information collected from a total number of 3,71,021 persons surveyed.&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;background-color:#ffffcc; width:47.98%&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:#1f497d&quot;>persons surveyed in rural areas&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:#1f497d&quot;>2,11,411&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;background-color:#ffffcc; width:52.02%&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:#1f497d&quot;>persons surveyed in urban areas&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;color:#1f497d&quot;>1,59,610&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;table align=&quot;left&quot; border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;MsoTableGrid&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;background-color:#dbe5f1; width:45.86%&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Monthly Bulletin for July, 2026 is available on the Ministry&amp;#39;s website (&lt;a href=&quot;https://www.mospi.gov.in&quot;>https://www.mospi.gov.in&lt;/a>).&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;background-color:#dbe5f1; width:54.14%&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>Scan QR code to access MoSPI Publications/ Reports&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;img alt=&quot;&quot; src=&quot;https://static.pib.gov.in/WriteReadData/userfiles/image/image013T17A.png&quot; />&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p>&lt;a href=&quot;https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026817960601.pdf&quot; target=&quot;_blank&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Click here to see in PDF&lt;/span>&lt;/span>&lt;/a>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&amp;nbsp;***&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>Samrat&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+" />
+        <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+        </script>
+        <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+                  function CleanHtml(html) {
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+        </script>
+        <script type="text/javascript">
+                  $(document).ready(function () {
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                        }
+                  });
+        </script>
+        <style type="text/css">
+            @media print {
+                .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                    display: none !important;
+                }
+            }
+
+            .f_vl {
+                padding-right: 30px;
+                font-size: 17px;
+                cursor: pointer;
+            }
+
+            .log_oo {
+                display: flex;
+                justify-content: space-between;
+            }
+
+                .log_oo img {
+                    width: 150px;
+                }
+
+            .sticky-social_mb {
+                position: fixed;
+                bottom: 0px;
+                padding: 0px;
+                margin: 0px;
+                width: 100%;
+            }
+
+            .social_mb {
+                list-style: none;
+                display: flex;
+                width: 100%;
+                margin-bottom: -8px;
+            }
+
+                .social_mb a {
+                    padding: 8px 0px;
+                    font-size: 30px;
+                    transition: all 0.8s ease-in-out;
+                    width: 20% !important;
+                    text-align: center;
+                }
+        </style>
+        <style type="text/css">
+            .section1 {
+                position: relative;
+                padding: 10px 0px;
+                width: 100%;
+            }
+
+            .sticky-social {
+                position: fixed;
+                top: 20px;
+                left: 0px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .social {
+                list-style: none;
+            }
+
+                .social a li {
+                    padding: 8px 12px;
+                    font-size: 25px;
+                    transition: all 0.8s ease-in-out;
+                }
+
+                    .social a li:hover {
+                        margin-right: -30px;
+                        box-shadow: 2px 5px 10px grey;
+                    }
+
+                        .social a li:hover .fa {
+                            margin-left: 20px;
+                        }
+
+            .fb_b {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .twitter_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .whatsapp_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .fa-envelope_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+
+            .fa-linkedin_r {
+                background-color: var(--dbim-key, #0F5757);
+            }
+        </style>
+        <style type="text/css">
+            @media only screen and (max-device-width: 767px) {
+                p span img {
+                    max-width: 90% !important;
+                    height: auto !important;
+                }
+
+                p img {
+                    max-width: 90% !important;
+                    height: auto !important;
+                }
+
+                h2 {
+                    font-size: var(--dbim-h2, 20px);
+                    font-weight: 600 !important;
+                }
+
+                h3 {
+                    font-size: var(--dbim-h3, 16px);
+                    font-weight: 600 !important;
+                }
+            }
+        </style>
+        <style type="text/css">
+            .film-roll-badge {
+                position: absolute;
+                top: 82%;
+                right: 20px;
+                width: 230px;
+                height: 70px;
+                background: repeating-linear-gradient( to right, var(--dbim-green-key, #0F5757) 0px, var(--dbim-green-key, #0F5757) 18px, var(--dbim-text, #150202) 18px, var(--dbim-text, #150202) 36px );
+                border-top: 8px solid var(--dbim-green-key, #0F5757);
+                border-bottom: 8px solid var(--dbim-green-key, #0F5757);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                animation: moveFilm 8s linear infinite;
+                z-index: 10;
+            }
+
+                .film-roll-badge::before,
+                .film-roll-badge::after {
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 10px;
+                    background: repeating-linear-gradient( to right, var(--dbim-green-key, #0F5757) 0px, var(--dbim-green-key, #0F5757) 10px, #fff 10px, #fff 20px );
+                    left: 0;
+                    z-index: 2;
+                }
+
+                .film-roll-badge::before {
+                    top: -4px;
+                }
+
+                .film-roll-badge::after {
+                    bottom: -4px;
+                }
+
+            .film-roll-inner {
+                position: relative;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: flicker 2s infinite ease-in-out;
+            }
+
+            .countdown-text {
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: #fff;
+                text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                white-space: nowrap;
+            }
+
+            @keyframes moveFilm {
+                0% {
+                    background-position: 0 0;
+                }
+
+                100% {
+                    background-position: 120px 0;
+                }
+            }
+
+            @keyframes flicker {
+                0%, 100% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.9;
+                }
+
+                25% {
+                    opacity: 0.95;
+                }
+
+                75% {
+                    opacity: 0.85;
+                }
+            }
+
+            @media (max-width: 1500px) {
+                .film-roll-badge {
+                    top: 68%;
+                    right: 18px;
+                    height: 65px;
+                    font-size: 0.85rem;
+                }
+
+                .press-section {
+                    margin-top: 35px;
+                }
+            }
+
+            @media (max-width: 992px) {
+                .film-roll-badge {
+                    top: 52%;
+                    right: 10px;
+                    width: 200px;
+                    height: 60px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .film-roll-badge {
+                    top: 56%;
+                    right: 10px;
+                    width: 124px;
+                    height: 55px;
+                }
+
+                .countdown-text {
+                    font-size: 0.9rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .film-roll-badge {
+                    top: 59%;
+                    right: 5px;
+                    height: 50px;
+                }
+
+                .countdown-text {
+                    font-size: 0.85rem;
+                }
+            }
+        </style>
+        <script type="text/javascript">
+                  const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                  const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+                  const countdownElement = document.getElementById("countdown");
+
+                  if (countdownElement) {
+                        const interval = setInterval(() => {
+                              const now = new Date().getTime();
+
+                              if (now < festivalStart) {
+                                    const diff = festivalStart - now;
+                                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                                    countdownElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to go`;
+                              } else if (now >= festivalStart && now <= festivalEnd) {
+                                    const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                                    countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                              } else {
+                                    countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+                                    const elements = document.querySelectorAll('.film-roll-badge');
+                                    elements.forEach(el => el.style.width = "350px");
+                                    clearInterval(interval);
+                              }
+                        }, 1000);
+                  }
+        </script>
+        <script type="text/javascript">
+                  const miffStart = new Date("2026-06-15T00:00:00").getTime();
+                  const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+                  const miffElement = document.getElementById("miff");
+
+                  if (miffElement) {
+                        const miffInterval = setInterval(() => {
+                              const now = new Date().getTime();
+
+                              if (now < miffStart) {
+                                    const diff = miffStart - now;
+                                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                    miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+                              } else if (now >= miffStart && now <= miffEnd) {
+                                    const dayNumber = Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+                                    miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                              } else {
+                                    miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+                                    document.querySelectorAll('.film-roll-badge').forEach(el => el.style.width = "350px");
+                                    clearInterval(miffInterval);
+                              }
+                        }, 1000);
+                  }
+        </script>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="hbDoc_UXpI-zXqGd4KZ8UjzHBbmntw03YlYZ_F7KX1dRuRPipHkSV9gaAoDMYmbvzLFxzo8Cu1_hAJUmltDnx9-yT6P5APYt"/></form>
+    
+
+<script type="application/json" id="pibConsentConfig">{"ga4Id":"G-Q414Y0X6EE,G-QJJ6LZ8LHV","policyUrl":"/CookiePolicy.aspx","text":{"bannerLabel":"Cookie consent","title":"Cookies on this website","body":"We use essential cookies to make this website work. We also set analytics cookies when you arrive, so we can see how the site is used and improve it - you can switch these off below or at any time from the Cookie Policy page. Cookies from embedded social media content are set only if you allow them.","policyLink":"Read our Cookie Policy","accept":"Accept all","reject":"Reject optional","customize":"Customise","prefsTitle":"Cookie preferences","prefsIntro":"Choose which cookies this website may set. Essential cookies cannot be switched off because the site does not work without them. Analytics cookies are on unless you turn them off. Social media cookies stay off until you allow them. You can change these choices at any time from the Cookie Policy page.","essentialName":"Essential cookies","essentialDesc":"Needed for the site to function. These remember your session, your language and region, your text size and colour theme, and verify the security check on forms. They are always on.","analyticsName":"Analytics cookies","analyticsDesc":"Help us understand how visitors use the site - which pages are read and how long people stay - so it can be improved. The information is collected in a form that does not directly identify you. These are on when you arrive; switching them off here stops them and deletes the ones already set.","socialName":"Social media cookies","socialDesc":"Set by content embedded from X, Facebook and YouTube, such as timelines and videos. These platforms may use them to track you across websites. They stay off until you allow them.","save":"Save preferences","cancel":"Cancel"}}</script>
+<script type="text/javascript" src='/js/consent.js?v=10'></script>
+
+<script type="text/javascript" src='/js/consent-embeds.js?v=10'></script>
+
+
+    <!-- Minimal O(N) Time and O(1) Auxiliary Space Word Count & Read Time Calculation -->
+    <script type="text/javascript">
+            (function () {
+                  function calculateReadingStats() {
+                        var bodyEl = document.getElementById("pibReleaseBody");
+                        if (!bodyEl) return;
+
+                        // textContent extracts text without triggering expensive layout/reflow computations
+                        var text = bodyEl.textContent || "";
+                        var words = 0;
+                        var inWord = false;
+
+                        // O(N) single pass character code scan: achieves O(1) space with zero array allocations
+                        for (var i = 0, len = text.length; i < len; i++) {
+                              var code = text.charCodeAt(i);
+                              // Delimits on ASCII whitespace, control characters, tabs, newlines, and non-breaking spaces (160)
+                              if (code <= 32 || code === 160) {
+                                    inWord = false;
+                              } else if (!inWord) {
+                                    inWord = true;
+                                    words++;
+                              }
+                        }
+
+                        // Standard 250 WPM reading speed (e.g., 612 words yields 2 min read)
+                        var minutes = Math.max(1, Math.round(words / 250));
+
+                        var elWords = document.getElementById("prWordCount");
+                        var elTime = document.getElementById("prReadTime");
+
+                        if (elWords) elWords.textContent = words + (words === 1 ? " word" : " words");
+                        if (elTime) elTime.textContent = minutes + " min read";
+                  }
+
+                  if (document.readyState === "loading") {
+                        document.addEventListener("DOMContentLoaded", calculateReadingStats);
+                  } else {
+                        calculateReadingStats();
+                  }
+            })();
+    </script>
+
+    <script type="text/javascript">
+            (function () {
+                  try {
+                        if (window.self === window.top) { return; }
+                  } catch (e) { return; }
+                  var s = document.createElement("style");
+                  s.textContent = ".sticky-social, .sticky-social_mb { display: none !important; }";
+                  (document.head || document.documentElement).appendChild(s);
+            }());
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+# Official data sources — verified 3 Nov 2026.
+# status: V = official file/page located; A = acquisition method to confirm; C = coverage to confirm.
+# Anything not listed here must be added with the same fields before use.
+
+rbi_handbook_states_2024_25:
+  publisher: Reserve Bank of India
+  edition: Handbook of Statistics on Indian States 2024-25 (10th edition)
+  release_date: 2025-12-11
+  index_page: https://www.rbi.org.in/scripts/AnnualPublications.aspx?head=Handbook+of+Statistics+on+Indian+States
+  full_pdf: https://rbidocs.rbi.org.in/rdocs/Publications/PDFs/0HANDBOOK111225883086B042ED449F9C3DDACAB54415D8.PDF
+  price_base: "2011-12 (constant-price tables)"
+  coverage: "state x fiscal year, 2011-12 to 2024-25 for state income tables"
+  unit_note: "GSVA/GSDP tables in Rs lakh; '-' means not available"
+  status: V; A (rbidocs may show a browser check to scripts -> download manually if so)
+  tables:
+    T08_unemployment_rural_us_adj: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23457", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/8T_111220254070338D01844B439710F4990CDAF4DF.XLSX"}
+    T09_unemployment_urban_us_adj: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23458", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/9T_11122025FD98FA2EE6704C18AB8D5EC9966548B6.XLSX"}
+    T13_domestic_tourist_visits: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23462", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/13T_1112202529FAEEB805FE49E78D8A39C8679DEC25.XLSX"}
+    T16_health_doctors_specialists: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23465", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/16T_11122025547AD10B7697436D9B9C4BF0C7891957.XLSX"}
+    T17_govt_hospitals_beds: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23466", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/17T_11122025EE6D7670D67644958960109D9F40FE68.XLSX"}
+    T18_public_health_expenditure: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23467", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/18T_11122025768C98BEB7A5493EA2E2EFFFEDDA7C46.XLSX"}
+    T20_per_capita_nsdp_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23469", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/20T_111220252B6EE27737FD4931A99C5A448B7CEC68.XLSX"}
+    T22_gsdp_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23471", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/22T_11122025E6BC0CB35180406EAB6E0D49DE51C8E8.XLSX"}
+    T24_nsdp_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23473", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/24T_111220256149723C25EB468BB1DED32D422521FB.XLSX", title: "Net State Domestic Product (Constant Prices)"}
+    T26_gsva_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23475", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/26T_111220258810CAC7CCE04326BE69C645C533A4CC.XLSX"}
+    T30_gsva_agriculture_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23479", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/30T_11122025EB5BFF5F84ED4F718486A656C104DF54.XLSX", title: "Gross State Value Added by Economic Activity - Agriculture (Constant Prices)"}
+    T34_gsva_manufacturing_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23483", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/34T_11122025ED6E848120AC44199A6067A22A3CB1F0.XLSX"}
+    T38_gsva_construction_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23487", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/38T_1112202597CA6CB1B312418789814162C38FE93A.XLSX"}
+    T42_gsva_industry_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23491", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/42T_11122025464D6F89F9CB487597603D7F105A644B.XLSX"}
+    T46_gsva_financial_services_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23495", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/46T_11122025F2C880562B6D48ECAAC61950010B2640.XLSX"}
+    T50_gsva_services_constant: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23499", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/50T_11122025C0F4E62A89514D7D8BF9BA28CE261951.XLSX"}
+    T108_cpi_inflation_general: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23557", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/108T_111220251942D16B3BED4D73BE851D15D2329168.XLSX"}
+    T111_cpi_housing_urban: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23560", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/111T_111220252F7D9704AB664C35A58770BAC73518DE.XLSX"}
+    T112_rural_wage_construction: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23561", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/112T_11122025771E55EB688044CE8A85E52A901B5D22.XLSX"}
+    T115_rural_wage_nonagri: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23564", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/115T_1112202585CF99F21E654CED8990A734A043B3DA.XLSX"}
+    T116_number_of_factories: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23565", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/116T_11122025F5E48BEEC5354EC7ABF7A9B4127694AE.XLSX", title: "State-wise Number of Factories"}
+    T117_asi_fixed_capital: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23566", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/117T_1112202588337477580042FDAD87DC3D07DDCD12.XLSX", title: "State-wise Fixed Capital"}
+    T122_asi_workers: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23571", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/122T_11122025E8D00E32A3384D3CAEA44E12BC9D418A.XLSX", title: "State-wise Number of Workers"}
+    T124_asi_total_emoluments: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23573", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/124T_11122025FFC254EADC04446293A9DC52FDC364B1.XLSX", title: "State-wise Total Emoluments"}
+    T128_asi_gva: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23577", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/128T_11122025BC6190C6B6B14014896D4E11A42A8E44.XLSX", title: "State-wise Gross Value Added"}
+    T132_asi_employees: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23581", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/132T_111220251B6C02F7678947E2B3907276989B8EED.XLSX", title: "State-wise Number of Employees"}
+    T138_per_capita_power_availability: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23587", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/138T_111220252D21BC51E5A842E4B25E954391C10A41.XLSX", title: "State-wise Per Capita Availability of Power"}
+    T139_power_availability: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23588", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/139T_111220256569FF1C11E248B7A8ED64D31C999776.XLSX", title: "State-wise Availability of Power"}
+    T140_installed_capacity_power: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23589", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/140T_111220254D8DA0B69B444492B6E9BAF30F3395C8.XLSX", title: "State-wise Installed Capacity of Power"}
+    T141_power_requirement: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23590", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/141T_11122025615E98A72EA6475CAACFFD12FFC83057.XLSX", title: "State-wise Power Requirement"}
+    T142_peak_demand_vs_met: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23591", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/142T_111220252ABDAB650F53423F990E3EA91A0B5B5A.XLSX", title: "State-wise Actual Power Supply Position in terms of Peak Demand vis-à-vis Peak Met"}
+    T143_renewable_capacity: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23592", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/143T_11122025415C21E8727B4EA0B009173F7DC19E84.XLSX", title: "State-wise Total Installed Capacity of Grid Interactive Renewable Power"}
+    T144_national_highways_length: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23593", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/144T_111220250497208D070C44219818788DB5BCE35A.XLSX", title: "State-wise Length of National Highways"}
+    T145_railway_route: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23594", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/145T_111220259E033C52098E4732A6101C940DEF1222.XLSX", title: "State-wise Railway Route"}
+    T146_road_length: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23595", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/146T_11122025B89449F4159B420E8305A9509F27FE82.XLSX", title: "State-wise Length of Roads"}
+    T147_state_highways_length: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23596", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/147T_111220255C153B31AB2E4835ABEEAC91D7494BFA.XLSX", title: "State-wise Length of State Highways"}
+    T148_td_losses: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23597", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/148T_11122025D741C3CB2CC24F448DC99D907589DD71.XLSX", title: "State-wise Electricity Transmission & Distribution Losses"}
+    T149_telephones_per_100: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23598", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/149T_1112202538D6A609C55B4FEFBBC44BB6C5ED20F7.XLSX", title: "State-wise Telephones per 100 Population"}
+    T152_bank_offices_scb: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23601", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/152T_1112202512B2BF0FBDB74FF48CF835E2A6B7C592.XLSX", title: "State-wise Distribution of Offices of Scheduled Commercial Banks"}
+    T153_cd_ratio_sanction: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23602", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/153T_111220255DEA2A2D23744132BFEDD5768D038648.XLSX", title: "State-wise Credit-Deposit Ratio of Scheduled Commercial Banks - According to Place of Sanction"}
+    T154_cd_ratio_utilisation: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23603", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/154T_111220253A00C718ED584E7C850BBCAC3B2FA18B.XLSX", title: "State-wise Credit-Deposit Ratio of Scheduled Commercial Banks - According to Place of Utilisation"}
+    T155_deposits_scb: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23604", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/155T_11122025BC88547570414295AB088FBCF5C90806.XLSX", title: "State-wise Deposits by Scheduled Commercial Banks in India"}
+    T156_credit_scb: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23605", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/156T_1112202520771561966C49F1B9C00F56ACF97557.XLSX", title: "State-wise Credit by Scheduled Commercial Banks in India"}
+    T158_credit_to_industry_scb: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23607", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/158T_11122025E9070972891A407D90EFAD7C62F796F2.XLSX", title: "State-wise Credit to Industry by Scheduled Commercial Banks"}
+    T159_personal_loans_scb: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23608", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/159T_1112202552A28DBA4EF94487B4240BF86BC15692.XLSX", title: "State-wise Personal Loans by Scheduled Commercial Banks"}
+    T181_exports: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23630", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/181T_1112202574821AB7B09745AC82B77B352FF4E3EB.XLSX", title: "State-wise Exports"}
+    T182_foreign_tourist_visits: {html: "https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23631", xlsx: "https://rbidocs.rbi.org.in/rdocs/Publications/DOCs/182T_111220255D1D4A3006504017A6916B26516E0915.XLSX", title: "State-Wise Foreign Tourist Visits"}
+  tables_added_2026_11_03: "T30 and T116-T182 scraped from index_page on 2026-11-03 (power, roads, telecom, banking-credit, ASI, exports, foreign tourists)"
+  caveat: >
+    Sector detail beyond manufacturing/construction/industry/financial/services is NOT in the handbook.
+    Trade/hotels, transport/storage, real estate/professional services need state DES or MoSPI
+    sub-sector GSVA statements (see mospi_gsva_state_sector).
+
+mospi_gsva_state_sector:
+  publisher: MoSPI / State DES
+  what: State GSVA by detailed economic activity (trade & repair, hotels & restaurants, transport, storage, communication, real estate & professional services, health)
+  portal: https://mospi.gov.in/
+  status: A/C — locate the latest 'State-wise GSVA by economic activity' statement (2011-12 base); otherwise fall back to each state's DES / Economic Survey appendix.
+
+mospi_gsva_base_2022_23:
+  publisher: MoSPI (NSO)
+  what: New series, base year 2022-23
+  national_gdp_press_note: https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/feb/doc2026227806401.pdf
+  state_guideline_press_release: https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/may/doc202657865101.pdf
+  status: C — states were still being onboarded (guideline finalised May 2026; joint discussions on current-price 2022-23..2024-25 in May 2026). A full back series was expected by Dec 2026. Do NOT mix with 2011-12 base. Recheck before launch.
+
+asi_2024_25:
+  publisher: MoSPI — Annual Survey of Industries
+  reference_period: 2024-25 (Apr 2024–Mar 2025); released 2026-09-30
+  factsheet_pdf: https://www.mospi.gov.in/uploads/publications_reports/publications_reports1790761607830_02ca8547-c087-4c5c-9826-5d58740ee63f_Factsheet_ASI_2024-25.pdf
+  press_note_pdf: https://www.mospi.gov.in/uploads/latestReleases/latest_release_1790768522303_b1ee6ba9-c9d3-481a-b30e-45a24c7f3729_PIB_Note_ASI_2024-25_English.pdf
+  use: state factories, workers, fixed capital, GVA (Annexure-II state tables)
+  status: V; extract Annexure-II tables from PDF with spot checks
+
+plfs_annual_2025:
+  publisher: MoSPI — Periodic Labour Force Survey
+  reference_period: calendar year 2025 (Jan–Dec) — first calendar-year report; earlier reports are July–June
+  press_note_pdf: https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf
+  use: state LFPR, WPR, UR (usual status, 15+); find the full annual report state tables on mospi.gov.in
+  status: V; break in series from 2025 (new design + calendar year) -> flag, don't splice with older years
+
+hces_2023_24:
+  publisher: MoSPI — Household Consumption Expenditure Survey
+  reference_period: Aug 2023–Jul 2024
+  final_report_pdf: https://mospi.gov.in/sites/default/files/publication_reports/Final_Report_HCES_2023-24L.pdf
+  factsheet_pdf: https://mospi.gov.in/sites/default/files/publication_reports/HCES%20FactSheet%202023-24.pdf
+  state_table_alt: https://rsdebate.nic.in/bitstream/123456789/757640/1/PQ_267_10032025_U1279_p414_p417.pdf
+  use: state rural/urban MPCE (without imputation) as consumer-demand proxy
+  status: V; snapshot — never interpolate into an annual series
+
+trai_pir:
+  publisher: TRAI — Indian Telecom Services Performance Indicators
+  latest_quarterly: {period: "Apr–Jun 2026", released: 2026-10-12, pdf: "https://www.trai.gov.in/sites/default/files/2026-10/QPIR_12102026.pdf"}
+  latest_yearly: {period: "2025-26", released: 2026-10-05, pdf: "https://trai.gov.in/sites/default/files/2026-10/YIR_05102026_0.pdf"}
+  use: internet subscribers / tele-density by licensed service area
+  caveat: service areas != states (e.g. Maharashtra excl. Mumbai, UP East/West, Mumbai separate). Build an explicit LSA->state map and document it.
+  status: V
+
+tourism_compendium:
+  publisher: Ministry of Tourism
+  compendium_2025_pdf: https://tourism.gov.in/sites/default/files/2025-09/India%20Tourism%20Data%20Compendium%202025_1.pdf
+  latest_state_series_2016_2025: https://tourism.gov.in/sites/default/files/2026-03/usq.3834%20for%2016.03.2026.pdf
+  use: domestic + foreign tourist visits by state (hospitality demand context)
+  caveat: visits are not unique people or hotel occupancy; UP 2025 inflated by Kumbh Mela — flag as one-off
+  status: V
+
+cea_power_supply_position:
+  publisher: Central Electricity Authority
+  portal: https://www.cea.nic.in/reports/dashboardView?headingId=107&lang=en&source=archive&subHeadingId=1003&subSubHeadingId=10010&title=Power+Supply+Position+-+Energy
+  use: annual energy requirement vs supplied, % shortage by state (latest FY 2025-26)
+  status: V portal; A — confirm latest annual file
+
+morth_roads:
+  publisher: Ministry of Road Transport & Highways
+  portal: https://morth.nic.in/
+  use: Basic Road Statistics — road length by state; compute road density per 100 sq km
+  status: A/C — latest edition to confirm
+
+mca_company_master:
+  publisher: Ministry of Corporate Affairs
+  portal: https://www.mcacdm.nic.in/company-master-details
+  ogd: https://data.gov.in/catalog/company-master-data
+  use: active companies by registered state & activity (snapshot)
+  caveat: CAPTCHA on MCA portal — use OGD files or manual download; registered office != operating site
+  status: V; A
+
+startup_ranking:
+  publisher: DPIIT
+  edition: 5th edition (period Jan 2023–Nov 2024), results released Jan 2026
+  results_page: https://www.startupindia.gov.in/srf/result.html
+  report_page: https://www.startupindia.gov.in/srf/portal/edition_5th_2026.html
+  state_policies: https://www.startupindia.gov.in/content/sih/en/startup-scheme/state-startup-policies.html
+  use: informational policy context only (ordinal categories, not a numeric score)
+  status: V
+
+census_2011:
+  publisher: Office of the Registrar General
+  portal: https://censusindia.gov.in/census.website/en/data
+  use: area, urbanisation share (2011 vintage — label as such). Prefer RBI/MoHFW projected population for current per-capita ratios.
+  status: V
+
+# ---------------- Added 3 Nov 2026: 2026 high-frequency data, internet speed, youth jobs, wages ----------------
+
+plfs_monthly_quarterly_2026:
+  publisher: MoSPI — PLFS (new design from Jan 2025, CWS)
+  monthly_latest: {period: "Aug 2026", pdf: "https://www.mospi.gov.in/uploads/publications_reports/publications_reports1789465291404_ba9c7140-0b83-481b-a5fd-a7ac121c476f_Monthly_Bulletin_Aug_2026.pdf"}
+  monthly_jul_2026_press: https://www.pib.gov.in/PressReleasePage.aspx?PRID=2300447&reg=48&lang=1
+  quarterly_apr_jun_2026: {released: 2026-08-10, press: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2297093&reg=3&lang=1", pdf: "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026810950001.pdf"}
+  quarterly_jan_mar_2026_press: https://www.mospi.gov.in/uploads/PressRelease/Press_note%20_Jan_March_2026%20PLFS_QB.pdf
+  esankhyiki_catalogue: https://esankhyiki.mospi.gov.in/catalogue-main/catalogue?product=PLFS
+  use: state-level quarterly LFPR/WPR/UR incl. youth 15-29 (selected states, CWS); monthly = all-India only
+  caveat: CWS (7-day) is not comparable with usual status (365-day); quarterly state estimates have high RSE, so show the RSE
+  status: V; parse state annex from the full bulletin PDF (pdfplumber)
+
+plfs_youth_ur_state_history:
+  what: State youth (15-29) UR, usual status, July-June years
+  y2023_24: https://dge.gov.in/dge/sites/default/files/2025-05/3232_e.pdf
+  y2022_23: https://eparlib.nic.in/bitstream/123456789/2973551/1/AU430.pdf
+  y2018_21: https://eparlib.nic.in/bitstream/123456789/1466967/1/AU792.pdf
+  extracted_to: data/extracted/labour/plfs_youth_ur_usual_status_by_state.csv
+  status: V
+
+district_youth_unemployment:
+  note: >
+    No official source publishes district-level youth unemployment every year. Options in order of preference:
+    (1) PLFS unit-level data (MoSPI microdata portal, free registration): state x rural/urban x NSS-region estimates, not district;
+    (2) Census 2011 district main/marginal workers and seeking-work tables (very old);
+    (3) NCS portal (ncs.gov.in) job seeker registrations by district (administrative, biased);
+    (4) State employment exchange live register (state labour departments).
+    The app should show youth unemployment at STATE level (and rural/urban) and say plainly that district figures don't exist.
+
+internet_speed_ookla:
+  publisher: Ookla Open Data (Speedtest Intelligence, quarterly tiles ~610 m)
+  registry: https://registry.opendata.aws/speedtest-global-performance
+  github: https://github.com/teamookla/ookla-open-data
+  bucket: s3://ookla-open-data (aws s3 ls --no-sign-request s3://ookla-open-data/)
+  licence: CC BY-NC-SA 4.0 (non-commercial; commercial use needs Ookla permission)
+  script: scripts/ookla_district_speeds.py (district + 28 pilot-state cities, fixed & mobile)
+  boundaries: https://github.com/wmgeolab/geoBoundaries/raw/main/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2.geojson
+  status: V (run on laptop; S3 blocked from the research workspace)
+
+internet_speed_trai:
+  myspeed_portal: https://myspeed.trai.gov.in/
+  independent_drive_tests: https://www.trai.gov.in/release-publication/reports/drive-test (city + highway drive tests, operator-wise 4G/5G throughput, 2025-2026)
+  examples_2026: ["Ahmedabad/Gandhinagar + Vadodara highway, Feb 2026 (Gujarat LSA)", "Gonda/Bahraich/Shravasti/Balrampur UP, Sep 2026: https://telecomlead.com/4g-lte/jio-vs-airtel-vs-vodafone-idea-vs-bsnl-5g-speed-call-drops-and-network-coverage-in-uttar-pradesh-trai-test-128423?amp=1", "Ahmedabad-Gandhidham rail: https://www.trai.gov.in/sites/default/files/2026-08/PR_No109of2026.pdf"]
+  use: official city-level measured throughput by operator; build a city table from each press release annex
+  status: V
+
+internet_availability:
+  trai_pir_lsa: see trai_pir (internet subscribers and tele-density by licensed service area)
+  nfhs5_district: "NFHS-5 (2019-21) district factsheets: % women/men who ever used the internet (district level, old but the only official district-wise usage measure): https://rchiips.org/nfhs/districtfactsheet_NFHS-5.shtml"
+  bharatnet: "BharatNet gram panchayat service-ready status by state/district: https://usof.gov.in / bbnl dashboards"
+  status: V/A
+
+gst_state_monthly:
+  publisher: GSTN / GST Council
+  portal: https://tutorial.gst.gov.in/downloads/news/  (monthly state-wise collection PDFs, e.g. net_revvenue_gst_oct_2025.pdf)
+  use: 2026 monthly consumption/activity proxy by state (domestic GST, pre/post settlement SGST)
+  fy26_state_totals_secondary: https://a2ztaxcorp.net/indias-top-10-states-by-gst-collections-in-fy26-and-who-lagged-behind/
+  status: V; replace secondary values in data/extracted/latest_2026 with official monthly files
+
+minimum_wages_2026:
+  what: statutory minimum wages by state, zone (city class) and skill level (unskilled/semi/skilled/highly skilled)
+  official_sources:
+    central: https://clc.gov.in/clc/min-wages
+    maharashtra: https://mahakamgar.maharashtra.gov.in/
+    karnataka: https://labour.karnataka.gov.in/
+    tamil_nadu: https://labour.tn.gov.in/
+    gujarat: https://col.gujarat.gov.in/
+    telangana: https://labour.telangana.gov.in/
+    uttar_pradesh: https://uplabour.gov.in/
+    rajasthan: https://labour.rajasthan.gov.in/
+  extracted_secondary: data/extracted/latest_2026/wages_and_salaries_2026.csv
+  caveat: secondary compilers disagree; use the state gazette notification (G.O. / order number) as the source of record
+  status: A — verify each value against its notification
+
+wages_official_other:
+  plfs_earnings: PLFS Annual Report 2025, average monthly earnings by state (regular salaried, self-employed, casual), rural/urban, male/female
+  asi_emoluments: ASI 2024-25 Annexure-II, emoluments per employee by state (factory sector pay benchmark)
+  labour_bureau_rural_wages: RBI handbook T112-T115 (construction, non-agri labourers, monthly by state)
+  epfo_payroll: https://www.epfindia.gov.in/site_en/Estimate_of_Payroll.php (monthly net new EPF subscribers by state, formal hiring 2026)
+
+salary_surveys_private:
+  note: Use for role- and city-level pay bands; label as private and survey-based.
+  sources:
+    - {name: "Indeed PayMap (city x experience)", url: "https://www.peoplematters.in/news/employment-landscape/not-delhi-or-mumbai-these-cities-are-driving-indias-fastest-salary-growth-46215"}
+    - {name: "Randstad Annual Salary Trends 2025-26 (8 tier-1 + 22 tier-2 cities, junior/middle/senior)", url: "https://www.storyboard18.com/how-it-works/tier-2-cities-senior-salaries-climb-to-%e2%82%b928-38-lakh-narrowing-gap-with-metros-report-88296.htm"}
+    - {name: "Michael Page India Salary Guide 2026 (roles x seniority)", url: "https://www.michaelpage.co.in/salary-guide"}
+    - {name: "TeamLease Employment Outlook / Jobs & Salaries Primer", url: "https://group.teamlease.com/"}
+    - {name: "Naukri JobSpeak (monthly hiring index by city/sector)", url: "https://www.naukri.com/jobspeak"}
+
+# ---------------- Added 3 Nov 2026: boundaries for the app map ----------------
+geoboundaries_ind_adm1:
+  publisher: geoBoundaries (William & Mary geoLab)
+  simplified_geojson: https://github.com/wmgeolab/geoBoundaries/raw/main/releaseData/gbOpen/IND/ADM1/geoBoundaries-IND-ADM1_simplified.geojson
+  licence: CC BY 4.0 (gbOpen)
+  use: state outlines for the results map only (no data values)
+  caveat: boundaries as published by geoBoundaries; not an official Survey of India map
+  status: V
