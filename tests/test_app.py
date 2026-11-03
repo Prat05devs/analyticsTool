@@ -44,3 +44,10 @@ def test_insufficient_states_message():
                                    "exclude_current": True})
     assert not at.exception
     assert any("Fewer than two" in m.value for m in at.markdown)
+
+
+def test_ranking_only_industry_has_no_empty_forecast_tile():
+    at = _run("pages/eligibility.py", {"industry": "healthcare", "priorities": [], "needs": ["power_intensive"],
+                                       "states": list(PILOT_IDS), "current_state": None, "capital_rs_crore": 1.0})
+    text = " ".join(m.value for m in at.markdown)
+    assert "Forecast + ranking" not in text and "No forecast is offered for healthcare" in text

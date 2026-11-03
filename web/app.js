@@ -205,7 +205,9 @@
       }
       return { sid, st: 'Ranking only', why: reg.reason || prof.target_note || 'no defensible sector target' };
     });
-    const tiles = [['Forecast + ranking', 'blue'], ['Ranking only', 'grey'], ['Excluded', 'amber']].map(([lab]) => {
+    // industries without a forecast model: every state is ranking-only by design, so don't show an empty forecast tile
+    const tileSet = prof.model_target ? [['Forecast + ranking'], ['Ranking only'], ['Excluded']] : [['Ranking only'], ['Excluded']];
+    const tiles = tileSet.map(([lab]) => {
       const sub = status.filter((x) => x.st === lab);
       return `<div class="card stat"><div class="v">${sub.length}</div><div class="l">${lab}${sub.length ? ': ' + sub.map((x) => esc(label(x.sid))).join(', ') : ''}</div></div>`;
     }).join('');
@@ -225,6 +227,7 @@
       <p class="lead">For ${esc(prof.label.toLowerCase())}, each state needs at least one observed official indicator in: <strong>${prof.mandatory_dimensions.map((d) => esc(S.dimensions[d].label.toLowerCase())).join(', ')}</strong>. Nothing is filled in where data are missing.</p></div>
       <div class="grid" style="--min:240px">${tiles}</div>
       ${gaps.length ? `<div class="caveat" role="note"><strong>${gaps.length} gap(s) disclosed, not filled</strong><br>${gaps.map(esc).join(' · ')}</div>` : ''}
+      ${!prof.model_target ? `<div class="note"><strong>No forecast is offered for ${esc(prof.label.toLowerCase())}.</strong> ${esc(prof.target_note || '')} States are compared on the ranking index only; the outlook dimension uses historical growth momentum.</div>` : ''}
       ${!validated && prof.model_target ? `<div class="note">Forecast unavailable: ${esc(reg.reason || 'model not validated')}.</div>` : ''}
       <section><h2 style="margin-bottom:12px">Indicator coverage</h2><div class="tbl-wrap"><table><thead><tr><th>State</th><th>Status</th>${dims.map((d) => `<th class="num">${esc(S.dimensions[d].label)}</th>`).join('')}<th class="num">Latest state accounts</th></tr></thead><tbody>${rows}</tbody></table></div>
       <p class="small muted">observed / indicators in the profile. Amber = an indicator is not published for that state; weights within the dimension are renormalised over what is observed.</p>

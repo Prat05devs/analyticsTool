@@ -53,8 +53,11 @@ for sid in compared:
         rows.append((sid, "Ranking only", reg.get("reason") or prof.get("target_note", "no defensible sector target")))
 status = pd.DataFrame(rows, columns=["state_id", "status", "reason"])
 
-c = st.columns(3)
-for col, (lab, kind) in zip(c, [("Forecast + ranking", "blue"), ("Ranking only", "grey"), ("Excluded", "amber")]):
+# industries without a forecast model: every state is ranking-only by design, so no empty forecast tile
+tile_set = [("Forecast + ranking", "blue"), ("Ranking only", "grey"), ("Excluded", "amber")] if prof.get("model_target") \
+    else [("Ranking only", "grey"), ("Excluded", "amber")]
+c = st.columns(len(tile_set))
+for col, (lab, kind) in zip(c, tile_set):
     sub = status[status.status == lab]
     with col:
         theme.stat(str(len(sub)), lab + (": " + ", ".join(name_of(s) for s in sub.state_id) if len(sub) else ""))
@@ -62,6 +65,9 @@ for col, (lab, kind) in zip(c, [("Forecast + ranking", "blue"), ("Ranking only",
 gaps = [f"{r.state}: {r.disclosure}" for r in res.ranking.itertuples() if r.disclosure]
 if gaps:
     theme.caveat(" · ".join(gaps), f"{len(gaps)} gap(s) disclosed, not filled")
+if not prof.get("model_target"):
+    theme.note(f"No forecast is offered for {prof['label'].lower()}. {prof.get('target_note', '')} States are compared on "
+               "the ranking index only; the outlook dimension uses historical growth momentum.")
 if not validated and prof.get("model_target"):
     theme.note("Forecast unavailable: " + reg.get("reason", "model not validated") + ".")
 
